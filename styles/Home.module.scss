@@ -1,0 +1,101 @@
+.container {
+  font-family: 'DM Sans';
+  font-style: normal;
+  padding: 10px;
+  margin-left: 370px;
+  width: 50%;
+  height: 100%;
+
+  .header {
+    height: 100px;
+
+    .right {
+      position: absolute;
+      right: 20%;
+
+      .profile {
+        display: flex;
+        .sharebutton {
+          padding: 5px 35px;
+          border: 1px solid #000000;
+          border-radius: 44px;
+        }
+      }
+      img {
+        padding-left: 20px;
+      }
+    }
+  }
+
+  .filter {
+    display: flex;
+    align-items: center;
+
+    .filterbutton {
+      padding-left: 20px;
+      font-weight: 400;
+      font-size: 20px;
+    }
+  }
+
+  .postwrapper {
+    display: flex;
+    padding-top: 15px;
+    border-bottom: 0.5px solid #000000;
+
+    .poster {
+      width: 50%;
+      height: 500px;
+    }
+
+    .descriptionwrapper {
+      width: 50%;
+      .description {
+        display: flex;
+        flex-direction: column;
+        padding-left: 15px;
+        gap: 30px;
+        .profiledescription {
+          display: flex;
+          .title {
+            font-weight: 700;
+            padding-left: 10px;
+            font-size: 18px;
+          }
+
+          .subtitle {
+            padding-left: 10px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #9F7CFF;
+
+          }
+        }
+        .boldtext{
+          font-weight: 700;
+          font-size: 22px;
+        }
+        .text{
+          font-size: 16px;
+        }
+        .like {
+        display: flex;
+        align-items: center;
+        }
+        .imgtitle{
+          padding-left: 7px;
+        }
+        .comment{
+          display: flex;
+        }
+        .selectwrapper{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+         
+        }
+      }
+    }
+
+  }
+}

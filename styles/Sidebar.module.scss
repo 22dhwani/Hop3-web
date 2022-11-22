@@ -1,0 +1,70 @@
+.sidebar {
+    background: linear-gradient(124.62deg, #F6F2FF -57.64%, #F5FFFB 81.51%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 350px;
+    height: 100%;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+
+    .container{
+        padding: 40px;
+        .menu {
+            padding-top: 50px;
+            .item {
+                padding: 5px 0px;
+                display: flex;
+                .icon{
+                    width: 25px;
+                    height: 22px;
+                }
+                .text{
+                    padding-left: 10px;                    
+                    font-family: 'DM Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 18px;
+                    &:hover{
+                        font-weight: 700;
+                    }
+                }
+                .arowicon{
+                    position: absolute;
+                    right: 40px;
+                }
+                &:hover{
+                    border-bottom: 1px solid #000000;
+                }
+            }
+        }
+        .buttonwrapper{
+            padding: 100px 0px;
+            .menubutton {
+                padding: 5px 35px;
+                background: #70FFC3;
+                border: 1px solid #000000;
+                border-radius: 44px;
+            }
+        }
+        .textwrapper {
+            .invite{
+
+                font-family: 'DM Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                letter-spacing: 0.01em;
+                color: #9F7CFF;
+            }
+            .help{
+                font-family: 'DM Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                letter-spacing: 0.01em;
+                color: #000000;
+            }
+        }
+    }
+}
