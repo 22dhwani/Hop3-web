@@ -1,0 +1,63 @@
+.logincontainer {
+    display: flex;
+    .rightsection {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 50px 100px;
+        gap: 20px;
+        .title {
+            font-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 64.0111px;
+            line-height: 74px;
+            max-width: 450px;
+        }
+
+        .loginform {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            padding-top: 30px;
+        }
+
+        .transformdivwrraper {
+            width: 296px;
+            height: 80px;
+            left: 110px;
+            top: 315px;
+            text-align: center;
+            display: flex;
+            padding-left: 10px;
+            align-items: center;
+            background: #70FFC3;
+            border-radius: 0px 33px 33px 0px;
+            transform: rotate(3.67deg);
+            .transformText {
+                font-family: 'DM Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 47.7388px;
+                line-height: 51px;
+                color: #000000;
+                 transform: rotate(3deg)
+            }
+        }
+    }
+
+    .leftsection {
+        width: 50%;
+        .imgcover {
+            height: 100%;
+            width: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+
+}
