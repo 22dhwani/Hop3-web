@@ -82,7 +82,7 @@ export default function Login() {
                                           },
                                     }}
                                 >
-                                    Submit
+                                    Login
                                 </Button>
                             </Grid>
                         </Grid>
