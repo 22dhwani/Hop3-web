@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar/Sidebar'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (<div>
-     <Sidebar />
+     {/* <Sidebar /> */}
     <Component {...pageProps} />
     </div>);
 }
