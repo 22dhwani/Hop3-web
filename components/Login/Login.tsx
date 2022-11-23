@@ -11,7 +11,7 @@ import {
     Link
 } from '@mui/material';
 import {auth} from "../firebase";
-
+import {getThemeColor} from '../../utils/utils'
 
 export default function Login() {
     const [fieldValues, setFieldValues] = useState({
@@ -69,7 +69,7 @@ export default function Login() {
                             width: '450px',
                             boxShadow: '4px 4px 0px #70FFC3',
                             borderRadius: '4px',
-                            color: '#000',
+                            color: getThemeColor(),
                             '&:hover': {
                                 backgroundColor: '#70FFC3',
                             },
@@ -122,7 +122,7 @@ export default function Login() {
                                         width: '450px',
                                         boxShadow: '4px 4px 0px #70FFC3',
                                         borderRadius: '4px',
-                                        color: '#000',
+                                        color: getThemeColor(),
                                         '&:hover': {
                                             backgroundColor: '#70FFC3',
                                           },
