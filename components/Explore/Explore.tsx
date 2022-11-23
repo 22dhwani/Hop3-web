@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
-export default function Explore() {
-  return (
-    <div>Explore</div>
-  )
-}
+export const Explore = () => {
+  return <div>Explore</div>;
+};
