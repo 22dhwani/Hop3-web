@@ -1,18 +1,35 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import styles from '../styles/UserDetails.module.scss'
 import Image from 'next/image'
 import Logo from '../public/images/Logo.svg'
 import Upload from '../public/images/Upload.svg'
-import {getThemeColor} from '../utils/utils'
+import { getThemeColor } from '../utils/utils'
 import { TextField, CardContent, Grid, Fab, FormLabel, FormControl, Button } from '@mui/material'
+import Router from 'next/router'
+import { createUser } from '../services/auth'
 
-export default function UserDetails() {
+export default function UserDetails({ }) {
+  console.log('router', Router?.query)
+  const userDetail = typeof Router?.query?.user === 'string' ? JSON.parse(Router?.query?.user) : {};
+  const [username, setUsername] = useState('')
   const handleUploadClick = () => {
 
   }
-  const handleSubmit=()=>{
 
-  }  
+  const handleSubmit = async () => {
+    try {
+      const response = await createUser({
+        username,
+        email: userDetail?.email
+      })
+      if (response.status === 201) {
+        Router.push('/dashboard')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
   return (
     <div className={styles.userdetail}>
       <div>
@@ -45,17 +62,22 @@ export default function UserDetails() {
               </div>
             </Grid>
           </CardContent>
-              <FormControl onSubmit={handleSubmit} className={styles.formcontainer}>
-                <FormLabel sx={{
-                  color: getThemeColor(),
-                  fontSize: '18px',
-                  paddingBottom: '5px'
-                }}>Username</FormLabel>
-                   <Grid container direction="column" spacing={10}>
-                            <Grid item>
+          <FormControl className={styles.formcontainer}>
+            <FormLabel sx={{
+              color: getThemeColor(),
+              fontSize: '18px',
+              paddingBottom: '5px'
+            }}>Username</FormLabel>
+            <Grid container direction="column" spacing={10}>
+              <Grid item>
                 <TextField
                   placeholder="Username"
+                  type="text"
+                  autoComplete='off'
                   name="username"
+                  onChange={(event) => {
+                    setUsername(event.target.value)
+                  }}
                   sx={{
                     width: '450px',
                     borderRadius: '4px',
@@ -65,12 +87,14 @@ export default function UserDetails() {
                   required
                   autoFocus
                 />
-                </Grid>
-                <Grid item>
+              </Grid>
+              <Grid item>
 
                 <Button
                   variant="contained"
                   type="submit"
+
+                  onClick={handleSubmit}
                   className="button-block"
                   sx={{
                     width: '250px',
@@ -82,9 +106,9 @@ export default function UserDetails() {
                 >
                   Start hopping
                 </Button>
-                </Grid>
-                </Grid>
-              </FormControl>
+              </Grid>
+            </Grid>
+          </FormControl>
         </div>
       </div>
     </div>

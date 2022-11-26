@@ -1,11 +1,13 @@
 import Image from 'next/image'
-import styles from '../styles/Home.module.scss'
-import Profile from '../public/images/Profile.png'
-import Post from '../public/images/Post.png'
-import User from '../public/images/Avtar.png'
-import Like from '../public/images/Like.svg'
+import styles from '../../styles/Home.module.scss'
+import Profile from '../../public/images/Profile.png'
+import Post from '../../public/images/Post.png'
+import Post2 from '../../public/images/Post2.png'
+import User from '../../public/images/Avtar.png'
+import Like from '../../public/images/Like.svg'
 
 import {MenuItem, Select} from '@mui/material';
+import ImageSlider from '../ImageSlider'
 interface StatusColorInterface { 
   [key: string]: string
 }
@@ -24,7 +26,7 @@ const statusColor: StatusColorInterface = {'Pending': '#DED2FF' , 'Approved' : '
 
 const postData=[{
     id: 1,
-    postImg: Post,
+    postImages: [Post,Post2, Post],
     prostUserImg: Profile,
     prostUserTitle: 'Davis Franci',
     prostUserSubTitle: 'hop3 Creator',
@@ -37,7 +39,7 @@ const postData=[{
 },
 {
   id: 2,
-  postImg: Post,
+  postImages: [Post,Post],
   prostUserImg: Profile,
   prostUserTitle: 'Davis Franci',
   prostUserSubTitle: 'hop3 Creator',
@@ -50,7 +52,7 @@ const postData=[{
 },
 {
   id: 3,
-  postImg: Post,
+  postImages: [Post,Post],
   prostUserImg: Profile,
   prostUserTitle: 'Davis Franci',
   prostUserSubTitle: 'hop3 Creator',
@@ -90,7 +92,8 @@ export default function Dashboard() {
           postData.map((data)=>(
             <div className={styles.postwrapper} key={data?.id}>
             <div className={styles.poster}>
-              <Image src={data?.postImg} alt={''} />
+              {/* <Image src={data?.postImg} alt={''} /> */}
+              <ImageSlider data={data?.postImages} />
             </div>
             <div className={styles.descriptionwrapper}>
               <div className={styles.description}>

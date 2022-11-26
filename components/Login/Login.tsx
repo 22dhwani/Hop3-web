@@ -1,5 +1,5 @@
-import React, {FormEvent, useCallback, useState} from 'react'
-import { signInWithEmailAndPassword ,createUserWithEmailAndPassword} from 'firebase/auth'
+import React, { FormEvent, useCallback, useEffect, useState } from 'react'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import Image from 'next/image'
 import styles from '../../styles/Login.module.scss'
 import LoginCover from '../../public/images/LoginCover.png'
@@ -10,14 +10,22 @@ import {
     Grid,
     Link
 } from '@mui/material';
-import {auth} from "../firebase";
-import {getThemeColor} from '../../utils/utils'
+import Router from 'next/router'
+import { auth } from "../firebase";
+import { getThemeColor } from '../../utils/utils'
+import { getUser } from '../../services/auth'
 
 export default function Login() {
     const [fieldValues, setFieldValues] = useState({
         email: '',
         password: '',
     })
+    useEffect(() => {
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+            Router.push('/dashboard')
+        }
+    }, [])
     const handleChange = (name: string, value: string) => {
         setFieldValues((prevFieldValues) => {
             return {
@@ -26,58 +34,49 @@ export default function Login() {
             }
         });
     }
-
-    const onGetToken = useCallback(async ()=>{
+    const redirectToUserDetailsPage = () => {
+        Router.push(`/userDetails?user=${JSON.stringify(fieldValues)}`, '/userDetails')
+    }
+    const setToken=async()=>{
         const token = await auth?.currentUser?.getIdToken(true)
-        if(token){
-            console.log("Tokjenss",token)
-        }else{
-            alert("Not tokem found")
-        }
-    },[])
+        localStorage.setItem('auth_token', token)   
+    }
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault()
+            signInWithEmailAndPassword(auth, fieldValues.email, fieldValues.password).then(async (user) => {
+                setToken();
+                const response = await getUser();
+                if (response?.status === 200) {
+                    Router.push('/dashboard')
+                } else {
+                    redirectToUserDetailsPage()
+                }
+            }).catch((error: any) => {
+                console.log({ error })
+                console.error("Error in sign in", error.message)
+                if (error.code === "auth/user-not-found") {
+                    createUserWithEmailAndPassword(auth, fieldValues.email, fieldValues.password).then(user => {
+                        setToken();
+                        redirectToUserDetailsPage();
 
-    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        signInWithEmailAndPassword(auth,fieldValues.email,fieldValues.password).then((user)=>{
-            console.log("Userss",user)
-        }).catch((error:any)=> {
-            console.error("Error in sign in",error.message)
-            if(error.code === "auth/user-not-found"){
-                createUserWithEmailAndPassword(auth,fieldValues.email,fieldValues.password).then(user=>{
-                    console.log("Userss",user)
-                }).catch((err:any)=>{
-                    console.error("error in create user",err)
-                })
-            }
-        })
-        console.log("Field value",fieldValues)
+                    }).catch((err: any) => {
+                        console.error("error in create user", err)
+                    })
+                } else if (error?.response?.status === 404) {
+                    redirectToUserDetailsPage();
+
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
     return (
         <div className={styles.logincontainer}>
             <div className={styles.rightsection}>
                 <Image src={Logo} alt={''} />
                 <p className={styles.title}>You are hopping to the</p>
-                <Grid item>
-                    <Button
-                        variant="contained"
-                        type="submit"
-                        className="button-block"
-                        onClick={onGetToken}
-                        sx={{
-                            background: '#FFFFFF',
-                            border: '1px solid #000000',
-                            width: '450px',
-                            boxShadow: '4px 4px 0px #70FFC3',
-                            borderRadius: '4px',
-                            color: getThemeColor(),
-                            '&:hover': {
-                                backgroundColor: '#70FFC3',
-                            },
-                        }}
-                    >
-                        GET TOKEN
-                    </Button>
-                </Grid>
                 <span className={styles.transformdivwrraper}><p className={styles.transformText}>right place</p></span>
                 <div className={styles.loginform}>
                     <form onSubmit={handleSubmit}>
@@ -125,7 +124,7 @@ export default function Login() {
                                         color: getThemeColor(),
                                         '&:hover': {
                                             backgroundColor: '#70FFC3',
-                                          },
+                                        },
                                     }}
                                 >
                                     Login
