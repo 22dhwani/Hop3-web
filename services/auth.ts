@@ -1,12 +1,11 @@
-import axios from '../config/axiosconfig'
+import axios from "../config/axiosconfig";
 
 interface userDataType {
-    username: string,
-    email: string,
-
+  username: string;
+  email: string;
 }
 
-export const createUser = (userData: userDataType) =>
-    axios.post('/user/createUser', userData);
+export const createUser = async (userData: userDataType) =>
+  await axios.post("/user/createUser", userData);
 
-export const getUser = () => axios.get('/user/getMineUser/');
+export const getUser = async () => await axios.get("/user/getMineUser/");
