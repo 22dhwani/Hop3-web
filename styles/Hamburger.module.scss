@@ -1,0 +1,22 @@
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  div {
+    width: 24px;
+    height: 4px;
+    background-color: #000;
+  }
+  &:not(.lg) {
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  &.lg {
+    @media screen and (min-width: 992px) {
+      display: none;
+    }
+  }
+}

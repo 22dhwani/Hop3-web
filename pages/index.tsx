@@ -1,11 +1,12 @@
+import React from "react";
 import Login from "../components/Login/Login";
-import '../components/firebase'
 
-export default function Home() {
-
+const Home = () => {
   return (
-   <div>
-    <Login />
-   </div>
-  )
-}
+    <>
+      <Login />
+    </>
+  );
+};
+
+export default Home;
