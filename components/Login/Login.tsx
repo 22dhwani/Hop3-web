@@ -1,9 +1,12 @@
-import React, { FormEvent, useCallback, useEffect, useState } from 'react'
+import React, { FormEvent, use, useCallback, useEffect, useState } from 'react'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
 import Image from 'next/image'
 import styles from '../../styles/Login.module.scss'
 import LoginCover from '../../public/images/LoginCover.png'
 import Logo from '../../public/images/Logo.svg'
+import Google from '../../public/images/Google.svg'
 import {
     Button,
     TextField,
@@ -12,21 +15,24 @@ import {
 } from '@mui/material';
 import Router from 'next/router'
 import { auth } from "../firebase";
-import { getThemeColor } from '../../utils/utils'
+import { getThemeColor, getToken } from '../../utils/utils'
 import { getUser } from '../../services/auth'
+const provider = new GoogleAuthProvider();
 
 export default function Login() {
+
     const [fieldValues, setFieldValues] = useState({
         email: '',
         password: '',
     })
     useEffect(() => {
         const token = localStorage.getItem('auth_token');
-        if (token) {
+        const isAuthenticated = localStorage.getItem('isAuthenticated');
+        if (token && isAuthenticated) {
             Router.push('/dashboard')
         }
     }, [])
-    const handleChange = (name: string, value: string) => {
+    const handleChange = (name: string, value: string | undefined) => {
         setFieldValues((prevFieldValues) => {
             return {
                 ...prevFieldValues,
@@ -36,10 +42,62 @@ export default function Login() {
     }
     const redirectToUserDetailsPage = () => {
         Router.push(`/userDetails?user=${JSON.stringify(fieldValues)}`, '/userDetails')
+    };
+    const setToken = async (token_str?: string) => {
+        let token = token_str
+        if (!token) {
+            token = await getToken();
+        }
+        localStorage.setItem('auth_token', token)
     }
-    const setToken=async()=>{
-        const token = await auth?.currentUser?.getIdToken(true)
-        localStorage.setItem('auth_token', token)   
+    const login = () => {
+
+        signInWithPopup(auth, provider)
+            .then(async (result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential?.accessToken;
+
+                // The signed-in user info.
+                const user = result.user;
+                setToken(user?.accessToken);
+                setFieldValues((prevFieldValues) => {
+                    return {
+                        ...prevFieldValues,
+                        email: user.email || '',
+                    }
+                });
+                try {
+
+                    const response = await getUser();
+                    console.log({ response })
+                    if (response?.status === 200) {
+                        Router.push('/dashboard')
+                        localStorage.setItem('isAuthenticated', 'true')
+                    } else {
+                        redirectToUserDetailsPage()
+                    }
+                } catch (error) {
+                    console.log({ error })
+                    redirectToUserDetailsPage()
+                }
+
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.email;
+                // The AuthCredential type that was used.
+                redirectToUserDetailsPage()
+
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                console.log({ errorCode, errorMessage, email, credential });
+
+            });
+
+
     }
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         try {
@@ -79,59 +137,32 @@ export default function Login() {
                 <p className={styles.title}>You are hopping to the</p>
                 <span className={styles.transformdivwrraper}><p className={styles.transformText}>right place</p></span>
                 <div className={styles.loginform}>
-                    <form onSubmit={handleSubmit}>
-                        <Grid container direction="column" spacing={2}>
-                            <Grid item>
-                                <TextField
-                                    type="email"
-                                    placeholder="Email"
-                                    name="email"
-                                    sx={{
-                                        width: '450px'
-                                    }}
-                                    variant="outlined"
-                                    value={fieldValues.email}
-                                    onChange={(event) => handleChange(event.target.name, event.target.value)}
-                                    required
-                                    autoFocus
-                                />
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    type="password"
-                                    placeholder="Password"
-                                    name="password"
-                                    sx={{
-                                        width: '450px'
-                                    }}
-                                    variant="outlined"
-                                    value={fieldValues.password}
-                                    onChange={(event) => handleChange(event.target.name, event.target.value)}
-                                    required
-                                />
-                            </Grid>
-                            <Grid item>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                    className="button-block"
-                                    sx={{
-                                        background: '#FFFFFF',
-                                        border: '1px solid #000000',
-                                        width: '450px',
-                                        boxShadow: '4px 4px 0px #70FFC3',
-                                        borderRadius: '4px',
-                                        color: getThemeColor(),
-                                        '&:hover': {
-                                            backgroundColor: '#70FFC3',
-                                        },
-                                    }}
-                                >
-                                    Login
-                                </Button>
-                            </Grid>
+                    <Grid container direction="column" spacing={2}>
+                        <Grid item>
+                            <Button
+                                onClick={login}
+                                variant="contained"
+                                type="submit"
+                                className="button-block"
+                                sx={{
+                                    background: '#FFFFFF',
+                                    border: '1px solid #000000',
+                                    width: '450px',
+                                    boxShadow: '4px 4px 0px #70FFC3',
+                                    borderRadius: '4px',
+                                    color: getThemeColor(),
+                                    textTransform: 'none',
+                                    '&:hover': {
+                                        backgroundColor: '#70FFC3',
+                                    },
+                                }}
+                            >
+                                <Image src={Google} alt={''} />
+                                &nbsp;
+                                Login via Google
+                            </Button>
                         </Grid>
-                    </form>
+                    </Grid>
                     <p>
                         By logining, I agree to the <Link>Terms of Service</Link> and
                         <br /><Link> Privacy Policy</Link>
