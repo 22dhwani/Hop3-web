@@ -1,0 +1,28 @@
+.profileUploader {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  margin-bottom: 44px;
+
+  .uploader {
+    width: 108px;
+    height: 108px;
+    border: 1px dashed #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text {
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+
+    .subTitle {
+      font-size: 14px;
+      color: #acacac;
+    }
+  }
+}

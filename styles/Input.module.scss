@@ -1,0 +1,27 @@
+.inputControl {
+  textarea,
+  input {
+    border: 1px solid #000;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 560px;
+    padding: 0 16px;
+    font-size: 16px;
+    outline: none;
+
+    &::placeholder {
+      color: #adadad;
+    }
+  }
+
+  textarea {
+    height: 180px;
+    resize: none;
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+
+  input {
+    height: 44px;
+  }
+}

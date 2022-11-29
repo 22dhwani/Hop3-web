@@ -1,0 +1,16 @@
+.addressSettings {
+  max-width: 560px;
+
+  .input {
+    margin-bottom: 38px;
+  }
+
+  .inputRow {
+    display: flex;
+    gap: 44px;
+
+    & > * {
+      flex-grow: 1;
+    }
+  }
+}
