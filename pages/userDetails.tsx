@@ -1,20 +1,12 @@
-import React, { useCallback, useState } from "react";
-import styles from "../styles/UserDetails.module.scss";
-import Image from "next/image";
-import Logo from "../public/images/Logo.svg";
-import Upload from "../public/images/Upload.svg";
-import { getThemeColor } from "../utils/utils";
-import {
-  TextField,
-  CardContent,
-  Grid,
-  Fab,
-  FormLabel,
-  FormControl,
-  Button,
-} from "@mui/material";
-import Router from "next/router";
-import { createUser } from "../services/auth";
+import React, { useEffect, useState } from 'react'
+import styles from '../styles/UserDetails.module.scss'
+import Image from 'next/image'
+import Logo from '../public/images/Logo.svg'
+import Upload from '../public/images/Upload.svg'
+import { getThemeColor } from '../utils/utils'
+import { TextField, CardContent, Grid, Fab, FormLabel, FormControl, Button } from '@mui/material'
+import {useRouter} from 'next/router'
+import { createUser } from '../services/auth'
 
 export default function UserDetails({}) {
   console.log("router", Router?.query);
@@ -24,6 +16,20 @@ export default function UserDetails({}) {
       : {};
   const [username, setUsername] = useState("");
   const handleUploadClick = () => {};
+export default function UserDetails({ }) {
+  const Router=useRouter();
+  const userDetail = typeof Router?.query?.user === 'string' ? JSON.parse(Router?.query?.user) : {};
+  const [username, setUsername] = useState('')
+  const handleUploadClick = () => {
+
+  }
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    if (token && isAuthenticated) {
+        Router.push('/dashboard')
+    }
+}, [])
 
   const handleSubmit = async () => {
     try {
@@ -32,7 +38,8 @@ export default function UserDetails({}) {
         email: userDetail?.email,
       });
       if (response.status === 201) {
-        Router.push("/dashboard");
+        localStorage.setItem('isAuthenticated', 'true')
+        Router.push('/dashboard')
       }
     } catch (error) {
       console.log(error);

@@ -1,14 +1,17 @@
-import Image from "next/image";
-import styles from "../../styles/Home.module.scss";
-import Profile from "../../public/images/Profile.png";
-import Post from "../../public/images/Post.png";
-import Post2 from "../../public/images/Post2.png";
-import User from "../../public/images/Avtar.png";
-import Like from "../../public/images/Like.svg";
+import React from 'react'
+import Image from 'next/image'
+import styles from '../../styles/Home.module.scss'
+import Profile from '../../public/images/Profile.png'
+import Post from '../../public/images/Post.png'
+import Post2 from '../../public/images/Post2.png'
+import User from '../../public/images/Avtar.png'
+import Like from '../../public/images/Like.svg'
+import { auth } from "../firebase";
 
-import { MenuItem, Select } from "@mui/material";
+import { MenuItem, Select, Menu } from "@mui/material";
 import ImageSlider from "../ImageSlider";
 import { userAgent } from "next/server";
+import { useRouter } from 'next/router'
 interface StatusColorInterface {
   [key: string]: string;
 }
@@ -29,62 +32,90 @@ const statusColor: StatusColorInterface = {
   Denied: "#000000",
 };
 
-const postData = [
-  {
-    id: 1,
-    postImages: [Post, Post2, Post],
-    prostUserImg: Profile,
-    prostUserTitle: "Davis Franci",
-    prostUserSubTitle: "hop3 Creator",
-    title: "This is a very very long Title",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More",
-    commentImg: User,
-    commentText: "The Dead Rabbit",
-    like: 123,
-    status: "Pending",
-  },
-  {
-    id: 2,
-    postImages: [Post, Post],
-    prostUserImg: Profile,
-    prostUserTitle: "Davis Franci",
-    prostUserSubTitle: "hop3 Creator",
-    title: "This is a very very long Title",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More",
-    commentImg: User,
-    commentText: "The Dead Rabbit",
-    like: 123,
-    status: "Approved",
-  },
-  {
-    id: 3,
-    postImages: [Post, Post],
-    prostUserImg: Profile,
-    prostUserTitle: "Davis Franci",
-    prostUserSubTitle: "hop3 Creator",
-    title: "This is a very very long Title",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More",
-    commentImg: User,
-    commentText: "The Dead Rabbit",
-    like: 123,
-    status: "Denied",
-  },
-];
+const postData = [{
+  id: 1,
+  postImages: [Post, Post2, Post],
+  prostUserImg: Profile,
+  prostUserTitle: 'Davis Franci',
+  prostUserSubTitle: 'hop3 Creator',
+  title: 'This is a very very long Title',
+  description: 'Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More',
+  commentImg: User,
+  commentText: 'The Dead Rabbit',
+  like: 123,
+  status: 'Pending'
+},
+{
+  id: 2,
+  postImages: [Post, Post],
+  prostUserImg: Profile,
+  prostUserTitle: 'Davis Franci',
+  prostUserSubTitle: 'hop3 Creator',
+  title: 'This is a very very long Title',
+  description: 'Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More',
+  commentImg: User,
+  commentText: 'The Dead Rabbit',
+  like: 123,
+  status: 'Approved'
+},
+{
+  id: 3,
+  postImages: [Post, Post],
+  prostUserImg: Profile,
+  prostUserTitle: 'Davis Franci',
+  prostUserSubTitle: 'hop3 Creator',
+  title: 'This is a very very long Title',
+  description: 'Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More',
+  commentImg: User,
+  commentText: 'The Dead Rabbit',
+  like: 123,
+  status: 'Denied'
+}
+]
 export default function Dashboard() {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const router = useRouter()
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleChange = () => {
+
+  }
+  const logOut = () => {
+    auth.signOut().then(() => {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('isAuthenticated');
+      router.push('/')
+
+    }).catch((error) => {
+      console.log(error.message)
+    })
+  }
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.right}>
           <div className={styles.profile}>
+
             <button className={styles.sharebutton}>Share Experience</button>
-            <Image
-              className={styles.profileimg}
-              src={Profile}
-              alt={"profile"}
-            />
+            <Image className={styles.profileimg} src={Profile} alt={'profile'} onClick={handleClick} />
+            {open && <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={logOut}>Logout</MenuItem>
+            </Menu>
+            }
           </div>
         </div>
       </header>
