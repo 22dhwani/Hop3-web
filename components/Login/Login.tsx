@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import Router from 'next/router'
 import { auth } from "../firebase";
-import { getThemeColor, getToken } from '../../utils/utils'
+import {getThemeColor, getToken, refreshToken} from '../../utils/utils'
 import { getUser } from '../../services/auth'
 const provider = new GoogleAuthProvider();
 
@@ -25,13 +25,13 @@ export default function Login() {
         email: '',
         password: '',
     })
-    useEffect(() => {
-        const token = localStorage.getItem('auth_token');
-        const isAuthenticated = localStorage.getItem('isAuthenticated');
-        if (token && isAuthenticated) {
-            Router.push('/dashboard')
-        }
-    }, [])
+    // useEffect(() => {
+    //     const token = localStorage.getItem('auth_token');
+    //     const isAuthenticated = localStorage.getItem('isAuthenticated');
+    //     if (token && isAuthenticated) {
+    //         Router.push('/dashboard')
+    //     }
+    // }, [])
     const handleChange = (name: string, value: string | undefined) => {
         setFieldValues((prevFieldValues) => {
             return {
@@ -43,13 +43,7 @@ export default function Login() {
     const redirectToUserDetailsPage = () => {
         Router.push(`/userDetails?user=${JSON.stringify(fieldValues)}`, '/userDetails')
     };
-    const setToken = async (token_str?: string) => {
-        let token = token_str
-        if (!token) {
-            token = await getToken();
-        }
-        localStorage.setItem('auth_token', token)
-    }
+
     const login = () => {
 
         signInWithPopup(auth, provider)
@@ -60,7 +54,7 @@ export default function Login() {
 
                 // The signed-in user info.
                 const user = result.user;
-                setToken(user?.accessToken);
+                await refreshToken()
                 setFieldValues((prevFieldValues) => {
                     return {
                         ...prevFieldValues,
@@ -74,12 +68,14 @@ export default function Login() {
                     if (response?.status === 200) {
                         Router.push('/dashboard')
                         localStorage.setItem('isAuthenticated', 'true')
-                    } else {
+                    } else if(response?.status === 403) {
                         redirectToUserDetailsPage()
                     }
-                } catch (error) {
-                    console.log({ error })
-                    redirectToUserDetailsPage()
+                } catch (error:any) {
+                   console.error("Errror in signin",error)
+                    if(error?.response?.status === 404){
+                        redirectToUserDetailsPage()
+                    }
                 }
 
             })
@@ -103,7 +99,7 @@ export default function Login() {
         try {
             e.preventDefault()
             signInWithEmailAndPassword(auth, fieldValues.email, fieldValues.password).then(async (user) => {
-                setToken();
+                await refreshToken()
                 const response = await getUser();
                 if (response?.status === 200) {
                     Router.push('/dashboard')
@@ -114,8 +110,8 @@ export default function Login() {
                 console.log({ error })
                 console.error("Error in sign in", error.message)
                 if (error.code === "auth/user-not-found") {
-                    createUserWithEmailAndPassword(auth, fieldValues.email, fieldValues.password).then(user => {
-                        setToken();
+                    createUserWithEmailAndPassword(auth, fieldValues.email, fieldValues.password).then(async user => {
+                        await refreshToken()
                         redirectToUserDetailsPage();
 
                     }).catch((err: any) => {
