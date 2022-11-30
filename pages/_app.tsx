@@ -21,12 +21,12 @@ export default function App({ Component, pageProps }: AppProps) {
     typeof localStorage != "undefined" && localStorage?.getItem("auth_token");
 
   return (
-    <div>
+    <>
       <QueryClientProvider client={queryClient} contextSharing={true}>
         <SetUps />
         <Component {...pageProps} />
       </QueryClientProvider>
-    </div>
+    </>
   );
 }
 
