@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, {useState, useRef, useCallback} from "react";
 import Image from "next/image";
 import clsx from "clsx";
 
 import InputLabel from "../InputLabel";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import styles from "../../styles/Dropdown.module.scss";
+import ErrorLabel from "../ErrorLabel";
 
 interface Option {
   label: string;
@@ -15,8 +16,10 @@ interface Props {
   label: string;
   required?: boolean;
   placeholder: string;
+  error?: string;
   options: Option[];
   listType?: boolean;
+  onSelect: (item:string) => void
 }
 
 const Dropdown = ({
@@ -26,6 +29,8 @@ const Dropdown = ({
   placeholder,
   options,
   listType,
+  onSelect,
+  error
 }: Props) => {
   const inputRef = useRef<HTMLDivElement>(null);
 
@@ -42,14 +47,14 @@ const Dropdown = ({
 
   useOnClickOutside({ ref: inputRef, handler: hideOptions });
 
+
   return (
     <div className={styles.dropdown}>
       <InputLabel id={id} label={label} required={required} />
 
-      <div className={clsx(styles.inputContainer, listType && styles.listType)}>
+      <div  ref={inputRef} className={clsx(styles.inputContainer, listType && styles.listType)}>
         <div
           className={clsx(styles.inputMain, isDropdownActive && styles.active)}
-          ref={inputRef}
         >
           <div className={styles.input} onClick={toggleOptions}>
             {value ? (
@@ -66,6 +71,7 @@ const Dropdown = ({
             />
           </div>
         </div>
+        {error && <ErrorLabel id={id} label={error} /> }
         <div
           className={clsx(
             styles.options,
@@ -81,7 +87,11 @@ const Dropdown = ({
                   styles.option,
                   el.label === value && styles.active
                 )}
-                onClick={() => setValue(el.label)}
+                onClick={() => {
+                  setValue(el.label)
+                  setIsDropdownActive(false)
+                  onSelect && onSelect(el.label)
+                }}
               >
                 {el.label}
               </div>

@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import Router from 'next/router'
 import { auth } from "../firebase";
-import {getThemeColor, getToken, refreshToken} from '../../utils/utils'
+import {getThemeColor, refreshToken} from '../../utils/utils'
 import { getUser } from '../../services/auth'
 const provider = new GoogleAuthProvider();
 
@@ -63,13 +63,10 @@ export default function Login() {
                 });
                 try {
 
-                    const response = await getUser();
-                    console.log({ response })
-                    if (response?.status === 200) {
+                    const data = await getUser();
+                    if (data?.id) {
                         Router.push('/dashboard')
                         localStorage.setItem('isAuthenticated', 'true')
-                    } else if(response?.status === 403) {
-                        redirectToUserDetailsPage()
                     }
                 } catch (error:any) {
                    console.error("Errror in signin",error)

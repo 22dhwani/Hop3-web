@@ -2,10 +2,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import TimelineDot from '@mui/lab/TimelineDot';
-import Paper from '@mui/material/Paper';
 import Image from 'next/image'
 import styles from '../styles/ImageSlider.module.scss'
-export default function ImageSlider({ data }) {
+
+export default function ImageSlider({ data }:any) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = data?.length;
@@ -28,8 +28,8 @@ export default function ImageSlider({ data }) {
             </Box>
             <Box className={styles.dotswrapper}>
             {
-                data?.map((image,index) => (
-                    <div key={`step-${index}`} className={styles.dot}> 
+                data?.map((image:any,index:number) => (
+                    <div key={`step-${index}`} className={styles.dot}>
                     <TimelineDot
                         color={activeStep===index? 'primary' : 'grey'}
                         onClick={() => {

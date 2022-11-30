@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import type { AppProps } from "next/app";
 import Router from "next/router";
 
@@ -7,8 +7,8 @@ import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { Atom, useAtom } from "jotai";
 import { setuid } from "process";
 import {auth} from "../components/firebase";
-import {onAuthStateChanged, User} from "@firebase/auth";
-import {refreshToken} from "../utils/utils";
+import { onAuthStateChanged, User } from "@firebase/auth";
+import { refreshToken } from "../utils/utils";
 
 export default function App({ Component, pageProps }: AppProps) {
   // useEffect(() => {
@@ -17,21 +17,25 @@ export default function App({ Component, pageProps }: AppProps) {
   //     Router.push("/");
   //   }
   // }, []);
+  const [isLoading,setIsLoading] = useState(true)
 
 
   useEffect(() => {
     let tempFlag = false
-    console.log("App use effect")
     const onAuthStateChange = async  (user:User | null) => {
-      if(!tempFlag && user) {tempFlag = true
+      if(!tempFlag && user) {
+        tempFlag = true
         console.log("USersss", user)
         await refreshToken()
         if(Router.pathname !== "/dashboard"){
           await Router.push("/dashboard");
         }
-        setTimeout(() => {
-          tempFlag = false
-        }, 3000)
+        setIsLoading(false)
+      }else if( !user){
+        if(Router.pathname !== "/"){
+          await Router.push("/");
+        }
+        setIsLoading(false)
       }
     }
      const unsubscribe = onAuthStateChanged(auth,onAuthStateChange)
@@ -46,7 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div>
       <QueryClientProvider client={queryClient} contextSharing={true}>
         <SetUps />
-        <Component {...pageProps} />
+        {!isLoading &&   <Component {...pageProps} />}
       </QueryClientProvider>
     </div>
   );
