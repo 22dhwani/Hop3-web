@@ -13,8 +13,8 @@ import Google from "../../public/images/Google.svg";
 import { Button, TextField, Grid, Link } from "@mui/material";
 import Router from "next/router";
 import { auth } from "../firebase";
-import {getThemeColor, refreshToken} from '../../utils/utils'
-import { getUser } from '../../services/auth'
+import { getThemeColor, refreshToken } from "../../utils/utils";
+import { getUser } from "../../services/auth";
 const provider = new GoogleAuthProvider();
 
 interface IUser {
@@ -59,40 +59,38 @@ export default function Login() {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
 
-                // The signed-in user info.
-                const user = result.user;
-                await refreshToken()
-                setFieldValues((prevFieldValues) => {
-                    return {
-                        ...prevFieldValues,
-                        email: user.email || '',
-                    }
-                });
-                try {
-
-                    const data = await getUser();
-                    if (data?.id) {
-                        Router.push('/dashboard')
-                        localStorage.setItem('isAuthenticated', 'true')
-                    } else {
-                        redirectToUserDetailsPage()
-                    }
-                } catch (error:any) {
-                    console.error("Errror in signin",error)
-                    if(error?.response?.status === 404){
-                        redirectToUserDetailsPage()
-                    }
-                }
-
-            })
-            .catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.email;
-                // The AuthCredential type that was used.
-                redirectToUserDetailsPage()
+        // The signed-in user info.
+        const user = result.user;
+        await refreshToken();
+        setFieldValues((prevFieldValues) => {
+          return {
+            ...prevFieldValues,
+            email: user.email || "",
+          };
+        });
+        try {
+          const data = await getUser();
+          if (data?.id) {
+            Router.push("/dashboard");
+            localStorage.setItem("isAuthenticated", "true");
+          } else {
+            redirectToUserDetailsPage();
+          }
+        } catch (error: any) {
+          console.error("Errror in signin", error);
+          if (error?.response?.status === 404) {
+            redirectToUserDetailsPage();
+          }
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        redirectToUserDetailsPage();
 
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log({ errorCode, errorMessage, email, credential });
