@@ -1,18 +1,18 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
-import Image from 'next/image'
-import styles from '../../styles/Home.module.scss'
-import Profile from '../../public/images/Profile.png'
-import Post from '../../public/images/Post.png'
-import Post2 from '../../public/images/Post2.png'
-import User from '../../public/images/Avtar.png'
-import Like from '../../public/images/Like.svg'
+import React, { useCallback, useEffect, useMemo, useState }  from "react";
+import Image from "next/image";
+import styles from "../../styles/Home.module.scss";
+import Profile from "../../public/images/Profile.png";
+import Post from "../../public/images/Post.png";
+import Post2 from "../../public/images/Post2.png";
+import User from "../../public/images/Avtar.png";
+import Like from "../../public/images/Like.svg";
 import LikeNot from '../../public/images/like_not.svg'
 import { auth } from "../firebase";
 
 import { MenuItem, Select, Menu } from "@mui/material";
 import ImageSlider from "../ImageSlider";
 import { userAgent } from "next/server";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import {getUser} from "../../services/auth";
 import {useMutation, useQuery} from "react-query";
 import {
@@ -21,9 +21,11 @@ import {
   createReaction,
   getPostForAdmin,
   getPostForUser,
-  IPostDataItem, rejectPost
+  IPostDataItem,
+  rejectPost
 } from "../../services/post";
 import clsx from "clsx";
+
 interface StatusColorInterface {
   [key: string]: string;
 }
@@ -44,52 +46,54 @@ const statusColor: StatusColorInterface = {
   Denied: "#FFCCCB",
 };
 
-const postData = [{
-  id: 1,
-  postImages: [Post, Post2, Post],
-  prostUserImg: Profile,
-  prostUserTitle: 'Davis Franci',
-  prostUserSubTitle: 'hop3 Creator',
-  title: 'This is a very very long Title',
-  description: 'Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More',
-  commentImg: User,
-  commentText: 'The Dead Rabbit',
-  like: 123,
-  status: 'Pending'
-},
-{
-  id: 2,
-  postImages: [Post, Post],
-  prostUserImg: Profile,
-  prostUserTitle: 'Davis Franci',
-  prostUserSubTitle: 'hop3 Creator',
-  title: 'This is a very very long Title',
-  description: 'Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More',
-  commentImg: User,
-  commentText: 'The Dead Rabbit',
-  like: 123,
-  status: 'Approved'
-},
-{
-  id: 3,
-  postImages: [Post, Post],
-  prostUserImg: Profile,
-  prostUserTitle: 'Davis Franci',
-  prostUserSubTitle: 'hop3 Creator',
-  title: 'This is a very very long Title',
-  description: 'Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More',
-  commentImg: User,
-  commentText: 'The Dead Rabbit',
-  like: 123,
-  status: 'Denied'
-}
-]
-
-
+const postData = [
+  {
+    id: 1,
+    postImages: [Post, Post2, Post],
+    prostUserImg: Profile,
+    prostUserTitle: "Davis Franci",
+    prostUserSubTitle: "hop3 Creator",
+    title: "This is a very very long Title",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More",
+    commentImg: User,
+    commentText: "The Dead Rabbit",
+    like: 123,
+    status: "Pending",
+  },
+  {
+    id: 2,
+    postImages: [Post, Post],
+    prostUserImg: Profile,
+    prostUserTitle: "Davis Franci",
+    prostUserSubTitle: "hop3 Creator",
+    title: "This is a very very long Title",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More",
+    commentImg: User,
+    commentText: "The Dead Rabbit",
+    like: 123,
+    status: "Approved",
+  },
+  {
+    id: 3,
+    postImages: [Post, Post],
+    prostUserImg: Profile,
+    prostUserTitle: "Davis Franci",
+    prostUserSubTitle: "hop3 Creator",
+    title: "This is a very very long Title",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc viverra tortor malesuada id non accumsan...More",
+    commentImg: User,
+    commentText: "The Dead Rabbit",
+    like: 123,
+    status: "Denied",
+  },
+];
 export default function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const router = useRouter()
+  const router = useRouter();
   const [pagination,setPagination ] = useState({
     page_number:1,
     limit:20,
@@ -101,29 +105,29 @@ export default function Dashboard() {
 
   const allPost = useMemo(()=>{
     const allItems = userData?.role === 'user' ? userPostData?.items : adminPostData?.items;
-        if(Array.isArray(allItems)){
-              const allItems = userPostData?.items || adminPostData?.items;
-              let finalArray :any = []
-              allItems.forEach((item:any) =>{
-                const tempItem = {...item}
-                const allLike = Array.isArray( tempItem?.reactions?.like) ? tempItem?.reactions?.like : []
-                const allLove = Array.isArray( tempItem?.reactions?.love) ? tempItem?.reactions?.love : []
-                const allHaha = Array.isArray( tempItem?.reactions?.haha) ? tempItem?.reactions?.haha : []
-                const allInsight = Array.isArray( tempItem?.reactions?.insight) ? tempItem?.reactions?.insight : []
-                const allReactions = [...allLike,...allHaha,...allInsight,...allLove]
-                let isLikeByMe = false
-                if(allReactions.includes(userData?.id)){
-                  isLikeByMe = true
-                }
-                tempItem.isLikeByMe  = isLikeByMe;
-                tempItem.totalLike = allReactions.length;
-                tempItem.status = tempItem.status === 'Rejected' ? 'Denied' : tempItem.status;
-                finalArray.push(tempItem)
-              })
-          return  finalArray
-        }else{
-          return []
+    if(Array.isArray(allItems)){
+      const allItems = userPostData?.items || adminPostData?.items;
+      let finalArray :any = []
+      allItems.forEach((item:any) =>{
+        const tempItem = {...item}
+        const allLike = Array.isArray( tempItem?.reactions?.like) ? tempItem?.reactions?.like : []
+        const allLove = Array.isArray( tempItem?.reactions?.love) ? tempItem?.reactions?.love : []
+        const allHaha = Array.isArray( tempItem?.reactions?.haha) ? tempItem?.reactions?.haha : []
+        const allInsight = Array.isArray( tempItem?.reactions?.insight) ? tempItem?.reactions?.insight : []
+        const allReactions = [...allLike,...allHaha,...allInsight,...allLove]
+        let isLikeByMe = false
+        if(allReactions.includes(userData?.id)){
+          isLikeByMe = true
         }
+        tempItem.isLikeByMe  = isLikeByMe;
+        tempItem.totalLike = allReactions.length;
+        tempItem.status = tempItem.status === 'Rejected' ? 'Denied' : tempItem.status;
+        finalArray.push(tempItem)
+      })
+      return  finalArray
+    }else{
+      return []
+    }
   },[userPostData?.items,userData?.id,userData?.role,adminPostData?.items])
 
 
@@ -137,7 +141,7 @@ export default function Dashboard() {
   },[userData?.role])
 
   useEffect(()=>{
-     getUserApi()
+    getUserApi()
   },[])
 
   useEffect(()=>{
@@ -148,6 +152,15 @@ export default function Dashboard() {
 
   const onClickShareExperience = useCallback(()=>{
     router.push('/share-experience')
+  },[])
+
+
+  useEffect(()=>{
+    console.log("Dashboard useefef")
+  },[])
+
+  const onRefresh = useCallback(()=>{
+    getAdminPost()
   },[])
 
   const handleClick = (event: React.MouseEvent<HTMLImageElement>) => {
@@ -162,37 +175,31 @@ export default function Dashboard() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleChange = () => {
-
-  }
-
-  useEffect(()=>{
-    console.log("Dashboard useefef")
-  },[])
-
-  const onRefresh = useCallback(()=>{
-    getAdminPost()
-  },[])
+  const handleChange = () => {};
 
   const logOut = () => {
-    auth.signOut().then(() => {
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('isAuthenticated');
-      router.push('/')
+    auth
+      .signOut()
+      .then(() => {
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("isAuthenticated");
+        router.push("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
-    }).catch((error) => {
-      console.log(error.message)
-    })
-  }
   if(isUserLoading){
-     return (
-         <div className={styles.container}>
-             <h1>Loading</h1>
-         </div>
-     )
+    return (
+        <div className={styles.container}>
+          <h1>Loading</h1>
+        </div>
+    )
   }
 
   const isAdmin = userData?.role === 'admin'
+
 
   return (
     <div className={styles.container}>

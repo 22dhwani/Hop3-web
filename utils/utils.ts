@@ -8,6 +8,7 @@ export const refreshToken = async () =>{
     try {
         const token =  await auth?.currentUser?.getIdToken(true)
         // token && localStorage.setItem('auth_token', token)
+        console.log("Tokenss",token)
         token && setAuthToken(token)
     }catch (e) {
         console.error("Errror in refreshing token",e)
