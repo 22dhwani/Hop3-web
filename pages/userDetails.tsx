@@ -24,6 +24,7 @@ export default function UserDetails({}) {
       : {};
   const [username, setUsername] = useState("");
   const handleUploadClick = () => {};
+
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     const isAuthenticated = localStorage.getItem("isAuthenticated");

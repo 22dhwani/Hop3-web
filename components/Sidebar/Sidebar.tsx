@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useCallback, useState} from 'react'
 import Image from 'next/image';
 import styles from '../../styles/Sidebar.module.scss'
 import Logo from '../../public/images/Logo.svg'
@@ -9,6 +9,7 @@ import EarthBlack from '../../public/images/EarthBlack.svg'
 import ShopBlack from '../../public/images/ShopBlack.svg'
 import UserBlack from '../../public/images/UserBlack.svg'
 import UpArrow from '../../public/images/UpArrow.svg'
+import {useRouter} from "next/router";
 
 export default function Sidebar() {
   const [isHover, setIsHover] = useState({
@@ -16,6 +17,9 @@ export default function Sidebar() {
     shop: false,
     creator: false
   })
+  const router = useRouter()
+
+
   const handleChangeHover = (key: string, val: boolean) => {
     setIsHover((previousIsHover) => {
       return {
@@ -25,6 +29,12 @@ export default function Sidebar() {
       }
     })
   }
+
+  const onClickShareExperience = useCallback(()=>{
+    router.push('/share-experience')
+  },[])
+
+
   const { creator, explore, shop } = isHover
   return (
     <div className={styles.sidebar}>
@@ -38,7 +48,7 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className={styles.buttonwrapper}>
-          <button className={styles.menubutton}>Share Experience</button>
+          <button className={styles.menubutton} onClick={onClickShareExperience}>Share Experience</button>
         </div>
         <div className={styles.textwrapper}>
           <span className={styles.invite}>Invite friends and earn 100</span>
