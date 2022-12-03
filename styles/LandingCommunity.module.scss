@@ -17,21 +17,46 @@
 
     @media screen and (max-width: 1400px) {
       font-size: 60px;
-      max-width: 680px;
+      max-width: 650px;
     }
 
     @media screen and (max-width: 1200px) {
       font-size: 50px;
-      max-width: 580px;
+      max-width: 550px;
     }
 
     @media screen and (max-width: 991px) {
       font-size: 40px;
-      max-width: 480px;
+      max-width: 400px;
     }
 
-    .coin {
-      transform: translateY(20%);
+    .coinWrap {
+      position: relative;
+      display: inline-block;
+      height: 40px;
+      width: 84px;
+
+      @media screen and (max-width: 1400px) {
+        width: 60px;
+      }
+
+      @media screen and (max-width: 1200px) {
+        max-width: 46px;
+      }
+
+      @media screen and (max-width: 991px) {
+        width: 42px;
+        height: 26px;
+      }
+
+      .coin {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: auto;
+      }
     }
   }
 

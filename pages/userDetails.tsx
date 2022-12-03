@@ -13,34 +13,33 @@ import {
   FormControl,
   Button,
 } from "@mui/material";
-import Router from "next/router";
+// import Router from "next/router";
 import { createUser } from "../services/auth";
 
-export default function UserDetails({}) {
-  console.log("router", Router?.query);
-  const userDetail =
-    typeof Router?.query?.user === "string"
-      ? JSON.parse(Router?.query?.user)
-      : {};
-  const [username, setUsername] = useState("");
-  const handleUploadClick = () => {};
+export default function UserDetails() {
+  // const userDetail =
+  //   typeof Router?.query?.user === "string"
+  //     ? JSON.parse(Router?.query?.user)
+  //     : {};
+  // const [username, setUsername] = useState("");
+  // const handleUploadClick = () => {};
 
-  const handleSubmit = async () => {
-    try {
-      const response = await createUser({
-        username,
-        email: userDetail?.email,
-      });
-      if (response.status === 201) {
-        Router.push("/dashboard");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleSubmit = async () => {
+  //   try {
+  //     const response = await createUser({
+  //       username,
+  //       email: userDetail?.email,
+  //     });
+  //     if (response.status === 201) {
+  //       Router.push("/dashboard");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <div className={styles.userdetail}>
-      <div>
+      {/* <div>
         <Image src={Logo} alt={""} />
       </div>
       <div className={styles.userformwrapper}>
@@ -123,7 +122,7 @@ export default function UserDetails({}) {
             </Grid>
           </FormControl>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

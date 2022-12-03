@@ -45,10 +45,10 @@ const UploaderInput = ({
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, []);
+  }, [files]);
 
   const thumbs = files.map((file, idx) => (
-    <div className={styles.previewWrap}>
+    <div className={styles.previewWrap} key={"thumb" + Math.random() + idx}>
       <Image
         className={styles.preview}
         src={file.preview}

@@ -2,10 +2,10 @@ import clsx from "clsx";
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 
-import styles from "../../../styles/LandingCommunity.module.scss";
 import distanceBetweenElements from "../../../utils/distanceBetweenElements";
 import Button from "../../Button";
 import Section from "../../Section";
+import styles from "../../../styles/LandingCommunity.module.scss";
 
 const LandingCommunity = () => {
   const firstElRef = useRef<HTMLHeadingElement>(null);
@@ -75,13 +75,15 @@ const LandingCommunity = () => {
     <Section className={styles.landingCommunity}>
       <h2>
         Earn Community Rewards
-        <Image
-          className={styles.coin}
-          src="/vectors/coin.svg"
-          alt="coin"
-          width={84}
-          height={114}
-        />
+        <div className={styles.coinWrap}>
+          <Image
+            className={styles.coin}
+            src="/vectors/coin.svg"
+            alt="coin"
+            width={84}
+            height={114}
+          />
+        </div>
         in Countless Ways
       </h2>
 
@@ -166,7 +168,7 @@ const LandingCommunity = () => {
             </p>
 
             <Button lg variant="dark-outlined">
-              I'm in
+              I&apos;m in
             </Button>
           </div>
 

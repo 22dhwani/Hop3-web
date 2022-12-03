@@ -29,10 +29,11 @@ const ProfileUploader = () => {
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, []);
+  }, [files]);
 
   const thumbs = files.map((file, idx) => (
     <Image
+      key={"image" + idx}
       src={file.preview}
       width={106}
       height={106}

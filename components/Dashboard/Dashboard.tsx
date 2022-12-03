@@ -96,8 +96,8 @@ export default function Dashboard() {
           <button className={styles.filterbutton}>Denied</button>
           <button className={styles.filterbutton}>Pending</button>
         </div>
-        {postData.map((data) => (
-          <PostItem data={data} />
+        {postData.map((data, idx) => (
+          <PostItem key={"post-item" + idx} data={data} />
         ))}
       </div>
     </div>

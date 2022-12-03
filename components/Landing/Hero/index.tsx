@@ -269,7 +269,7 @@ const LandingHero = () => {
                 d="M481.269,5.15771C729.769,112.158 695.769,404.658 617.769,473.158C493.663,582.148 314.769,529.158 215.769,529.158C150.242,529.158 51.1019,553.158 7.76855,577.658"
                 stroke="#4E4E4E"
                 strokeWidth="2"
-                stroke-dasharray="4 4"
+                strokeDasharray="4 4"
                 variants={pathVariants}
                 initial="initial"
                 animate="animate"

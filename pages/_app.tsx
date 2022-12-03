@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     if (!token) {
-      Router.push("/landing");
+      // Router.push("/landing");
     }
   }, []);
   const queryClient = new QueryClient();
