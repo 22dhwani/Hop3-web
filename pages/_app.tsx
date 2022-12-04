@@ -1,14 +1,21 @@
 import "../styles/globals.scss";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import type { AppProps } from "next/app";
 import Router from "next/router";
 
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { Atom, useAtom } from "jotai";
 import { setuid } from "process";
-import { auth } from "../components/firebase";
+import { FIREBASE_AUTH, FIREBASE_SERVICE } from "../components/firebase";
 import { onAuthStateChanged, User } from "@firebase/auth";
 import { refreshToken } from "../utils/utils";
+import {
+  logEvent,
+  isSupported,
+  initializeAnalytics,
+  Analytics,
+} from "firebase/analytics";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
   // useEffect(() => {
@@ -34,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
         setIsLoading(false);
       }
     };
-    const unsubscribe = onAuthStateChanged(auth, onAuthStateChange);
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, onAuthStateChange);
     return () => unsubscribe();
   }, []);
   const queryClient = new QueryClient();
@@ -54,8 +61,24 @@ export default function App({ Component, pageProps }: AppProps) {
 
 const SetUps = () => {
   // const [user, setUser] = useAtom(userAtom);
+  const router = useRouter();
 
-  // const { data, isLoading, error } = useQuery("account", getUser);
+  useEffect(() => {
+    const initAnalytics = async () => {
+      // await the result of the promise and assign it directly to the GOOGLE_ANALYTICS constant
+      const GOOGLE_ANALYTICS: Analytics | null = await isSupported().then(
+        (yes) => (yes ? initializeAnalytics(FIREBASE_SERVICE) : null)
+      );
+      if (GOOGLE_ANALYTICS)
+        router.events.on("routeChangeStart", (url) => {
+          logEvent(GOOGLE_ANALYTICS, "page_view", {
+            page_location: url,
+          });
+        });
+    };
+    initAnalytics();
+    return router.events.off("routeChangeStart", (url) => {});
+  }, [router.events]);
 
-  return <div></div>;
+  return <></>;
 };

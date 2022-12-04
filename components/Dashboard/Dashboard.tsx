@@ -7,7 +7,7 @@ import Post2 from "../../public/images/Post2.png";
 import User from "../../public/images/Avtar.png";
 import Like from "../../public/images/Like.svg";
 import LikeNot from "../../public/images/like_not.svg";
-import { auth } from "../firebase";
+import { FIREBASE_AUTH } from "../firebase";
 
 import { MenuItem, Select, Menu } from "@mui/material";
 import ImageSlider from "../ImageSlider";
@@ -208,8 +208,7 @@ export default function Dashboard() {
   const handleChange = () => {};
 
   const logOut = () => {
-    auth
-      .signOut()
+    FIREBASE_AUTH.signOut()
       .then(() => {
         localStorage.removeItem("auth_token");
         localStorage.removeItem("isAuthenticated");

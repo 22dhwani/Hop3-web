@@ -12,7 +12,7 @@ import Logo from "../../public/images/Logo.svg";
 import Google from "../../public/images/Google.svg";
 import { Button, TextField, Grid, Link } from "@mui/material";
 import Router from "next/router";
-import { auth } from "../firebase";
+import { FIREBASE_AUTH } from "../firebase";
 import { getThemeColor, refreshToken } from "../../utils/utils";
 import { getUser } from "../../services/auth";
 const provider = new GoogleAuthProvider();
@@ -54,7 +54,10 @@ export default function Login() {
 
   const login = async () => {
     try {
-      const googleLoginAuthenticator = await signInWithPopup(auth, provider);
+      const googleLoginAuthenticator = await signInWithPopup(
+        FIREBASE_AUTH,
+        provider
+      );
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = GoogleAuthProvider.credentialFromResult(
         googleLoginAuthenticator
