@@ -1,5 +1,7 @@
 .logincontainer {
     display: flex;
+    justify-content: space-between;
+
     .rightsection {
         display: flex;
         flex-direction: column;
@@ -49,13 +51,23 @@
     }
 
     .leftsection {
-        width: 50%;
+        max-width: 50%;
+        margin: 0;
+        height: 100vh;
+
         .imgcover {
             height: 100%;
             width: 100%;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: cover;
+            object-fit: cover;
+        }
+
+        @media (max-width: 1170px) {
+            max-width: 30%;
+        }
+        @media (max-width: 795px) {
+            max-width: 10%;
         }
     }
 

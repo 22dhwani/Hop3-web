@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import React, { useEffect, useRef, useState } from "react";
 import type { AppProps } from "next/app";
 import Router from "next/router";
@@ -26,9 +26,6 @@ export default function App({ Component, pageProps }: AppProps) {
         tempFlag = true;
         console.log("USersss", user);
         await refreshToken();
-        if (Router.pathname !== "/dashboard") {
-          await Router.push("/dashboard");
-        }
         setIsLoading(false);
       } else if (!user) {
         if (Router.pathname !== "/") {

@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
+import CustomLink from "../Link/CustomLink";
 import Image from "next/image";
 import styles from "../../styles/Login.module.scss";
 import LoginCover from "../../public/images/LoginCover.png";
@@ -52,87 +52,94 @@ export default function Login() {
     );
   };
 
-  const login = () => {
-    signInWithPopup(auth, provider)
-      .then(async (result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-
-        // The signed-in user info.
-        const user = result.user;
-        await refreshToken();
-        setFieldValues((prevFieldValues) => {
-          return {
-            ...prevFieldValues,
-            email: user.email || "",
-          };
-        });
-        try {
-          const data = await getUser();
-          if (data?.id) {
-            Router.push("/dashboard");
-            localStorage.setItem("isAuthenticated", "true");
-          } else {
-            redirectToUserDetailsPage();
-          }
-        } catch (error: any) {
-          console.error("Errror in signin", error);
-          if (error?.response?.status === 404) {
-            redirectToUserDetailsPage();
-          }
-        }
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        redirectToUserDetailsPage();
-
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log({ errorCode, errorMessage, email, credential });
-      });
-  };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const login = async () => {
     try {
-      e.preventDefault();
-      signInWithEmailAndPassword(auth, fieldValues.email, fieldValues.password)
-        .then(async (user) => {
-          await refreshToken();
-          const response = await getUser();
-          if (response?.status === 200) {
-            Router.push("/dashboard");
-          } else {
-            redirectToUserDetailsPage();
-          }
-        })
-        .catch((error: any) => {
-          console.log({ error });
-          console.error("Error in sign in", error.message);
-          if (error.code === "auth/user-not-found") {
-            createUserWithEmailAndPassword(
-              auth,
-              fieldValues.email,
-              fieldValues.password
-            )
-              .then(async (user) => {
-                await refreshToken();
-                redirectToUserDetailsPage();
-              })
-              .catch((err: any) => {
-                console.error("error in create user", err);
-              });
-          } else if (error?.response?.status === 404) {
-            redirectToUserDetailsPage();
-          }
-        });
+      const googleLoginAuthenticator = await signInWithPopup(auth, provider);
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(
+        googleLoginAuthenticator
+      );
+      const token = credential?.accessToken;
+
+      // The signed-in user info.
+      const user = googleLoginAuthenticator.user;
+      await refreshToken();
+      console.log(user);
+      // setFieldValues((prevFieldValues) => {
+      //   return {
+      //     ...prevFieldValues,
+      //     email: user.email || "",
+      //   };
+      // });
+
+      //   try {
+      //     const data = await getUser();
+      //     if (data?.id) {
+      //       Router.push("/dashboard");
+      //       localStorage.setItem("isAuthenticated", "true");
+      //     } else {
+      //       redirectToUserDetailsPage();
+      //     }
+      //   } catch (error: any) {
+      //     console.error("Errror in signin", error);
+      //     if (error?.response?.status === 404) {
+      //       redirectToUserDetailsPage();
+      //     }
+      //   }
+      // }).catch((error) => {
+      //   // Handle Errors here.
+      //   const errorCode = error.code;
+      //   const errorMessage = error.message;
+      //   // The email of the user's account used.
+      //   const email = error.email;
+      //   // The AuthCredential type that was used.
+      //   redirectToUserDetailsPage();
+
+      //   const credential = GoogleAuthProvider.credentialFromError(error);
+      //   console.log({ errorCode, errorMessage, email, credential });
+      // });
     } catch (error) {
       console.log(error);
     }
   };
+
+  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //   try {
+  //     e.preventDefault();
+  //     signInWithEmailAndPassword(auth, fieldValues.email, fieldValues.password)
+  //       .then(async (user) => {
+  //         await refreshToken();
+  //         const response = await getUser();
+  //         if (response?.status === 200) {
+  //           Router.push("/dashboard");
+  //         } else {
+  //           redirectToUserDetailsPage();
+  //         }
+  //       })
+  //       .catch((error: any) => {
+  //         console.log({ error });
+  //         console.error("Error in sign in", error.message);
+  //         if (error.code === "auth/user-not-found") {
+  //           createUserWithEmailAndPassword(
+  //             auth,
+  //             fieldValues.email,
+  //             fieldValues.password
+  //           )
+  //             .then(async (user) => {
+  //               await refreshToken();
+  //               redirectToUserDetailsPage();
+  //             })
+  //             .catch((err: any) => {
+  //               console.error("error in create user", err);
+  //             });
+  //         } else if (error?.response?.status === 404) {
+  //           redirectToUserDetailsPage();
+  //         }
+  //       });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <div className={styles.logincontainer}>
       <div className={styles.rightsection}>
@@ -168,9 +175,10 @@ export default function Login() {
             </Grid>
           </Grid>
           <p>
-            By logining, I agree to the <Link>Terms of Service</Link> and
+            By logining, I agree to the{" "}
+            <CustomLink label="Term of Services" url="www.google.com" /> and
             <br />
-            <Link> Privacy Policy</Link>
+            <CustomLink label="Privacy Policy" url="www.google.com" />
           </p>
         </div>
       </div>
