@@ -1,14 +1,19 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
-import TimelineDot from '@mui/lab/TimelineDot';
-import Image from 'next/image'
-import styles from '../styles/ImageSlider.module.scss'
+import * as React from "react";
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
+import TimelineDot from "@mui/lab/TimelineDot";
+import Paper from "@mui/material/Paper";
+import Image from "next/image";
+import styles from "../styles/ImageSlider.module.scss";
 
-export default function ImageSlider({ data }:any) {
-    const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = data?.length;
+interface Props {
+  data: any[];
+}
+
+export default function ImageSlider({ data }: Props) {
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const maxSteps = data?.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

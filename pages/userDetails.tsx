@@ -46,7 +46,7 @@ export default function UserDetails({}) {
   };
   return (
     <div className={styles.userdetail}>
-      <div>
+      {/* <div>
         <Image src={Logo} alt={""} />
       </div>
       <div className={styles.userformwrapper}>
@@ -129,7 +129,7 @@ export default function UserDetails({}) {
             </Grid>
           </FormControl>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

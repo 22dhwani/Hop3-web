@@ -264,54 +264,15 @@ export default function Dashboard() {
         </div>
       </header>
       <div>
-        {isAdmin && (
-          <div className={styles.filter}>
-            filter by:
-            <button
-              className={clsx(
-                styles.filterbutton,
-                postFilter === "All" && styles.selectedFilterButton
-              )}
-              onClick={() => onClickStatus("All")}
-            >
-              All
-            </button>
-            <button
-              className={clsx(
-                styles.filterbutton,
-                postFilter === "Approved" && styles.selectedFilterButton
-              )}
-              onClick={() => onClickStatus("Approved")}
-            >
-              Approved
-            </button>
-            <button
-              className={clsx(
-                styles.filterbutton,
-                postFilter === "Rejected" && styles.selectedFilterButton
-              )}
-              onClick={() => onClickStatus("Rejected")}
-            >
-              Denied
-            </button>
-            <button
-              className={clsx(
-                styles.filterbutton,
-                postFilter === "Pending" && styles.selectedFilterButton
-              )}
-              onClick={() => onClickStatus("Pending")}
-            >
-              Pending
-            </button>
-          </div>
-        )}
-        {allPost.map((data: IPostDataItem) => (
-          <PostItem
-            key={data.id}
-            data={data}
-            isAdmin={isAdmin}
-            onRefresh={onRefresh}
-          />
+        <div className={styles.filter}>
+          filter by:
+          <button className={styles.filterbutton}>All</button>
+          <button className={styles.filterbutton}>Approved</button>
+          <button className={styles.filterbutton}>Denied</button>
+          <button className={styles.filterbutton}>Pending</button>
+        </div>
+        {postData.map((data: any, idx) => (
+          <PostItem key={"post-item" + idx} data={data} isAdmin={data.role} />
         ))}
       </div>
     </div>
@@ -333,7 +294,7 @@ const UserProfile = (props: any) => {
 };
 
 const PostItem = (props: {
-  data: IPostDataItem;
+  data: IPostDataItem | any;
   isAdmin: boolean;
   onRefresh?: () => void;
 }) => {
@@ -366,7 +327,7 @@ const PostItem = (props: {
 
   const onPressLike = useCallback(() => {
     setIsLocalLike(true);
-    setTotalLikes((prevState) => prevState + 1);
+    setTotalLikes((prevState: any) => prevState + 1);
     const payload = {
       postId: data.id,
       reactionData: {

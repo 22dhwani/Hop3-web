@@ -1,0 +1,109 @@
+.landingFooter {
+  background-color: #1b1b1b;
+
+  @media screen and (max-width: 767px) {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .mid {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+    @media screen and (max-width: 767px) {
+      padding-top: 0;
+      padding-bottom: 80px;
+    }
+
+    @media screen and (max-width: 575px) {
+      flex-direction: column;
+    }
+
+    .left {
+      h2 {
+        font-size: 70px;
+        max-width: 420px;
+        background: linear-gradient(
+          164.98deg,
+          #ffffff -64.45%,
+          #9f7cff 21.29%,
+          #d2ff2d 110.93%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+
+        @media screen and (max-width: 1200px) {
+          font-size: 60px;
+          max-width: 360px;
+        }
+
+        @media screen and (max-width: 767px) {
+          font-size: 40px;
+          max-width: 240px;
+
+          img {
+            width: 30px;
+            height: unset;
+          }
+        }
+
+        @media screen and (max-width: 575px) {
+          max-width: unset;
+          text-align: center;
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 26px;
+
+      @media screen and (max-width: 575px) {
+        margin-top: 30px;
+      }
+
+      a {
+        font-size: 28px;
+        color: #fff;
+        display: block;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        text-decoration: underline;
+
+        @media screen and (max-width: 575px) {
+          justify-content: center;
+        }
+
+        &:hover {
+          text-decoration: none;
+        }
+
+        @media screen and (max-width: 1200px) {
+          font-size: 26px;
+        }
+
+        img {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+
+  .copyright {
+    color: #fff;
+    font-size: 18px;
+
+    @media screen and (max-width: 575px) {
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+}

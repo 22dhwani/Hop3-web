@@ -1,0 +1,77 @@
+.landingPortal {
+  background-color: #1b1b1b;
+
+  h2 {
+    color: #8f8f8f;
+    font-size: 50px;
+
+    @media screen and (max-width: 1400px) {
+      font-size: 42px;
+    }
+
+    @media screen and (max-width: 991px) {
+      font-size: 34px;
+    }
+
+    @media screen and (max-width: 767px) {
+      font-size: 26px;
+    }
+
+    .rewarding {
+      color: #d2ff2d;
+    }
+
+    .typeWriter {
+      position: relative;
+      color: #fff;
+
+      &::after {
+        content: "|";
+        position: absolute;
+        right: -16px;
+        top: -10%;
+        animation: cursor 1s ease infinite;
+        font-size: 60px;
+        font-weight: 100;
+
+        @media screen and (max-width: 1400px) {
+          font-size: 52px;
+          top: -17%;
+        }
+
+        @media screen and (max-width: 991px) {
+          font-size: 46px;
+          top: -17%;
+        }
+
+        @media screen and (max-width: 767px) {
+          font-size: 40px;
+          top: -30%;
+          right: -13px;
+        }
+      }
+    }
+
+    @media screen and (min-width: 576px) {
+      br.small {
+        display: none;
+      }
+    }
+  }
+
+  .portal {
+    img {
+      width: 100%;
+      height: unset;
+    }
+  }
+}
+
+@keyframes cursor {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

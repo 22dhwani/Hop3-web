@@ -1,0 +1,298 @@
+.landingHero {
+  min-height: calc(100vh);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 54px;
+  background-image: url("/vectors/bg-landing-hero.svg");
+  background-size: cover;
+  background-position: center;
+  padding-top: 0;
+  position: relative;
+
+  // &::before {
+  //   content: "";
+  //   top: 0;
+  //   position: absolute;
+  //   left: 50%;
+  //   width: 10px;
+  //   height: 790px;
+  //   background-color: red;
+  // }
+
+  @media screen and (max-width: 575px) {
+    min-height: 500px;
+  }
+
+  & > * {
+    width: 100%;
+  }
+
+  .step1Card1,
+  .step1Card2,
+  .step1Card3,
+  .step1Line1,
+  .step2Card1,
+  .step2Card2,
+  .step2Line1,
+  .step2Line2,
+  .step3Card1,
+  .step3Card2,
+  .step3Line1 {
+    position: absolute;
+    opacity: 0;
+
+    @media screen and (max-width: 991px) {
+      display: none;
+    }
+  }
+
+  .step1Card1 {
+    left: calc(50% + 350px);
+    top: calc(50% - 140px);
+    // animation: popCard 0.4s ease forwards;
+    // animation-delay: 0.2s;
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% + 450px);
+      top: calc(50% - 200px);
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% + 530px);
+      top: calc(50% - 220px);
+    }
+  }
+
+  .step1Card2 {
+    left: calc(50% + 120px);
+    top: calc(50% + 66px);
+    // animation: popCard 0.4s ease forwards;
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% + 130px);
+      top: calc(50% + 90px);
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% + 150px);
+      top: calc(50% + 120px);
+    }
+  }
+
+  .step1Card3 {
+    left: calc(50% - 360px);
+    top: calc(50% - 10px);
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% - 500px);
+      top: calc(50% + 20px);
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% - 550px);
+      top: calc(50% + 40px);
+    }
+  }
+
+  .step1Line1 {
+    left: calc(50% + 180px);
+    top: calc(50% + 20px);
+    width: 220px;
+    height: unset;
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% + 190px);
+      top: calc(50% - 40px);
+      width: 310px;
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% + 210px);
+      top: calc(50% - 60px);
+      width: 370px;
+    }
+  }
+
+  .step2Card1 {
+    left: calc(50% + 250px);
+    top: calc(50% - 200px);
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% + 340px);
+      top: calc(50% - 240px);
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% + 260px);
+      top: calc(50% - 310px);
+    }
+  }
+
+  .step2Card2 {
+    left: calc(50% + 24px);
+    top: calc(50% + 66px);
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% + 50px);
+      top: calc(50% + 110px);
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% - 112px);
+      top: calc(50% + 140px);
+    }
+  }
+
+  .step2Line1 {
+    left: calc(50% - 80px);
+    top: calc(50% + 126px);
+    width: 158px;
+    height: unset;
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% - 146px);
+      top: calc(50% + 120px);
+      width: 250px;
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% - 336px);
+      top: calc(50% + 140px);
+      width: 274px;
+    }
+  }
+
+  .step2Line2 {
+    left: calc(50% + 80px);
+    top: calc(50% - 40px);
+    width: 300px;
+    height: unset;
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% + 106px);
+      top: calc(50% - 80px);
+      width: 400px;
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% - 60px);
+      top: calc(50% - 150px);
+      width: 520px;
+    }
+  }
+
+  .step3Card1 {
+    left: calc(50% - 80px);
+    top: calc(50% + 56px);
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% - 60px);
+      top: calc(50% + 74px);
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% + 74px);
+      top: calc(50% + 116px);
+    }
+  }
+
+  .step3Card2 {
+    left: calc(50% - 460px);
+    top: calc(50% - 190px);
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% - 490px);
+      top: calc(50% - 200px);
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% - 566px);
+      top: calc(50% - 296px);
+    }
+  }
+
+  .step3Line1 {
+    left: calc(50% - 416px);
+    top: calc(50% - 40px);
+    width: 400px;
+    height: unset;
+
+    @media screen and (min-width: 1281px) {
+      left: calc(50% - 450px);
+      top: calc(50% - 50px);
+      width: 450px;
+    }
+
+    @media screen and (min-width: 1401px) {
+      left: calc(50% - 540px);
+      top: calc(50% - 150px);
+      width: 680px;
+    }
+  }
+
+  h1 {
+    font-size: 75px;
+
+    @media screen and (max-width: 1400px) {
+      font-size: 60px;
+
+      img {
+        width: 36px;
+        height: auto;
+      }
+    }
+
+    @media screen and (max-width: 1280px) {
+      font-size: 46px;
+
+      img {
+        width: 36px;
+        height: auto;
+      }
+    }
+
+    @media screen and (max-width: 575px) {
+      font-size: 30px;
+    }
+  }
+
+  .limitedAccess {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #c8ff2a;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    padding: 11.5px 0;
+
+    @media screen and (max-width: 1400px) {
+      font-size: 21px;
+    }
+
+    @media screen and (max-width: 1200px) {
+      font-size: 18px;
+    }
+
+    @media screen and (max-width: 575px) {
+      font-size: 15px;
+    }
+  }
+}
+
+@keyframes popCard {
+  0% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
