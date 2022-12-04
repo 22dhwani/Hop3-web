@@ -11,7 +11,7 @@ import Radios from "../Radios";
 import Tooltip from "../Tooltip";
 import UploaderInput from "../UploaderInput";
 import {ChangeEvent, ChangeEventHandler, useCallback, useEffect, useState} from "react";
-import {createPost} from "../../services/post";
+import {createPost, getSignedUrl, IPostMedia, IPostMediaItem, uploadOnS3Bucket} from "../../services/post";
 import {useMutation, useQuery} from "react-query";
 import {useRouter} from "next/router";
 import {getUser} from "../../services/auth";
@@ -94,6 +94,7 @@ const dealOptions = [
 const ShareExperience = () => {
   const { data:userData, isLoading:isUserLoading, error:getUserError,refetch: getUserApi } = useQuery("getUser", getUser,{enabled:false});
   const createPostMutation = useMutation(createPost)
+  const createPostMediaMutation = useMutation(getSignedUrl)
   const router = useRouter()
   const [postInfo,setPostInfo] = useState({
     title:'',
@@ -102,7 +103,8 @@ const ShareExperience = () => {
     location:'',
     event:'',
     price:'',
-    hashtags:''
+    hashtags:'',
+    files:[],
   })
   const [error,setError] = useState({
     title:'',
@@ -155,8 +157,28 @@ const ShareExperience = () => {
           if(postInfo.location){
             payload.location =  postInfo.location
           }
-      console.log("Payloadd",payload)
-          createPostMutation.mutate(payload)
+
+          createPostMutation.mutate(payload,{onSuccess: (data:any)=>{
+              console.log("Valueee",data)
+              //@ts-ignore
+              const finalFilesData : IPostMediaItem[] = postInfo.files.map((item:any) => (
+                  {
+                    file_size_mb : item.fileSize / 1024 / 1024,
+                    file_extension : "."+item.name.split(".").pop()
+                  }
+                  ))
+              createPostMediaMutation.mutate({postId: data.id,postMediaData: {
+                  post_media: finalFilesData
+                }},{onSuccess:  (async (urlData :any) => {
+
+                  for(let i=0; i < urlData.post_media_data.length ; i++){
+                      await uploadOnS3Bucket({
+                     uploadUrl: urlData.post_media_data[i].signUrl,
+                      fileData: postInfo.files[i]
+                    })
+                  }
+                })})
+            }})
     }
 
   },[checkValidation,postInfo])
@@ -190,13 +212,17 @@ const ShareExperience = () => {
     setPostInfo((prevState => ({...prevState,price})))
   },[])
 
-  useEffect(()=>{
-    if(createPostMutation.isSuccess){
-      router.back()
-    }
-  },[createPostMutation.isSuccess])
+  // useEffect(()=>{
+  //   if(createPostMutation.isSuccess){
+  //     router.back()
+  //   }
+  // },[createPostMutation.isSuccess])
 
   const isAdminOrCreator = userData?.role === 'admin' || userData?.role === 'creator'
+
+  const onFileSelected = useCallback((files:any)=>{
+    setPostInfo((prevState => ({...prevState,files })))
+  },[])
 
 
   return (
@@ -270,6 +296,7 @@ const ShareExperience = () => {
                 id="upload"
                 label="Upload video or image"
                 required
+                onFilesSelected={onFileSelected}
               />
               <div className={styles.helper}>
                 Need some help?{" "}

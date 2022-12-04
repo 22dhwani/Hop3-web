@@ -22,7 +22,7 @@ export default function ImageSlider({ data }:any) {
     <Box className={styles.imageslidercontainer}>
       <Box>
         <div>
-          <Image className={styles.image} src={data[activeStep]} alt={""} />
+              <Image className={styles.image} src={data[activeStep]} alt={""} width={500} height={400} />
         </div>
       </Box>
       <Box className={styles.dotswrapper}>

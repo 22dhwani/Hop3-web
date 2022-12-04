@@ -380,7 +380,7 @@ const PostItem = (props: {
     <div className={styles.postwrapper} key={data?.id}>
       <div className={styles.poster}>
         {/* <Image src={data?.postImg} alt={''} /> */}
-        <ImageSlider data={[Post2, Post]} />
+        <ImageSlider data={data.media_url.map((item:any) => item?.signUrl)}  />
       </div>
       <div className={styles.descriptionwrapper}>
         <div className={styles.description}>
