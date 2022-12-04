@@ -16,6 +16,7 @@ import {
   Analytics,
 } from "firebase/analytics";
 import { useRouter } from "next/router";
+import { pageview } from "../utils/utils";
 
 export default function App({ Component, pageProps }: AppProps) {
   // useEffect(() => {
@@ -64,20 +65,19 @@ const SetUps = () => {
   const router = useRouter();
 
   useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      pageview(url);
+    };
     const initAnalytics = async () => {
       // await the result of the promise and assign it directly to the GOOGLE_ANALYTICS constant
       const GOOGLE_ANALYTICS: Analytics | null = await isSupported().then(
         (yes) => (yes ? initializeAnalytics(FIREBASE_SERVICE) : null)
       );
       if (GOOGLE_ANALYTICS)
-        router.events.on("routeChangeStart", (url) => {
-          logEvent(GOOGLE_ANALYTICS, "page_view", {
-            page_location: url,
-          });
-        });
+        router.events.on("routeChangeComplete", handleRouteChange);
     };
     initAnalytics();
-    return router.events.off("routeChangeStart", (url) => {});
+    return router.events.off("routeChangeStart", handleRouteChange);
   }, [router.events]);
 
   return <></>;
