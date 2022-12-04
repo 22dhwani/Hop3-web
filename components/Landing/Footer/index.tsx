@@ -8,11 +8,11 @@ import Link from "next/link";
 const links = [
   {
     label: "Explore the app",
-    href: "",
+    href: "/login",
   },
   {
     label: "Join Discord",
-    href: "",
+    href: "https://discord.gg/xKhs3bFKa4",
   },
   {
     label: "Contact us",

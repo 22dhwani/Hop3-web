@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
         setIsLoading(false);
       } else if (!user) {
         if (Router.pathname !== "/") {
-          await Router.push("/login");
+          // await Router.push("/login");
         }
         setIsLoading(false);
       }

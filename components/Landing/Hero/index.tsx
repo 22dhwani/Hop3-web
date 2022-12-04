@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Section from "../../Section";
 import styles from "../../../styles/LandingHero.module.scss";
 import Button from "../../Button";
+import Link from "next/link";
 
 const pathVariants = {
   initial: {
@@ -392,14 +393,16 @@ const LandingHero = () => {
         <Image src="/vectors/logo-2.svg" width={56} height={56} alt="logo" />{" "}
         recs
       </h1>
-
-      <Button lg variant="dark" className={styles.btn}>
-        start now
-      </Button>
-
-      <div className={styles.limitedAccess}>
-        LIMITED BETA ACCESS SPOTS ==&gt;&gt; SIGN UP NOW
-      </div>
+      <Link href="/login">
+        <Button lg variant="dark" className={styles.btn}>
+          start now
+        </Button>
+      </Link>
+      <Link href="/login">
+        <div className={styles.limitedAccess}>
+          LIMITED BETA ACCESS SPOTS ==&gt;&gt; SIGN UP NOW
+        </div>
+      </Link>
     </Section>
   );
 };

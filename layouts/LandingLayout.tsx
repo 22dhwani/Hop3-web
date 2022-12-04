@@ -44,16 +44,19 @@ const LandingLayout = ({ children }: Props) => {
             />
           </Link>
           <div className={styles.menu}>
-            <Link href="#0">How to earn</Link>
-            <Button variant="dark-outlined" className={styles.btn}>
-              Launch app{" "}
-              <Image
-                src="/vectors/icons/beta.svg"
-                alt="beta"
-                width={36}
-                height={18}
-              />
-            </Button>
+            <Link href="/login">How to earn</Link>
+            <Link href="/login">
+              {" "}
+              <Button variant="dark-outlined" className={styles.btn}>
+                Launch app{" "}
+                <Image
+                  src="/vectors/icons/beta.svg"
+                  alt="beta"
+                  width={36}
+                  height={18}
+                />
+              </Button>
+            </Link>
           </div>
         </Section>
         <div className={styles.mainContent}>{children}</div>
