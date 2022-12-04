@@ -1,11 +1,17 @@
 import React from "react";
-import Login from "../components/Login/Login";
+import Image from "next/image";
+import LandingPage from "../public/images/LandingPage.png";
+import { height } from "@mui/system";
 
-const Home = () => {
+const Home = (props: any) => {
   return (
-    <>
-      <Login />
-    </>
+    <div>
+      <Image
+        src={LandingPage}
+        alt={"landingpage"}
+        style={{ objectFit: "cover", height: "auto", maxWidth: "100%" }}
+      />
+    </div>
   );
 };
 

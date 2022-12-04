@@ -41,6 +41,7 @@ const ProfileUploader = () => {
       onLoad={() => {
         URL.revokeObjectURL(file.preview);
       }}
+      key={"files" + idx}
     />
   ));
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/UserDetails.module.scss";
 import Image from "next/image";
 import Logo from "../public/images/Logo.svg";
@@ -13,30 +13,37 @@ import {
   FormControl,
   Button,
 } from "@mui/material";
-// import Router from "next/router";
+import { useRouter } from "next/router";
 import { createUser } from "../services/auth";
 
-export default function UserDetails() {
-  // const userDetail =
-  //   typeof Router?.query?.user === "string"
-  //     ? JSON.parse(Router?.query?.user)
-  //     : {};
-  // const [username, setUsername] = useState("");
-  // const handleUploadClick = () => {};
+export default function UserDetails({}) {
+  const Router = useRouter();
+  const userDetail =
+    typeof Router?.query?.user === "string"
+      ? JSON.parse(Router?.query?.user)
+      : {};
+  const [username, setUsername] = useState("");
+  const handleUploadClick = () => {};
 
-  // const handleSubmit = async () => {
-  //   try {
-  //     const response = await createUser({
-  //       username,
-  //       email: userDetail?.email,
-  //     });
-  //     if (response.status === 201) {
-  //       Router.push("/dashboard");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  // useEffect(() => {
+  //   const token = localStorage.getItem("auth_token");
+  //   const isAuthenticated = localStorage.getItem("isAuthenticated");
+  // }, []);
+
+  const handleSubmit = async () => {
+    try {
+      const response = await createUser({
+        username,
+        email: userDetail?.email,
+      });
+      if (response.status === 201) {
+        localStorage.setItem("isAuthenticated", "true");
+        // Router.push("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className={styles.userdetail}>
       {/* <div>

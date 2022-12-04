@@ -1,19 +1,49 @@
-import "../styles/globals.css";
-import React, { useEffect } from "react";
+import "../styles/globals.scss";
+import React, { useEffect, useCallback, useState } from "react";
 import type { AppProps } from "next/app";
 import Router from "next/router";
 
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { getUser } from "../services/auth";
 import { Atom, useAtom } from "jotai";
 import { setuid } from "process";
+import { FIREBASE_AUTH, FIREBASE_SERVICE } from "../components/firebase";
+import { onAuthStateChanged, User } from "@firebase/auth";
+import { refreshToken } from "../utils/utils";
+import {
+  logEvent,
+  isSupported,
+  initializeAnalytics,
+  Analytics,
+} from "firebase/analytics";
+import { useRouter } from "next/router";
+import { pageview } from "../utils/utils";
 
 export default function App({ Component, pageProps }: AppProps) {
+  // useEffect(() => {
+  //   const token = localStorage.getItem("auth_token");
+  //   if (!token) {
+  //     Router.push("/");
+  //   }
+  // }, []);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    const token = localStorage.getItem("auth_token");
-    if (!token) {
-      // Router.push("/landing");
-    }
+    let tempFlag = false;
+    const onAuthStateChange = async (user: User | null) => {
+      if (!tempFlag && user) {
+        tempFlag = true;
+        console.log("USersss", user);
+        await refreshToken();
+        setIsLoading(false);
+      } else if (!user) {
+        if (Router.pathname !== "/") {
+          await Router.push("/login");
+        }
+        setIsLoading(false);
+      }
+    };
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, onAuthStateChange);
+    return () => unsubscribe();
   }, []);
   const queryClient = new QueryClient();
 
@@ -21,19 +51,34 @@ export default function App({ Component, pageProps }: AppProps) {
     typeof localStorage != "undefined" && localStorage?.getItem("auth_token");
 
   return (
-    <div>
+    <>
       <QueryClientProvider client={queryClient} contextSharing={true}>
         <SetUps />
-        <Component {...pageProps} />
+        {!isLoading && <Component {...pageProps} />}
       </QueryClientProvider>
-    </div>
+    </>
   );
 }
 
 const SetUps = () => {
   // const [user, setUser] = useAtom(userAtom);
+  const router = useRouter();
 
-  const { data, isLoading, error } = useQuery("account", getUser);
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      pageview(url);
+    };
+    const initAnalytics = async () => {
+      // await the result of the promise and assign it directly to the GOOGLE_ANALYTICS constant
+      const GOOGLE_ANALYTICS: Analytics | null = await isSupported().then(
+        (yes) => (yes ? initializeAnalytics(FIREBASE_SERVICE) : null)
+      );
+      if (GOOGLE_ANALYTICS)
+        router.events.on("routeChangeComplete", handleRouteChange);
+    };
+    initAnalytics();
+    return router.events.off("routeChangeStart", handleRouteChange);
+  }, [router.events]);
 
-  return <div></div>;
+  return <></>;
 };
