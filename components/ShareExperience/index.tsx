@@ -158,7 +158,7 @@ const ShareExperience = () => {
                 id="upload"
                 label="Upload video or image"
                 required
-                onFilesSelected={onFileSelected}
+                // onFilesSelected={onFileSelected}
               />
               <div className={styles.helper}>
                 Need some help?{" "}
