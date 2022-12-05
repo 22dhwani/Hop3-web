@@ -20,6 +20,7 @@ const LandingPortal = () => {
             typeSpeed={250}
             loop
           />
+          <span className={styles.cursor}>|</span>
         </span>
         <br />
         <span className={styles.rewarding}>rewarding</span>”

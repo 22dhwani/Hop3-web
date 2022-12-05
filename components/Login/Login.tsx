@@ -1,43 +1,30 @@
-import React, { FormEvent, use, useCallback, useEffect, useState } from "react";
+import React, { FormEvent, useCallback, useEffect, useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import CustomLink from "../Link/CustomLink";
 import Image from "next/image";
 import styles from "../../styles/Login.module.scss";
 import LoginCover from "../../public/images/LoginCover.png";
 import Logo from "../../public/images/Logo.svg";
-import Google from "../../public/images/Google.svg";
 import { Button, TextField, Grid, Link } from "@mui/material";
 import Router from "next/router";
-import { FIREBASE_AUTH } from "../firebase";
-import { getThemeColor, refreshToken } from "../../utils/utils";
+import { auth } from "../firebase";
+import { getThemeColor } from "../../utils/utils";
 import { getUser } from "../../services/auth";
-const provider = new GoogleAuthProvider();
-
-interface IUser {
-  email: string;
-  password: string;
-  accesstoken: string;
-}
 
 export default function Login() {
   const [fieldValues, setFieldValues] = useState({
     email: "",
     password: "",
   });
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("auth_token");
-  //   const isAuthenticated = localStorage.getItem("isAuthenticated");
-  //   if (token && isAuthenticated) {
-  //     Router.push("/dashboard");
-  //   }
-  // }, []);
-
-  const handleChange = (name: string, value: string | undefined) => {
+  useEffect(() => {
+    const token = localStorage.getItem("auth_token");
+    if (token) {
+      Router.push("/dashboard");
+    }
+  }, []);
+  const handleChange = (name: string, value: string) => {
     setFieldValues((prevFieldValues) => {
       return {
         ...prevFieldValues,
@@ -51,98 +38,47 @@ export default function Login() {
       "/userDetails"
     );
   };
-
-  const login = async () => {
+  const setToken = async () => {
+    const token = await auth?.currentUser?.getIdToken(true);
+    localStorage.setItem("auth_token", token as string);
+  };
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     try {
-      const googleLoginAuthenticator = await signInWithPopup(
-        FIREBASE_AUTH,
-        provider
-      );
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(
-        googleLoginAuthenticator
-      );
-      const token = credential?.accessToken;
-
-      // The signed-in user info.
-      const user = googleLoginAuthenticator.user;
-      await refreshToken();
-      console.log(user);
-      // setFieldValues((prevFieldValues) => {
-      //   return {
-      //     ...prevFieldValues,
-      //     email: user.email || "",
-      //   };
-      // });
-
-      //   try {
-      //     const data = await getUser();
-      //     if (data?.id) {
-      //       Router.push("/dashboard");
-      //       localStorage.setItem("isAuthenticated", "true");
-      //     } else {
-      //       redirectToUserDetailsPage();
-      //     }
-      //   } catch (error: any) {
-      //     console.error("Errror in signin", error);
-      //     if (error?.response?.status === 404) {
-      //       redirectToUserDetailsPage();
-      //     }
-      //   }
-      // }).catch((error) => {
-      //   // Handle Errors here.
-      //   const errorCode = error.code;
-      //   const errorMessage = error.message;
-      //   // The email of the user's account used.
-      //   const email = error.email;
-      //   // The AuthCredential type that was used.
-      //   redirectToUserDetailsPage();
-
-      //   const credential = GoogleAuthProvider.credentialFromError(error);
-      //   console.log({ errorCode, errorMessage, email, credential });
-      // });
+      e.preventDefault();
+      signInWithEmailAndPassword(auth, fieldValues.email, fieldValues.password)
+        .then(async (user) => {
+          setToken();
+          const response = await getUser();
+          if (response?.status === 200) {
+            Router.push("/dashboard");
+          } else {
+            redirectToUserDetailsPage();
+          }
+        })
+        .catch((error: any) => {
+          console.log({ error });
+          console.error("Error in sign in", error.message);
+          if (error.code === "auth/user-not-found") {
+            createUserWithEmailAndPassword(
+              auth,
+              fieldValues.email,
+              fieldValues.password
+            )
+              .then((user) => {
+                setToken();
+                redirectToUserDetailsPage();
+              })
+              .catch((err: any) => {
+                console.error("error in create user", err);
+              });
+          } else if (error?.response?.status === 404) {
+            redirectToUserDetailsPage();
+          }
+        });
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  //   try {
-  //     e.preventDefault();
-  //     signInWithEmailAndPassword(auth, fieldValues.email, fieldValues.password)
-  //       .then(async (user) => {
-  //         await refreshToken();
-  //         const response = await getUser();
-  //         if (response?.status === 200) {
-  //           Router.push("/dashboard");
-  //         } else {
-  //           redirectToUserDetailsPage();
-  //         }
-  //       })
-  //       .catch((error: any) => {
-  //         console.log({ error });
-  //         console.error("Error in sign in", error.message);
-  //         if (error.code === "auth/user-not-found") {
-  //           createUserWithEmailAndPassword(
-  //             auth,
-  //             fieldValues.email,
-  //             fieldValues.password
-  //           )
-  //             .then(async (user) => {
-  //               await refreshToken();
-  //               redirectToUserDetailsPage();
-  //             })
-  //             .catch((err: any) => {
-  //               console.error("error in create user", err);
-  //             });
-  //         } else if (error?.response?.status === 404) {
-  //           redirectToUserDetailsPage();
-  //         }
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   return (
     <div className={styles.logincontainer}>
       <div className={styles.rightsection}>
@@ -152,36 +88,67 @@ export default function Login() {
           <p className={styles.transformText}>right place</p>
         </span>
         <div className={styles.loginform}>
-          <Grid container direction="column" spacing={2}>
-            <Grid item>
-              <Button
-                onClick={login}
-                variant="contained"
-                type="submit"
-                className="button-block"
-                sx={{
-                  background: "#FFFFFF",
-                  border: "1px solid #000000",
-                  width: "450px",
-                  boxShadow: "4px 4px 0px #70FFC3",
-                  borderRadius: "4px",
-                  color: getThemeColor(),
-                  textTransform: "none",
-                  "&:hover": {
-                    backgroundColor: "#70FFC3",
-                  },
-                }}
-              >
-                <Image src={Google} alt={""} />
-                &nbsp; Login via Google
-              </Button>
+          <form onSubmit={handleSubmit}>
+            <Grid container direction="column" spacing={2}>
+              <Grid item>
+                <TextField
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  sx={{
+                    width: "450px",
+                  }}
+                  variant="outlined"
+                  value={fieldValues.email}
+                  onChange={(event) =>
+                    handleChange(event.target.name, event.target.value)
+                  }
+                  required
+                  autoFocus
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  sx={{
+                    width: "450px",
+                  }}
+                  variant="outlined"
+                  value={fieldValues.password}
+                  onChange={(event) =>
+                    handleChange(event.target.name, event.target.value)
+                  }
+                  required
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  className="button-block"
+                  sx={{
+                    background: "#FFFFFF",
+                    border: "1px solid #000000",
+                    width: "450px",
+                    boxShadow: "4px 4px 0px #70FFC3",
+                    borderRadius: "4px",
+                    color: getThemeColor(),
+                    "&:hover": {
+                      backgroundColor: "#70FFC3",
+                    },
+                  }}
+                >
+                  Login
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
           <p>
-            By logining, I agree to the{" "}
-            <CustomLink label="Term of Services" url="www.google.com" /> and
+            By logining, I agree to the <Link>Terms of Service</Link> and
             <br />
-            <CustomLink label="Privacy Policy" url="www.google.com" />
+            <Link> Privacy Policy</Link>
           </p>
         </div>
       </div>

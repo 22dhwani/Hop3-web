@@ -58,12 +58,18 @@ const LandingEcosystem = () => {
           </p>
         </div>
         <div className={styles.imgContainer}>
-          <div className={styles.coin}>
+          <div className={styles.coins}>
             <Image
-              src="/vectors/coins.svg"
+              src="/vectors/coin-1.svg"
               alt="coins"
-              width={140}
-              height={213}
+              width={97}
+              height={139}
+            />
+            <Image
+              src="/vectors/coin-2.svg"
+              alt="coins"
+              width={64}
+              height={87}
             />
           </div>
         </div>

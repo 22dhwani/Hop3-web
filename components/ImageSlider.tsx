@@ -31,7 +31,7 @@ export default function ImageSlider({ data }: Props) {
         </div>
       </Box>
       <Box className={styles.dotswrapper}>
-        {data?.map((image: any, index: number) => (
+        {data?.map((image, index) => (
           <div key={`step-${index}`} className={styles.dot}>
             <TimelineDot
               color={activeStep === index ? "primary" : "grey"}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "../styles/UserDetails.module.scss";
 import Image from "next/image";
 import Logo from "../public/images/Logo.svg";
@@ -13,32 +13,27 @@ import {
   FormControl,
   Button,
 } from "@mui/material";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { createUser } from "../services/auth";
 
 export default function UserDetails({}) {
-  const Router = useRouter();
-  const userDetail =
-    typeof Router?.query?.user === "string"
-      ? JSON.parse(Router?.query?.user)
-      : {};
+  // console.log("router", Router?.query);
   const [username, setUsername] = useState("");
   const handleUploadClick = () => {};
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("auth_token");
-  //   const isAuthenticated = localStorage.getItem("isAuthenticated");
-  // }, []);
-
   const handleSubmit = async () => {
+    const userDetail =
+      typeof Router?.query?.user === "string"
+        ? JSON.parse(Router?.query?.user)
+        : {};
+
     try {
       const response = await createUser({
         username,
         email: userDetail?.email,
       });
       if (response.status === 201) {
-        localStorage.setItem("isAuthenticated", "true");
-        // Router.push("/dashboard");
+        Router.push("/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -46,7 +41,7 @@ export default function UserDetails({}) {
   };
   return (
     <div className={styles.userdetail}>
-      {/* <div>
+      <div>
         <Image src={Logo} alt={""} />
       </div>
       <div className={styles.userformwrapper}>
@@ -129,7 +124,7 @@ export default function UserDetails({}) {
             </Grid>
           </FormControl>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

@@ -10,11 +10,6 @@ import Navbar from "../Navbar";
 import Radios from "../Radios";
 import Tooltip from "../Tooltip";
 import UploaderInput from "../UploaderInput";
-import {ChangeEvent, ChangeEventHandler, useCallback, useEffect, useState} from "react";
-import {createPost} from "../../services/post";
-import {useMutation, useQuery} from "react-query";
-import {useRouter} from "next/router";
-import {getUser} from "../../services/auth";
 
 const rewardItems = [
   {
@@ -92,113 +87,6 @@ const dealOptions = [
 ];
 
 const ShareExperience = () => {
-  const { data:userData, isLoading:isUserLoading, error:getUserError,refetch: getUserApi } = useQuery("getUser", getUser,{enabled:false});
-  const createPostMutation = useMutation(createPost)
-  const router = useRouter()
-  const [postInfo,setPostInfo] = useState({
-    title:'',
-    description:'',
-    category:'',
-    location:'',
-    event:'',
-    price:'',
-    hashtags:''
-  })
-  const [error,setError] = useState({
-    title:'',
-    description:'',
-    category:'',
-    location:'',
-    event:'',
-    price:'',
-    hashtags:''
-  })
-
-  useEffect(()=>{
-    getUserApi()
-  },[])
-
-  const checkValidation = useCallback(()=>{
-    const tempError = {...error}
-    tempError.title =  postInfo.title === '' ? 'Title is required' : ''
-    tempError.description =  postInfo.description === '' ? 'Description is required' : ''
-    setError(tempError)
-    return tempError
-  },[error,postInfo])
-
-  console.log("Mutation loading",createPostMutation.isLoading)
-  console.log("Mutation error",createPostMutation.error)
-
-  const onPressSubmit = useCallback((e:any)=>{
-    e.preventDefault()
-    const tempError = checkValidation();
-    console.log("temp erro",tempError)
-    if(!tempError.title && !tempError.description){
-          const payload : any = {
-            post_type:'Standard',
-            title: postInfo.title,
-            description: postInfo.description,
-            media_type: "image",
-          }
-          if(postInfo.category){
-            payload.category =  postInfo.category
-          }
-          if(postInfo.price){
-            payload.price =  postInfo.price
-          }
-          if(postInfo.hashtags){
-            payload.hashtag =  postInfo.hashtags
-          }
-          if(postInfo.event){
-            payload.event =  postInfo.event
-          }
-          if(postInfo.location){
-            payload.location =  postInfo.location
-          }
-      console.log("Payloadd",payload)
-          createPostMutation.mutate(payload)
-    }
-
-  },[checkValidation,postInfo])
-
-
-  const onChangeTitle = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-      setPostInfo((prevState => ({...prevState,title: event.target.value})))
-  },[])
-
-  const onChangeDescription = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-    setPostInfo((prevState => ({...prevState,description: event.target.value})))
-  },[])
-
-  const onChangeEvent = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-    setPostInfo((prevState => ({...prevState,event: event.target.value})))
-  },[])
-
-  const onChangeLocation = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-    setPostInfo((prevState => ({...prevState,location: event.target.value})))
-  },[])
-
-  const onChangeHashtags = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-    setPostInfo((prevState => ({...prevState,hashtags: event.target.value})))
-  },[])
-
-  const onSelectCategory = useCallback((category:string)=>{
-    setPostInfo((prevState => ({...prevState,category})))
-  },[])
-
-  const onSelectPrice = useCallback((price:string)=>{
-    setPostInfo((prevState => ({...prevState,price})))
-  },[])
-
-  useEffect(()=>{
-    if(createPostMutation.isSuccess){
-      router.back()
-    }
-  },[createPostMutation.isSuccess])
-
-  const isAdminOrCreator = userData?.role === 'admin' || userData?.role === 'creator'
-
-
   return (
     <div className={styles.shareExperienceContainer}>
       <Navbar withoutShareExpBtn />
@@ -304,9 +192,6 @@ const ShareExperience = () => {
                 label="Title"
                 required
                 placeholder="Give your post an attractive title"
-                onChange={onChangeTitle}
-                value={postInfo.title}
-                error={error.title}
               />
             </div>
 
@@ -317,9 +202,6 @@ const ShareExperience = () => {
                 required
                 textarea
                 placeholder="Tell more about..."
-                onChange={onChangeDescription}
-                value={postInfo.description}
-                error={error.description}
               />
             </div>
 
@@ -329,7 +211,7 @@ const ShareExperience = () => {
                 label="Category"
                 options={categories}
                 placeholder="Select a category for your post"
-                onSelect={onSelectCategory}
+                required
               />
             </div>
 
@@ -338,8 +220,6 @@ const ShareExperience = () => {
                 id="location"
                 label="Location"
                 placeholder="Where is it located?"
-                onChange={onChangeLocation}
-                value={postInfo.location}
               />
             </div>
             <div className={styles.input}>
@@ -349,7 +229,6 @@ const ShareExperience = () => {
                 options={priceRange}
                 placeholder="How much does it cost?"
                 listType
-                onSelect={onSelectPrice}
               />
             </div>
 
@@ -358,35 +237,29 @@ const ShareExperience = () => {
                 id="url"
                 label="URL to the event or resturant"
                 placeholder="Give more information to explore"
-                onChange={onChangeEvent}
-                value={postInfo.event}
               />
             </div>
-            {isAdminOrCreator && (
-                <>
-                  <div className={styles.input}>
-                    <Input
-                        id="hash-tags"
-                        label="Hashtags"
-                        placeholder="Give the content great hashtags to help people find it"
-                        required
-                        onChange={onChangeHashtags}
-                        value={postInfo.hashtags}
-                    />
-                  </div>
 
-                <div className={styles.input}>
-                <Radios
-                id="deals"
-                label="Is it a deal"
+            <div className={styles.input}>
+              <Input
+                id="hash-tags"
+                label="Hashtags"
+                placeholder="Give the content great hashtags to help people find it"
+                required
+              />
+            </div>
+
+            <div className={styles.input}>
+              <Radios
+                id="hash-tags"
+                label="Hashtags"
                 data={dealOptions}
                 required
-                />
-                </div>
-            </>
-          )}
+              />
+            </div>
+
             <div className={styles.buttons}>
-              <Button variant="purple" onClick={onPressSubmit} >Submit</Button>
+              <Button variant="purple">Submit</Button>
               <Button variant="grey">Cancel</Button>
             </div>
           </form>

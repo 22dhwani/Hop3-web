@@ -48,7 +48,7 @@ const UploaderInput = ({
   }, [files]);
 
   const thumbs = files.map((file, idx) => (
-    <div className={styles.previewWrap} key={"files" + idx}>
+    <div className={styles.previewWrap} key={"thumb" + Math.random() + idx}>
       <Image
         className={styles.preview}
         src={file.preview}

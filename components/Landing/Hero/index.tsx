@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Section from "../../Section";
 import styles from "../../../styles/LandingHero.module.scss";
 import Button from "../../Button";
-import Link from "next/link";
 
 const pathVariants = {
   initial: {
@@ -38,7 +37,7 @@ const imgVariants = {
 };
 
 const LandingHero = () => {
-  const [currStep, setCurrStep] = useState(1);
+  const [currStep, setCurrStep] = useState(3);
 
   const step1Card1 = useRef<HTMLImageElement>(null);
   const step1Card2 = useRef<HTMLImageElement>(null);
@@ -61,9 +60,7 @@ const LandingHero = () => {
         else return ++prevState;
       });
     };
-
     const interval = setInterval(revealCards, 4000);
-
     return () => {
       clearInterval(interval);
     };
@@ -354,7 +351,7 @@ const LandingHero = () => {
               <motion.path
                 d="M838.304,530.334C563.348,413.334 468.048,551.613 299.304,520.897C-36.1521,459.834 -36.152,150.334 47.3045,4.33447"
                 stroke="#4E4E4E"
-                stroke-width="2"
+                strokeWidth="2"
                 strokeDasharray="4 4"
                 variants={pathVariants}
                 initial="initial"
@@ -393,16 +390,14 @@ const LandingHero = () => {
         <Image src="/vectors/logo-2.svg" width={56} height={56} alt="logo" />{" "}
         recs
       </h1>
-      <Link href="/login">
-        <Button lg variant="dark" className={styles.btn}>
-          start now
-        </Button>
-      </Link>
-      <Link href="/login">
-        <div className={styles.limitedAccess}>
-          LIMITED BETA ACCESS SPOTS ==&gt;&gt; SIGN UP NOW
-        </div>
-      </Link>
+
+      <Button lg variant="dark" className={styles.btn}>
+        start now
+      </Button>
+
+      <div className={styles.limitedAccess}>
+        LIMITED BETA ACCESS SPOTS ==&gt;&gt; SIGN UP NOW
+      </div>
     </Section>
   );
 };
