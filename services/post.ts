@@ -7,7 +7,7 @@ interface IPostData {
   description: string;
   media_url:[{
     signUrl:string,
-    file_extension:string,
+    content_type:string,
     media_name:string,
   }]
   category: string;
@@ -34,7 +34,7 @@ export interface IPostDataUserItem {
 }
 
 export interface IPostMediaItem {
-  file_extension:string,
+  content_type:string,
   file_size_mb:string,
 }
 
@@ -42,6 +42,17 @@ export interface IPostMedia {
   post_media: IPostMediaItem[],
 }
 
+export interface IPostAddMedia {
+  content_type:string,
+  media_name:string,
+}
+
+interface IAddPostMediaApi {
+  postId:string
+  mediaData: {
+    post_media : IPostAddMedia[]
+  };
+}
 
 
 
@@ -64,13 +75,17 @@ export const getSignedUrl = async (data: {postId:string,postMediaData: IPostMedi
   return (await hop3Api.post(`/post/createPostMediaSignUrl/${postId}`, postMediaData)).data;
 }
 
-export const uploadOnS3Bucket = async (data: {uploadUrl:string,fileData: any}) => {
-  const { uploadUrl, fileData } = data
-  return (await axios.put(uploadUrl,fileData.fileObj,{
-    headers:{
-      'Content-Type': fileData.type
-    }
-  })).data;
+export const uploadOnS3Bucket = async (data: {uploadUrl:string,fileData: any, fields:any,content_type:string}) => {
+  try {
+    const {uploadUrl, fileData, fields, content_type} = data
+    const formData = new FormData()
+    Object.keys(fields).forEach((subItem: string) => formData.append(subItem, fields[subItem]))
+    formData.append("Content-Type", content_type)
+    formData.append("file", fileData.fileObj)
+    return (await axios.post(uploadUrl, formData,)).status;
+  }catch (e) {
+    console.log("Error in upload on s3",e)
+  }
 }
 
 export const createReaction = async (data: IReactionType) =>{
@@ -98,6 +113,12 @@ export const getPostForAdmin = async ({ queryKey } : any) =>{
     url = url + `&status=${status}`
   }
   return (await hop3Api.get(url)).data;
+}
+
+export const addPostMediaDetails = async (data: IAddPostMediaApi) =>{
+  const postId = data.postId
+  const mediaData = data.mediaData
+  return (await hop3Api.put(`/post/addPostMediaDetails/${postId}`, mediaData)).data;
 }
 
 

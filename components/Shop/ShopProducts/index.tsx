@@ -1,10 +1,10 @@
 import Image from "next/image";
 import clsx from "clsx";
 
-import useModal from "../../hooks/useModal";
-import Button from "../Button";
-import RedeemModal from "../../modals/RedeemModal";
-import styles from "../../styles/ShopProducts.module.scss";
+import useModal from "../../../hooks/useModal";
+import Button from "../../Button";
+import RedeemModal from "../../../modals/RedeemModal";
+import styles from "../../../styles/ShopProducts.module.scss";
 
 const data = [
   {

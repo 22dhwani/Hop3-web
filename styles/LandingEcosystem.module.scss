@@ -1,0 +1,186 @@
+.landingEcosystem {
+  background-color: #f8f8f8;
+  padding-bottom: 0;
+
+  @media screen and (max-width: 767px) {
+    padding-bottom: 60px;
+  }
+
+  .btn {
+    height: 70px;
+    padding-left: 46px;
+    padding-right: 46px;
+    font-size: 26px;
+    margin-top: 30px;
+  }
+
+  h2 {
+    font-size: 60px;
+    margin-bottom: 40px;
+    max-width: 680px;
+
+    @media screen and (max-width: 1400px) {
+      font-size: 52px;
+      max-width: 590px;
+    }
+
+    @media screen and (max-width: 1200px) {
+      font-size: 48px;
+      max-width: 540px;
+    }
+
+    @media screen and (max-width: 767px) {
+      font-size: 36px;
+      max-width: unset;
+    }
+  }
+
+  .descs {
+    display: flex;
+    gap: 50px;
+
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .para {
+      width: 100%;
+      max-width: 380px;
+      font-size: 18px;
+
+      @media screen and (max-width: 767px) {
+        max-width: unset;
+      }
+    }
+  }
+
+  .for {
+    margin-top: 80px;
+    display: flex;
+
+    @media screen and (max-width: 991px) {
+      margin-top: 60px;
+    }
+
+    @media screen and (max-width: 767px) {
+      margin-top: 40px;
+      margin-bottom: 70px;
+    }
+
+    @media screen and (max-width: 700px) {
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .text {
+      width: 415px;
+      font-size: 30px;
+      transform: translateY(20%);
+
+      @media screen and (max-width: 1400px) {
+        font-size: 26px;
+      }
+
+      @media screen and (max-width: 991px) {
+        font-size: 24px;
+      }
+
+      @media screen and (max-width: 700px) {
+        min-width: 286px;
+      }
+    }
+
+    .image {
+      width: 80%;
+
+      @media screen and (max-width: 700px) {
+        width: 100%;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .allocation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+    }
+
+    & > * {
+      width: calc(50% - 12px);
+      margin: 80px 0;
+
+      @media screen and (max-width: 1400px) {
+        margin: 50px 0;
+      }
+
+      @media screen and (max-width: 767px) {
+        margin: 0;
+        width: 100%;
+
+        &:nth-child(1) {
+          order: 1;
+        }
+
+        &:nth-child(2) {
+          order: 2;
+        }
+
+        &:nth-child(3) {
+          order: 4;
+        }
+
+        &:nth-child(4) {
+          order: 3;
+        }
+      }
+    }
+
+    .text {
+      h3 {
+        font-size: 40px;
+        margin-bottom: 20px;
+
+        @media screen and (max-width: 1400px) {
+          font-size: 34px;
+        }
+
+        @media screen and (max-width: 1200px) {
+          font-size: 30px;
+        }
+
+        @media screen and (max-width: 991px) {
+          font-size: 26px;
+        }
+      }
+
+      p {
+        font-size: 18px;
+        margin-bottom: 22px;
+      }
+    }
+
+    .imgContainer {
+      display: flex;
+      align-items: flex-end;
+
+      .brands {
+        width: 100%;
+
+        img {
+          width: 100%;
+          max-width: 670px;
+          height: auto;
+        }
+      }
+    }
+  }
+}

@@ -11,7 +11,14 @@ import Radios from "../Radios";
 import Tooltip from "../Tooltip";
 import UploaderInput from "../UploaderInput";
 import {ChangeEvent, ChangeEventHandler, useCallback, useEffect, useState} from "react";
-import {createPost, getSignedUrl, IPostMedia, IPostMediaItem, uploadOnS3Bucket} from "../../services/post";
+import {
+  addPostMediaDetails,
+  createPost,
+  getSignedUrl,
+  IPostMedia,
+  IPostMediaItem,
+  uploadOnS3Bucket
+} from "../../services/post";
 import {useMutation, useQuery} from "react-query";
 import {useRouter} from "next/router";
 import {getUser} from "../../services/auth";
@@ -95,6 +102,7 @@ const ShareExperience = () => {
   const { data:userData, isLoading:isUserLoading, error:getUserError,refetch: getUserApi } = useQuery("getUser", getUser,{enabled:false});
   const createPostMutation = useMutation(createPost)
   const createPostMediaMutation = useMutation(getSignedUrl)
+  const addPostMediaDetailsMutation = useMutation(addPostMediaDetails)
   const router = useRouter()
   const [postInfo,setPostInfo] = useState({
     title:'',
@@ -160,23 +168,38 @@ const ShareExperience = () => {
 
           createPostMutation.mutate(payload,{onSuccess: (data:any)=>{
               console.log("Valueee",data)
+              const postId = data.id
               //@ts-ignore
               const finalFilesData : IPostMediaItem[] = postInfo.files.map((item:any) => (
                   {
                     file_size_mb : item.fileSize / 1024 / 1024,
-                    file_extension : "."+item.name.split(".").pop()
+                    content_type : item.type,
                   }
                   ))
-              createPostMediaMutation.mutate({postId: data.id,postMediaData: {
+              createPostMediaMutation.mutate({postId: postId,postMediaData: {
                   post_media: finalFilesData
                 }},{onSuccess:  (async (urlData :any) => {
-
+                  const successDetails = [];
                   for(let i=0; i < urlData.post_media_data.length ; i++){
-                      await uploadOnS3Bucket({
+                   const resp =  await uploadOnS3Bucket({
                      uploadUrl: urlData.post_media_data[i].signUrl,
-                      fileData: postInfo.files[i]
+                      fileData: postInfo.files[i],
+                      fields:urlData.post_media_data[i].fields,
+                      content_type: urlData.post_media_data[i].content_type
                     })
+                    console.log("Upload response",resp)
+                    if(resp === 204){
+                      successDetails.push({
+                        media_name:urlData.post_media_data[i].name,
+                        content_type: urlData.post_media_data[i].content_type
+                      })
+                    }
                   }
+                  addPostMediaDetailsMutation.mutate({postId: postId, mediaData:{
+                    post_media: successDetails,
+                    }},{ onSuccess: async (updatedPost:any)=>{
+                      console.log("Updated post",updatedPost)
+                    }})
                 })})
             }})
     }

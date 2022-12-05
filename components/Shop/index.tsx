@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import MainLayout from "../../layouts/MainLayout";
-import ShopProducts from "../ShopProducts";
+import ShopProducts from "./ShopProducts";
 import styles from "../../styles/Shop.module.scss";
 
 const filterOptions = [

@@ -5,6 +5,8 @@ import styles from "../../styles/Button.module.scss";
 
 interface Props {
   variant: "purple" | "grey" | "dark-outlined" | "green" | "dark";
+  lg?: boolean;
+  className?: string;
   children: React.ReactNode;
   disabled?: boolean;
   href?: string;
@@ -14,6 +16,8 @@ interface Props {
 
 const Button = ({
   variant,
+  lg,
+  className,
   disabled,
   children,
   href,
@@ -27,6 +31,8 @@ const Button = ({
       disabled={disabled}
       className={clsx(
         styles.btn,
+        className,
+        { [styles.lg]: lg },
         variant === "dark-outlined" && styles.darkOutlined,
         variant === "purple" && styles.purple,
         variant === "grey" && styles.grey,

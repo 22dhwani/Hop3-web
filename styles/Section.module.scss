@@ -1,0 +1,27 @@
+.pageSection {
+  padding-left: 5rem;
+  padding-right: 5rem;
+  padding-top: 80px;
+  padding-bottom: 80px;
+
+  @media screen and (max-width: 991px) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @media screen and (max-width: 575px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .pageContainer {
+    max-width: 1380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

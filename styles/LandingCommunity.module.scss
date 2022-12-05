@@ -1,0 +1,228 @@
+.landingCommunity {
+  padding-bottom: 150px;
+  position: relative;
+
+  @media screen and (max-width: 1400px) {
+    padding-bottom: 60px;
+  }
+
+  @media screen and (max-width: 991px) {
+    padding-bottom: 36px;
+  }
+
+  h2 {
+    max-width: 700px;
+    font-size: 80px;
+    line-height: 1.1;
+
+    @media screen and (max-width: 1400px) {
+      font-size: 60px;
+      max-width: 650px;
+    }
+
+    @media screen and (max-width: 1200px) {
+      font-size: 50px;
+      max-width: 550px;
+    }
+
+    @media screen and (max-width: 991px) {
+      font-size: 40px;
+      max-width: 400px;
+    }
+
+    .coinWrap {
+      position: relative;
+      display: inline-block;
+      height: 40px;
+      width: 84px;
+
+      @media screen and (max-width: 1400px) {
+        width: 60px;
+      }
+
+      @media screen and (max-width: 1200px) {
+        max-width: 46px;
+      }
+
+      @media screen and (max-width: 991px) {
+        width: 42px;
+        height: 26px;
+      }
+
+      .coin {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .headline {
+    text-align: center;
+    font-size: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+
+    @media screen and (max-width: 1400px) {
+      font-size: 46px;
+    }
+
+    @media screen and (max-width: 991px) {
+      font-size: 36px;
+    }
+
+    @media screen and (max-width: 767px) {
+      font-size: 26px;
+    }
+
+    @media screen and (max-width: 575px) {
+      font-size: 204x;
+    }
+  }
+
+  .steps {
+    position: relative;
+    padding: 50px 0;
+    overflow: hidden;
+
+    @media screen and (max-width: 767px) {
+      padding-bottom: 0px;
+    }
+
+    .blurry {
+      background: linear-gradient(
+        to top,
+        rgba(255, 255, 255, 0.556) 90%,
+        transparent 100%
+      );
+      // backdrop-filter: blur(2px);
+      position: absolute;
+      left: -10px;
+      right: -10px;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .progressLine {
+      position: absolute;
+      content: "";
+      left: 7px;
+      width: 3px;
+      height: 100%;
+      background-color: #e7e7e7;
+      top: calc(130px + 30px);
+      overflow: hidden;
+
+      .progressBar {
+        position: absolute;
+        width: 100%;
+        background-color: #000;
+        transition: 0.2s ease-out;
+      }
+    }
+
+    .step {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 80px 0;
+
+      @media screen and (max-width: 991px) {
+        padding: 50px 0;
+      }
+
+      @media screen and (max-width: 767px) {
+        flex-direction: column;
+        gap: 50px;
+        align-items: flex-start;
+      }
+
+      .left {
+        max-width: 350px;
+        padding-left: 50px;
+
+        @media screen and (max-width: 767px) {
+          max-width: unset;
+          padding-left: 40px;
+        }
+
+        h3 {
+          position: relative;
+          font-size: 58px;
+          margin-bottom: 34px;
+
+          @media screen and (max-width: 1400px) {
+            font-size: 48px;
+          }
+
+          @media screen and (max-width: 1200px) {
+            font-size: 40px;
+          }
+
+          @media screen and (max-width: 767px) {
+            margin-bottom: 24px;
+          }
+
+          .circle {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: #e7e7e7;
+            border-radius: 50%;
+            left: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            @media screen and (max-width: 767px) {
+              left: -40px;
+            }
+
+            &.lastCircle::after {
+              content: "";
+              position: absolute;
+              width: 18px;
+              height: 58px;
+              background-color: #fff;
+              left: 50%;
+              top: 100%;
+              transform: translateX(-50%);
+            }
+          }
+        }
+
+        p {
+          font-size: 18px;
+          margin-bottom: 22px;
+        }
+      }
+
+      .right {
+        width: 50%;
+
+        @media screen and (max-width: 767px) {
+          padding-left: 30px;
+          width: 100%;
+          max-width: 500px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        img {
+          width: 100%;
+          height: auto;
+          max-width: 630px;
+        }
+      }
+    }
+  }
+}
