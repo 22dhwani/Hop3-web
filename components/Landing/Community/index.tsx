@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
+import Marquee from "react-fast-marquee";
 
 import distanceBetweenElements from "../../../utils/distanceBetweenElements";
 import Button from "../../Button";
@@ -183,9 +184,16 @@ const LandingCommunity = () => {
         </div>
       </div>
 
-      <div className={styles.headline}>
-        the next-gen experience &tilde; hop3 &tilde; the next-gen
-        experience&tilde;hop3
+      <div
+        className={clsx(styles.headline, "marquee3k")}
+        data-speed="0.25"
+        data-reverse="false"
+        data-pausable="false"
+      >
+        <Marquee>
+          the next-gen experience &tilde; hop3 &tilde; the next-gen
+          experience&tilde;hop3
+        </Marquee>
       </div>
     </Section>
   );
