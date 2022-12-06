@@ -1,16 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import LandingPage from "../public/images/LandingPage.png";
 import { height } from "@mui/system";
+import Landing from "../components/Landing";
 
 const Home = (props: any) => {
   return (
     <div>
-      <Image
-        src={LandingPage}
-        alt={"landingpage"}
-        style={{ objectFit: "cover", height: "auto", maxWidth: "100%" }}
-      />
+      <Landing />
     </div>
   );
 };
