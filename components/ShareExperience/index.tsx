@@ -10,18 +10,24 @@ import Navbar from "../Navbar";
 import Radios from "../Radios";
 import Tooltip from "../Tooltip";
 import UploaderInput from "../UploaderInput";
-import {ChangeEvent, ChangeEventHandler, useCallback, useEffect, useState} from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import {
   addPostMediaDetails,
   createPost,
   getSignedUrl,
   IPostMedia,
   IPostMediaItem,
-  uploadOnS3Bucket
+  uploadOnS3Bucket,
 } from "../../services/post";
-import {useMutation, useQuery} from "react-query";
-import {useRouter} from "next/router";
-import {getUser} from "../../services/auth";
+import { useMutation, useQuery } from "react-query";
+import { useRouter } from "next/router";
+import { getUser } from "../../services/auth";
 
 const rewardItems = [
   {
@@ -99,141 +105,184 @@ const dealOptions = [
 ];
 
 const ShareExperience = () => {
-  const { data:userData, isLoading:isUserLoading, error:getUserError,refetch: getUserApi } = useQuery("getUser", getUser,{enabled:false});
-  const createPostMutation = useMutation(createPost)
-  const createPostMediaMutation = useMutation(getSignedUrl)
-  const addPostMediaDetailsMutation = useMutation(addPostMediaDetails)
-  const router = useRouter()
-  const [postInfo,setPostInfo] = useState({
-    title:'',
-    description:'',
-    category:'',
-    location:'',
-    event:'',
-    price:'',
-    hashtags:'',
-    files:[],
-  })
-  const [error,setError] = useState({
-    title:'',
-    description:'',
-    category:'',
-    location:'',
-    event:'',
-    price:'',
-    hashtags:''
-  })
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    error: getUserError,
+    refetch: getUserApi,
+  } = useQuery("getUser", getUser, { enabled: false });
+  const createPostMutation = useMutation(createPost);
+  const createPostMediaMutation = useMutation(getSignedUrl);
+  const addPostMediaDetailsMutation = useMutation(addPostMediaDetails);
+  const router = useRouter();
+  const [postInfo, setPostInfo] = useState({
+    title: "",
+    description: "",
+    category: "",
+    location: "",
+    event: "",
+    price: "",
+    hashtags: "",
+    files: [],
+  });
+  const [error, setError] = useState({
+    title: "",
+    description: "",
+    category: "",
+    location: "",
+    event: "",
+    price: "",
+    hashtags: "",
+  });
 
-  useEffect(()=>{
-    getUserApi()
-  },[])
+  useEffect(() => {
+    getUserApi();
+  }, []);
 
-  const checkValidation = useCallback(()=>{
-    const tempError = {...error}
-    tempError.title =  postInfo.title === '' ? 'Title is required' : ''
-    tempError.description =  postInfo.description === '' ? 'Description is required' : ''
-    setError(tempError)
-    return tempError
-  },[error,postInfo])
+  const checkValidation = useCallback(() => {
+    const tempError = { ...error };
+    tempError.title = postInfo.title === "" ? "Title is required" : "";
+    tempError.description =
+      postInfo.description === "" ? "Description is required" : "";
+    setError(tempError);
+    return tempError;
+  }, [error, postInfo]);
 
-  console.log("Mutation loading",createPostMutation.isLoading)
-  console.log("Mutation error",createPostMutation.error)
+  console.log("Mutation loading", createPostMutation.isLoading);
+  console.log("Mutation error", createPostMutation.error);
 
-  const onPressSubmit = useCallback((e:any)=>{
-    e.preventDefault()
-    const tempError = checkValidation();
-    console.log("temp erro",tempError)
-    if(!tempError.title && !tempError.description){
-          const payload : any = {
-            post_type:'Standard',
-            title: postInfo.title,
-            description: postInfo.description,
-            media_type: "image",
-          }
-          if(postInfo.category){
-            payload.category =  postInfo.category
-          }
-          if(postInfo.price){
-            payload.price =  postInfo.price
-          }
-          if(postInfo.hashtags){
-            payload.hashtag =  postInfo.hashtags
-          }
-          if(postInfo.event){
-            payload.event =  postInfo.event
-          }
-          if(postInfo.location){
-            payload.location =  postInfo.location
-          }
+  const onPressSubmit = useCallback(
+    (e: any) => {
+      e.preventDefault();
+      const tempError = checkValidation();
+      console.log("temp erro", tempError);
+      if (!tempError.title && !tempError.description) {
+        const payload: any = {
+          post_type: "Standard",
+          title: postInfo.title,
+          description: postInfo.description,
+          media_type: "image",
+        };
+        if (postInfo.category) {
+          payload.category = postInfo.category;
+        }
+        if (postInfo.price) {
+          payload.price = postInfo.price;
+        }
+        if (postInfo.hashtags) {
+          payload.hashtag = postInfo.hashtags;
+        }
+        if (postInfo.event) {
+          payload.event = postInfo.event;
+        }
+        if (postInfo.location) {
+          payload.location = postInfo.location;
+        }
 
-          createPostMutation.mutate(payload,{onSuccess: (data:any)=>{
-              console.log("Valueee",data)
-              const postId = data.id
-              //@ts-ignore
-              const finalFilesData : IPostMediaItem[] = postInfo.files.map((item:any) => (
-                  {
-                    file_size_mb : item.fileSize / 1024 / 1024,
-                    content_type : item.type,
-                  }
-                  ))
-              createPostMediaMutation.mutate({postId: postId,postMediaData: {
-                  post_media: finalFilesData
-                }},{onSuccess:  (async (urlData :any) => {
+        createPostMutation.mutate(payload, {
+          onSuccess: (data: any) => {
+            console.log("Valueee", data);
+            const postId = data.id;
+            //@ts-ignore
+            const finalFilesData: IPostMediaItem[] = postInfo.files.map(
+              (item: any) => ({
+                file_size_mb: item.fileSize / 1024 / 1024,
+                content_type: item.type,
+              })
+            );
+            createPostMediaMutation.mutate(
+              {
+                postId: postId,
+                postMediaData: {
+                  post_media: finalFilesData,
+                },
+              },
+              {
+                onSuccess: async (urlData: any) => {
                   const successDetails = [];
-                  for(let i=0; i < urlData.post_media_data.length ; i++){
-                   const resp =  await uploadOnS3Bucket({
-                     uploadUrl: urlData.post_media_data[i].signUrl,
+                  for (let i = 0; i < urlData.post_media_data.length; i++) {
+                    const resp = await uploadOnS3Bucket({
+                      uploadUrl: urlData.post_media_data[i].signUrl,
                       fileData: postInfo.files[i],
-                      fields:urlData.post_media_data[i].fields,
-                      content_type: urlData.post_media_data[i].content_type
-                    })
-                    console.log("Upload response",resp)
-                    if(resp === 204){
+                      fields: urlData.post_media_data[i].fields,
+                      content_type: urlData.post_media_data[i].content_type,
+                    });
+                    console.log("Upload response", resp);
+                    if (resp === 204) {
                       successDetails.push({
-                        media_name:urlData.post_media_data[i].name,
-                        content_type: urlData.post_media_data[i].content_type
-                      })
+                        media_name: urlData.post_media_data[i].name,
+                        content_type: urlData.post_media_data[i].content_type,
+                      });
                     }
                   }
-                  addPostMediaDetailsMutation.mutate({postId: postId, mediaData:{
-                    post_media: successDetails,
-                    }},{ onSuccess: async (updatedPost:any)=>{
-                      console.log("Updated post",updatedPost)
-                    }})
-                })})
-            }})
-    }
+                  addPostMediaDetailsMutation.mutate(
+                    {
+                      postId: postId,
+                      mediaData: {
+                        post_media: successDetails,
+                      },
+                    },
+                    {
+                      onSuccess: async (updatedPost: any) => {
+                        console.log("Updated post", updatedPost);
+                      },
+                    }
+                  );
+                },
+              }
+            );
+          },
+        });
+      }
+    },
+    [checkValidation, postInfo]
+  );
 
-  },[checkValidation,postInfo])
+  const onChangeTitle = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setPostInfo((prevState) => ({ ...prevState, title: event.target.value }));
+  }, []);
 
+  const onChangeDescription = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setPostInfo((prevState) => ({
+        ...prevState,
+        description: event.target.value,
+      }));
+    },
+    []
+  );
 
-  const onChangeTitle = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-      setPostInfo((prevState => ({...prevState,title: event.target.value})))
-  },[])
+  const onChangeEvent = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setPostInfo((prevState) => ({ ...prevState, event: event.target.value }));
+  }, []);
 
-  const onChangeDescription = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-    setPostInfo((prevState => ({...prevState,description: event.target.value})))
-  },[])
+  const onChangeLocation = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setPostInfo((prevState) => ({
+        ...prevState,
+        location: event.target.value,
+      }));
+    },
+    []
+  );
 
-  const onChangeEvent = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-    setPostInfo((prevState => ({...prevState,event: event.target.value})))
-  },[])
+  const onChangeHashtags = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setPostInfo((prevState) => ({
+        ...prevState,
+        hashtags: event.target.value,
+      }));
+    },
+    []
+  );
 
-  const onChangeLocation = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-    setPostInfo((prevState => ({...prevState,location: event.target.value})))
-  },[])
+  const onSelectCategory = useCallback((category: string) => {
+    setPostInfo((prevState) => ({ ...prevState, category }));
+  }, []);
 
-  const onChangeHashtags = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
-    setPostInfo((prevState => ({...prevState,hashtags: event.target.value})))
-  },[])
-
-  const onSelectCategory = useCallback((category:string)=>{
-    setPostInfo((prevState => ({...prevState,category})))
-  },[])
-
-  const onSelectPrice = useCallback((price:string)=>{
-    setPostInfo((prevState => ({...prevState,price})))
-  },[])
+  const onSelectPrice = useCallback((price: string) => {
+    setPostInfo((prevState) => ({ ...prevState, price }));
+  }, []);
 
   // useEffect(()=>{
   //   if(createPostMutation.isSuccess){
@@ -241,11 +290,11 @@ const ShareExperience = () => {
   //   }
   // },[createPostMutation.isSuccess])
 
-  const isAdminOrCreator = userData?.role === 'admin' || userData?.role === 'creator'
+  // const isAdminOrCreator = userData?.role === 'admin' || userData?.role === 'creator'
 
-  const onFileSelected = useCallback((files:any)=>{
-    setPostInfo((prevState => ({...prevState,files })))
-  },[])
+  const onFileSelected = useCallback((files: any) => {
+    setPostInfo((prevState) => ({ ...prevState, files }));
+  }, []);
 
   return (
     <div className={styles.shareExperienceContainer}>
