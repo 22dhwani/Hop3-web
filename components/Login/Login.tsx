@@ -7,13 +7,13 @@ import Image from "next/image";
 import styles from "../../styles/Login.module.scss";
 import LoginCover from "../../public/images/LoginCover.png";
 import Logo from "../../public/images/Logo.svg";
-import { Button, TextField, Grid, Link } from "@mui/material";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { auth } from "../firebase";
 import { getThemeColor } from "../../utils/utils";
 import { getUser } from "../../services/auth";
 
 export default function Login() {
+  const router=useRouter()
   const [fieldValues, setFieldValues] = useState({
     email: "",
     password: "",
@@ -21,7 +21,7 @@ export default function Login() {
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     if (token) {
-      Router.push("/dashboard");
+      router.push("/dashboard");
     }
   }, []);
   const handleChange = (name: string, value: string) => {
@@ -33,7 +33,7 @@ export default function Login() {
     });
   };
   const redirectToUserDetailsPage = () => {
-    Router.push(
+    router.push(
       `/userDetails?user=${JSON.stringify(fieldValues)}`,
       "/userDetails"
     );
@@ -50,7 +50,7 @@ export default function Login() {
           setToken();
           const response = await getUser();
           if (response?.status === 200) {
-            Router.push("/dashboard");
+            router.push("/dashboard");
           } else {
             redirectToUserDetailsPage();
           }
@@ -88,17 +88,13 @@ export default function Login() {
           <p className={styles.transformText}>right place</p>
         </span>
         <div className={styles.loginform}>
-          <form onSubmit={handleSubmit}>
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <TextField
+          <form onSubmit={handleSubmit} data-testid="login-form">
+            <div className={styles.formwrapper}> 
+                <input
                   type="email"
                   placeholder="Email"
                   name="email"
-                  sx={{
-                    width: "450px",
-                  }}
-                  variant="outlined"
+                  data-testid="email"
                   value={fieldValues.email}
                   onChange={(event) =>
                     handleChange(event.target.name, event.target.value)
@@ -106,49 +102,31 @@ export default function Login() {
                   required
                   autoFocus
                 />
-              </Grid>
-              <Grid item>
-                <TextField
+                <input
                   type="password"
                   placeholder="Password"
                   name="password"
-                  sx={{
-                    width: "450px",
-                  }}
-                  variant="outlined"
+                  data-testid="password"
                   value={fieldValues.password}
                   onChange={(event) =>
                     handleChange(event.target.name, event.target.value)
                   }
                   required
                 />
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
+                <button
                   type="submit"
+                  data-testid="login"
+
                   className="button-block"
-                  sx={{
-                    background: "#FFFFFF",
-                    border: "1px solid #000000",
-                    width: "450px",
-                    boxShadow: "4px 4px 0px #70FFC3",
-                    borderRadius: "4px",
-                    color: getThemeColor(),
-                    "&:hover": {
-                      backgroundColor: "#70FFC3",
-                    },
-                  }}
                 >
                   Login
-                </Button>
-              </Grid>
-            </Grid>
+                </button>
+                </div>
           </form>
           <p>
-            By logining, I agree to the <Link>Terms of Service</Link> and
+            By logining, I agree to the <a className={styles.link}>Terms of Service</a> and
             <br />
-            <Link> Privacy Policy</Link>
+            <a className={styles.link}> Privacy Policy</a>
           </p>
         </div>
       </div>
