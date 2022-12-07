@@ -58,7 +58,7 @@ const LandingCommunity = () => {
       const center = top - vh / 2;
 
       progressBarRef.current.style.height = -center + "px";
-      blurryRef.current.style.top = -center + 200 + "px";
+      blurryRef.current.style.top = -center + vh / 2 + "px";
 
       markCircle(circle1Ref.current, vh);
       markCircle(circle2Ref.current, vh);
@@ -192,7 +192,8 @@ const LandingCommunity = () => {
       >
         <Marquee>
           the next-gen experience &tilde; hop3 &tilde; the next-gen
-          experience&tilde;hop3
+          experience&tilde;hop3 the next-gen experience &tilde; hop3 &tilde; the
+          next-gen experience&tilde;hop3
         </Marquee>
       </div>
     </Section>

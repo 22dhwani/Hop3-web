@@ -38,6 +38,17 @@
   .step1Card1,
   .step1Card2,
   .step1Card3,
+  .step2Card1,
+  .step2Card2,
+  .step3Card1,
+  .step3Card2 {
+    z-index: 1;
+    transform-origin: center bottom;
+  }
+
+  .step1Card1,
+  .step1Card2,
+  .step1Card3,
   .step1Line1,
   .step2Card1,
   .step2Card2,
@@ -48,6 +59,7 @@
   .step3Line1 {
     position: absolute;
     opacity: 0;
+    pointer-events: none;
   }
 
   .step1Card1 {
@@ -439,6 +451,35 @@
 
   h1 {
     font-size: 75px;
+
+    * {
+      font-size: inherit !important;
+      font-family: "DM Sans", sans-serif !important;
+      color: inherit !important;
+    }
+
+    & > div {
+      display: inline;
+
+      & > section {
+        display: inline-flex !important;
+        transform: translate(0, 10%);
+        margin-right: 1.5rem;
+        margin-left: 10px;
+
+        * {
+          text-shadow: 2px 2px #d2ff2d;
+        }
+
+        @media screen and (max-width: 1280px) {
+          margin-right: 1rem;
+        }
+
+        @media screen and (max-width: 991px) {
+          margin-right: 0.75rem;
+        }
+      }
+    }
 
     @media screen and (max-width: 1400px) {
       font-size: 60px;
