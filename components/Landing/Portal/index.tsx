@@ -17,9 +17,10 @@ const LandingPortal = () => {
               "exploring events",
               "finding deals",
             ]}
-            typeSpeed={250}
+            typeSpeed={50}
             loop
           />
+          <span className={styles.cursor}>|</span>
         </span>
         <br />
         <span className={styles.rewarding}>rewarding</span>”

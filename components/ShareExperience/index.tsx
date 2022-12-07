@@ -247,7 +247,6 @@ const ShareExperience = () => {
     setPostInfo((prevState => ({...prevState,files })))
   },[])
 
-
   return (
     <div className={styles.shareExperienceContainer}>
       <Navbar withoutShareExpBtn />
@@ -319,7 +318,7 @@ const ShareExperience = () => {
                 id="upload"
                 label="Upload video or image"
                 required
-                onFilesSelected={onFileSelected}
+                // onFilesSelected={onFileSelected}
               />
               <div className={styles.helper}>
                 Need some help?{" "}
@@ -354,9 +353,6 @@ const ShareExperience = () => {
                 label="Title"
                 required
                 placeholder="Give your post an attractive title"
-                onChange={onChangeTitle}
-                value={postInfo.title}
-                error={error.title}
               />
             </div>
 
@@ -367,9 +363,6 @@ const ShareExperience = () => {
                 required
                 textarea
                 placeholder="Tell more about..."
-                onChange={onChangeDescription}
-                value={postInfo.description}
-                error={error.description}
               />
             </div>
 
@@ -379,7 +372,7 @@ const ShareExperience = () => {
                 label="Category"
                 options={categories}
                 placeholder="Select a category for your post"
-                onSelect={onSelectCategory}
+                required
               />
             </div>
 
@@ -388,8 +381,6 @@ const ShareExperience = () => {
                 id="location"
                 label="Location"
                 placeholder="Where is it located?"
-                onChange={onChangeLocation}
-                value={postInfo.location}
               />
             </div>
             <div className={styles.input}>
@@ -399,7 +390,6 @@ const ShareExperience = () => {
                 options={priceRange}
                 placeholder="How much does it cost?"
                 listType
-                onSelect={onSelectPrice}
               />
             </div>
 
@@ -408,35 +398,29 @@ const ShareExperience = () => {
                 id="url"
                 label="URL to the event or resturant"
                 placeholder="Give more information to explore"
-                onChange={onChangeEvent}
-                value={postInfo.event}
               />
             </div>
-            {isAdminOrCreator && (
-                <>
-                  <div className={styles.input}>
-                    <Input
-                        id="hash-tags"
-                        label="Hashtags"
-                        placeholder="Give the content great hashtags to help people find it"
-                        required
-                        onChange={onChangeHashtags}
-                        value={postInfo.hashtags}
-                    />
-                  </div>
 
-                <div className={styles.input}>
-                <Radios
-                id="deals"
-                label="Is it a deal"
+            <div className={styles.input}>
+              <Input
+                id="hash-tags"
+                label="Hashtags"
+                placeholder="Give the content great hashtags to help people find it"
+                required
+              />
+            </div>
+
+            <div className={styles.input}>
+              <Radios
+                id="hash-tags"
+                label="Hashtags"
                 data={dealOptions}
                 required
-                />
-                </div>
-            </>
-          )}
+              />
+            </div>
+
             <div className={styles.buttons}>
-              <Button variant="purple" onClick={onPressSubmit} >Submit</Button>
+              <Button variant="purple">Submit</Button>
               <Button variant="grey">Cancel</Button>
             </div>
           </form>

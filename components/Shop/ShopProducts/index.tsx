@@ -56,7 +56,7 @@ const ShopProducts = () => {
                 <div className={styles.limitedTimeOffer}>Limited-Time</div>
               )}
 
-              <Image src={el.img} alt={el.img} />
+              <img src={el.img} alt={el.img} />
 
               <div className={styles.name}>{el.name}</div>
 

@@ -10,7 +10,6 @@ interface Props {
   children: React.ReactNode;
   disabled?: boolean;
   href?: string;
-  onClick?: (e:any) => void
   [x: string]: any;
 }
 

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import FlipNumbers from "react-flip-numbers";
 
 import Section from "../../Section";
 import styles from "../../../styles/LandingHero.module.scss";
 import Button from "../../Button";
-import Link from "next/link";
 
 const pathVariants = {
   initial: {
@@ -15,6 +15,7 @@ const pathVariants = {
     pathLength: 1,
     transition: {
       duration: 1,
+      delay: 0.5,
     },
   },
   exit: {
@@ -25,34 +26,42 @@ const pathVariants = {
 const imgVariants = {
   initial: {
     opacity: 0,
-    scale: 0.5,
+    scale: 0.4,
   },
   animate: {
     opacity: 1,
     scale: 1,
+    transition: {
+      duration: 0.4,
+    },
   },
   exit: {
+    scale: 0,
     opacity: 0,
-    scale: 0.5,
+    transition: {
+      duration: 0.4,
+    },
   },
 };
 
 const LandingHero = () => {
-  const [currStep, setCurrStep] = useState(1);
+  const [currStep, setCurrStep] = useState(3);
+  const [numTime, setNumTime] = useState(2);
+  const [num, setNum] = useState<string>("1259");
+  const [delay, setDelay] = useState<number>(0);
+  const [numWidth, setNumWidth] = useState(60);
+  const [numHeight, setNumHeight] = useState(70);
 
   const step1Card1 = useRef<HTMLImageElement>(null);
   const step1Card2 = useRef<HTMLImageElement>(null);
   const step1Card3 = useRef<HTMLImageElement>(null);
-  const step1Line1 = useRef<HTMLImageElement>(null);
 
   const step2Card1 = useRef<HTMLImageElement>(null);
   const step2Card2 = useRef<HTMLImageElement>(null);
   const step2Line1 = useRef<HTMLImageElement>(null);
-  const step2Line2 = useRef<HTMLImageElement>(null);
 
   const step3Card1 = useRef<HTMLImageElement>(null);
   const step3Card2 = useRef<HTMLImageElement>(null);
-  const step3Line1 = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const revealCards = () => {
@@ -61,17 +70,82 @@ const LandingHero = () => {
         else return ++prevState;
       });
     };
-
     const interval = setInterval(revealCards, 4000);
-
     return () => {
       clearInterval(interval);
     };
   }, []);
 
+  useEffect(() => {
+    let inter: ReturnType<typeof setInterval>;
+    const timeout = setTimeout(() => {
+      setNumTime(1);
+
+      inter = setInterval(() => {
+        setNum((num) => (parseInt(num) + 1).toString());
+      }, 2500);
+    }, 3500);
+
+    return () => {
+      clearInterval(inter);
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    const bpF0 = function (x?: any) {
+      if (x.matches) {
+        setNumWidth(60);
+        setNumHeight(70);
+      }
+    };
+    const bp0 = window.matchMedia("(min-width: 1401px)");
+    bpF0(bp0);
+    bp0.addListener(bpF0);
+
+    const bpF1 = function (x?: any) {
+      if (x.matches) {
+        setNumWidth(46);
+        setNumHeight(60);
+      }
+    };
+    const bp1 = window.matchMedia("(max-width: 1400px)");
+    bpF1(bp1);
+    bp1.addListener(bpF1);
+
+    const bpF3 = function (x?: any) {
+      if (x.matches) {
+        setNumWidth(36);
+        setNumHeight(46);
+      }
+    };
+    const bp3 = window.matchMedia("(max-width: 1280px)");
+    bpF3(bp3);
+    bp3.addListener(bpF3);
+
+    const bpF4 = function (x?: any) {
+      if (x.matches) {
+        setNumWidth(34);
+        setNumHeight(42);
+      }
+    };
+    const bp4 = window.matchMedia("(max-width: 991px)");
+    bpF4(bp4);
+
+    const bpF5 = function (x?: any) {
+      if (x.matches) {
+        setNumWidth(22);
+        setNumHeight(28);
+      }
+    };
+    const bp5 = window.matchMedia("(max-width: 575px)");
+    bpF5(bp5);
+    bp5.addListener(bpF5);
+  }, []);
+
   return (
     <Section className={styles.landingHero}>
-      <AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
         {currStep === 1 && (
           <>
             <motion.img
@@ -167,40 +241,9 @@ const LandingHero = () => {
             </motion.svg>
           </>
         )}
+      </AnimatePresence>
 
-        {/* <img
-        ref={step1Card1}
-        src="/vectors/step-1-card-1.svg"
-        className={styles.step1Card1}
-        width={116}
-        height={166}
-        alt="card"
-      />
-      <img
-        ref={step1Card2}
-        src="/vectors/step-1-card-2.svg"
-        className={styles.step1Card2}
-        width={108}
-        height={160}
-        alt="card"
-      />
-      <img
-        ref={step1Card3}
-        src="/vectors/step-1-card-3.svg"
-        className={styles.step1Card3}
-        width={126}
-        height={150}
-        alt="card"
-      />
-      <img
-        ref={step1Line1}
-        src="/vectors/step-1-line-1.svg"
-        className={styles.step1Line1}
-        width={420}
-        height={394}
-        alt="line"
-      /> */}
-
+      <AnimatePresence exitBeforeEnter>
         {currStep === 2 && (
           <>
             <motion.img
@@ -284,23 +327,11 @@ const LandingHero = () => {
                 fill="black"
               />
             </motion.svg>
-
-            {/* <motion.img
-              variants={imgVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              key={"step2Line2"}
-              ref={step2Line2}
-              src="/vectors/step-2-line-2.svg"
-              className={styles.step2Line2}
-              width={667}
-              height={572}
-              alt="line"
-            /> */}
           </>
         )}
+      </AnimatePresence>
 
+      <AnimatePresence exitBeforeEnter>
         {currStep === 3 && (
           <>
             <motion.img
@@ -354,7 +385,7 @@ const LandingHero = () => {
               <motion.path
                 d="M838.304,530.334C563.348,413.334 468.048,551.613 299.304,520.897C-36.1521,459.834 -36.152,150.334 47.3045,4.33447"
                 stroke="#4E4E4E"
-                stroke-width="2"
+                strokeWidth="2"
                 strokeDasharray="4 4"
                 variants={pathVariants}
                 initial="initial"
@@ -370,39 +401,35 @@ const LandingHero = () => {
                 fill="black"
               />
             </motion.svg>
-
-            {/* <motion.img
-              variants={imgVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              key={"step3Line1"}
-              ref={step3Line1}
-              src="/vectors/step-3-line-1.svg"
-              className={styles.step3Line1}
-              width={840}
-              height={533}
-              alt="line"
-            /> */}
           </>
         )}
       </AnimatePresence>
 
       <h1>
-        Explore 1,259{" "}
+        Explore
+        <div>
+          <FlipNumbers
+            height={numHeight}
+            width={numWidth}
+            color="black"
+            background="transparent"
+            play
+            perspective={500}
+            duration={numTime}
+            numbers={num}
+          />
+        </div>
         <Image src="/vectors/logo-2.svg" width={56} height={56} alt="logo" />{" "}
         recs
       </h1>
-      <Link href="/login">
-        <Button lg variant="dark" className={styles.btn}>
-          start now
-        </Button>
-      </Link>
-      <Link href="/login">
-        <div className={styles.limitedAccess}>
-          LIMITED BETA ACCESS SPOTS ==&gt;&gt; SIGN UP NOW
-        </div>
-      </Link>
+
+      <Button lg variant="dark" className={styles.btn}>
+        start now
+      </Button>
+
+      <div className={styles.limitedAccess}>
+        LIMITED BETA ACCESS SPOTS ==&gt;&gt; SIGN UP NOW
+      </div>
     </Section>
   );
 };

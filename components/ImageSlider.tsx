@@ -27,11 +27,11 @@ export default function ImageSlider({ data }: Props) {
     <Box className={styles.imageslidercontainer}>
       <Box>
         <div>
-              <Image className={styles.image} src={data[activeStep]} alt={""} width={500} height={400} />
+          <Image className={styles.image} src={data[activeStep]} alt={""} />
         </div>
       </Box>
       <Box className={styles.dotswrapper}>
-        {data?.map((image: any, index: number) => (
+        {data?.map((image, index) => (
           <div key={`step-${index}`} className={styles.dot}>
             <TimelineDot
               color={activeStep === index ? "primary" : "grey"}

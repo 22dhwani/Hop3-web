@@ -32,18 +32,9 @@
     align-items: center;
 
     .filterbutton {
+      padding-left: 20px;
       font-weight: 400;
       font-size: 20px;
-      border-width: 0;
-      background: transparent;
-      justify-content: center;
-      align-items: center;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-    .selectedFilterButton {
-      font-weight: 700;
-      text-decoration-line: underline;
     }
   }
 
@@ -55,7 +46,7 @@
     .poster {
       width: 50%;
       height: 500px;
-      }
+    }
 
     .descriptionwrapper {
       width: 50%;
@@ -64,7 +55,6 @@
         flex-direction: column;
         padding-left: 15px;
         gap: 30px;
-        align-items: flex-end;
         .profiledescription {
           display: flex;
           .title {
@@ -93,8 +83,7 @@
         align-items: center;
         }
         .imgtitle{
-          padding-left: 8px;
-          padding-right: 8px;
+          padding-left: 7px;
         }
         .comment{
           display: flex;
@@ -102,6 +91,8 @@
         .selectwrapper{
           display: flex;
           justify-content: space-between;
+          align-items: center;
+         
         }
       }
     }

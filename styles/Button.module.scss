@@ -67,6 +67,11 @@
     min-width: 166px;
     font-weight: 700;
 
+    &,
+    * {
+      color: #000;
+    }
+
     @media screen and (max-width: 575px) {
       min-width: 100px;
       padding: 0 20px;
@@ -74,7 +79,11 @@
 
     &:hover {
       background-color: #000000;
-      color: #fff;
+
+      &,
+      * {
+        color: #fff;
+      }
     }
   }
 

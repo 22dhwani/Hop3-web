@@ -1,7 +1,5 @@
 .logincontainer {
     display: flex;
-    justify-content: space-between;
-
     .rightsection {
         display: flex;
         flex-direction: column;
@@ -23,8 +21,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 30px;
-            padding-top: 50px;
+            gap: 20px;
+            padding-top: 30px;
         }
 
         .transformdivwrraper {
@@ -51,23 +49,13 @@
     }
 
     .leftsection {
-        max-width: 50%;
-        margin: 0;
-        height: 100vh;
-
+        width: 50%;
         .imgcover {
             height: 100%;
             width: 100%;
             background-position: center;
             background-repeat: no-repeat;
-            object-fit: cover;
-        }
-
-        @media (max-width: 1170px) {
-            max-width: 30%;
-        }
-        @media (max-width: 795px) {
-            max-width: 10%;
+            background-size: cover;
         }
     }
 
