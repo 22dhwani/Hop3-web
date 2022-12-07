@@ -1,11 +1,13 @@
 import React from "react";
-import Login from "../components/Login/Login";
+import Image from "next/image";
+import { height } from "@mui/system";
+import Landing from "../components/Landing";
 
 const Home = () => {
   return (
-    <>
-      <Login />
-    </>
+    <div>
+      <Landing />
+    </div>
   );
 };
 
