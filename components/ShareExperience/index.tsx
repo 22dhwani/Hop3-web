@@ -22,7 +22,11 @@ import {
 import {useMutation, useQuery} from "react-query";
 import {useRouter} from "next/router";
 import {getUser} from "../../services/auth";
-
+interface  UserDataType {
+  username: string;
+  email: string;
+  role?: string;
+}
 const rewardItems = [
   {
     amount: 2,
@@ -99,7 +103,7 @@ const dealOptions = [
 ];
 
 const ShareExperience = () => {
-  const { data:userData, isLoading:isUserLoading, error:getUserError,refetch: getUserApi } = useQuery("getUser", getUser,{enabled:false});
+  const { data:userData, isLoading:isUserLoading, error:getUserError,refetch: getUserApi } = useQuery<UserDataType, Error>("getUser", getUser,{enabled:false});
   const createPostMutation = useMutation(createPost)
   const createPostMediaMutation = useMutation(getSignedUrl)
   const addPostMediaDetailsMutation = useMutation(addPostMediaDetails)
@@ -241,7 +245,7 @@ const ShareExperience = () => {
   //   }
   // },[createPostMutation.isSuccess])
 
-  const isAdminOrCreator = userData?.role === 'admin' || userData?.role === 'creator'
+  const isAdminOrCreator =  userData?.role === 'admin' || userData?.role=== 'creator'
 
   const onFileSelected = useCallback((files:any)=>{
     setPostInfo((prevState => ({...prevState,files })))

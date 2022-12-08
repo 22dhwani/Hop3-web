@@ -1,132 +1,106 @@
-import React, { FormEvent, useCallback, useEffect, useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import React, { useState, useEffect } from "react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
 import Image from "next/image";
 import styles from "../../styles/Login.module.scss";
 import LoginCover from "../../public/images/LoginCover.png";
 import Logo from "../../public/images/Logo.svg";
-import { useRouter } from "next/router";
+import Google from "../../public/images/Google.svg";
+import Router from "next/router";
 import { auth } from "../firebase";
-import { getThemeColor } from "../../utils/utils";
-import { getUser } from "../../services/auth";
+import { getThemeColor, refreshToken } from '../../utils/utils'
+import { getUser } from '../../services/auth'
+const provider = new GoogleAuthProvider();
 
 export default function Login() {
-  const router=useRouter()
   const [fieldValues, setFieldValues] = useState({
     email: "",
     password: "",
   });
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
-    if (token) {
-      router.push("/dashboard");
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (token && isAuthenticated) {
+      Router.push("/dashboard");
     }
   }, []);
-  const handleChange = (name: string, value: string) => {
-    setFieldValues((prevFieldValues) => {
-      return {
-        ...prevFieldValues,
-        [name]: value,
-      };
-    });
-  };
   const redirectToUserDetailsPage = () => {
-    router.push(
+    Router.push(
       `/userDetails?user=${JSON.stringify(fieldValues)}`,
       "/userDetails"
     );
   };
-  const setToken = async () => {
-    const token = await auth?.currentUser?.getIdToken(true);
-    localStorage.setItem("auth_token", token as string);
-  };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault();
-      signInWithEmailAndPassword(auth, fieldValues.email, fieldValues.password)
-        .then(async (user) => {
-          setToken();
-          const response = await getUser();
-          if (response?.status === 200) {
-            router.push("/dashboard");
-          } else {
-            redirectToUserDetailsPage();
-          }
-        })
-        .catch((error: any) => {
-          console.log({ error });
-          console.error("Error in sign in", error.message);
-          if (error.code === "auth/user-not-found") {
-            createUserWithEmailAndPassword(
-              auth,
-              fieldValues.email,
-              fieldValues.password
-            )
-              .then((user) => {
-                setToken();
-                redirectToUserDetailsPage();
-              })
-              .catch((err: any) => {
-                console.error("error in create user", err);
-              });
-          } else if (error?.response?.status === 404) {
-            redirectToUserDetailsPage();
+
+  const login = () => {
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+
+        // The signed-in user info.
+        const user = result.user;
+        await refreshToken()
+        setFieldValues((prevFieldValues) => {
+          return {
+            ...prevFieldValues,
+            email: user.email || '',
           }
         });
-    } catch (error) {
-      console.log(error);
-    }
+        try {
+
+          const data = await getUser();
+          if (data?.id) {
+            Router.push('/dashboard')
+            localStorage.setItem('isAuthenticated', 'true')
+          } else {
+            redirectToUserDetailsPage()
+          }
+        } catch (error: any) {
+          console.error("Errror in signin", error)
+          if (error?.response?.status === 404 || error?.response?.status === 500) {
+            redirectToUserDetailsPage()
+          }
+        }
+
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        redirectToUserDetailsPage()
+
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log({ errorCode, errorMessage, email, credential });
+      });
   };
   return (
     <div className={styles.logincontainer}>
       <div className={styles.rightsection}>
         <Image src={Logo} alt={""} />
-        <p className={styles.title}>You are hopping to the</p>
+        <p className={styles.title}>You are<br/>hopping to the</p>
         <span className={styles.transformdivwrraper}>
           <p className={styles.transformText}>right place</p>
         </span>
         <div className={styles.loginform}>
-          <form onSubmit={handleSubmit} data-testid="login-form">
-            <div className={styles.formwrapper}> 
-                <input
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  data-testid="email"
-                  value={fieldValues.email}
-                  onChange={(event) =>
-                    handleChange(event.target.name, event.target.value)
-                  }
-                  required
-                  autoFocus
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  data-testid="password"
-                  value={fieldValues.password}
-                  onChange={(event) =>
-                    handleChange(event.target.name, event.target.value)
-                  }
-                  required
-                />
-                <button
-                  type="submit"
-                  data-testid="login"
-
-                  className="button-block"
-                >
-                  Login
-                </button>
-                </div>
-          </form>
-          <p>
+          <div className={styles.formwrapper}>
+            <button
+              type="submit"
+              data-testid="login"
+              onClick={login}
+              className="button-block"
+            >
+              <Image src={Google} alt={""} />
+              &nbsp;&nbsp; Login via Google
+            </button>
+          </div>
+          <p className={styles.agreetext}> 
             By logining, I agree to the <a className={styles.link}>Terms of Service</a> and
             <br />
-            <a className={styles.link}> Privacy Policy</a>
+            <a className={styles.link}>Privacy Policy</a>
           </p>
         </div>
       </div>

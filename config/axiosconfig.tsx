@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Hop3Api_Local as Hop3_Service_Url } from "../serviceConfig";
 
 import {AxiosRequestConfig} from "axios";
+import {refreshToken} from "../utils/utils";
 const instance = axios.create({
   baseURL: Hop3_Service_Url,
   headers: {
@@ -9,21 +10,20 @@ const instance = axios.create({
   }
 })
 
-instance.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
-    const token = localStorage.getItem('auth_token');
-    console.log({token})
-    if (token) {
-        config.headers = config.headers ?? {};
-        config.headers['Authorization'] = `Bearer ${token}`;
-        console.log({config})
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+export const setAuthToken = (token:string) =>{
+  console.log({token})
+    instance.defaults.headers.Authorization = "Bearer "+token
+}
+
+// instance.interceptors.request.use(
+//   (config: AxiosRequestConfig) => {
+//
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 instance.interceptors.response.use(
   (res) => {
@@ -31,6 +31,10 @@ instance.interceptors.response.use(
   },
   async (err) => {
     const originalConfig = err.config;
+      console.log("Errrorr",err.response.status)
+      if(err.response.status === 403){
+          await refreshToken()
+      }
     // localStorage.removeItem('auth_token')
     return Promise.reject(err);
   }
