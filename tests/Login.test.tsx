@@ -1,9 +1,7 @@
 import Login from '../components/Login/Login';
-
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
-import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router';
+
 
 jest.mock('next/router', () => ({
     useRouter: jest.fn(),
