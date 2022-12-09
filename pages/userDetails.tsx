@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/UserDetails.module.scss";
 import Image from "next/image";
 import Logo from "../public/images/Logo.svg";
@@ -13,18 +13,24 @@ import {
   FormControl,
   Button,
 } from "@mui/material";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { createUser } from "../services/auth";
 
-export default function UserDetails({}) {
-  // console.log("router", Router?.query);
+export default function UserDetails({ }) {
+  const router = useRouter()
   const [username, setUsername] = useState("");
-  const handleUploadClick = () => {};
+  const handleUploadClick = () => { };
 
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (isAuthenticated || !router?.query?.user) {
+      router.back();
+    }
+  }, []);
   const handleSubmit = async () => {
     const userDetail =
-      typeof Router?.query?.user === "string"
-        ? JSON.parse(Router?.query?.user)
+      typeof router?.query?.user === "string"
+        ? JSON.parse(router?.query?.user)
         : {};
 
     try {
@@ -33,7 +39,8 @@ export default function UserDetails({}) {
         email: userDetail?.email,
       });
       if (response.status === 201) {
-        Router.push("/dashboard");
+        localStorage.setItem('isAuthenticated', 'true')
+        router.push("/dashboard");
       }
     } catch (error) {
       console.log(error);

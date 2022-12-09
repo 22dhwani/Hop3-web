@@ -15,14 +15,67 @@
 
       .profile {
         display: flex;
+
+        .dropdown {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+
+          .dropdowncontent {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            left: 18px;
+
+            .menuitem {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              .logout {
+                width: 25px;
+                height: 25px;
+              }
+            }
+          }
+
+          .profileimg {
+            width: 45px;
+            height: 45px;
+
+          }
+
+          .menuitem {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+
+            &:hover {
+              background-color: #f1f1f1
+            }
+          }
+
+          &:hover {
+            .dropdowncontent {
+              display: block;
+            }
+          }
+        }
+
         .sharebutton {
           padding: 5px 35px;
           border: 1px solid #000000;
+          background: none;
           border-radius: 44px;
         }
       }
+
       img {
-        padding-left: 20px;
+        margin-left: 20px;
       }
     }
   }
@@ -31,13 +84,25 @@
     display: flex;
     align-items: center;
 
-    .filterbutton {
+    .btnwrapper {
       padding-left: 20px;
-      font-weight: 400;
-      font-size: 20px;
+
+      .filterbutton {
+        font-weight: 400;
+        font-size: 20px;
+        background: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+
+        &.active {
+          font-weight: bold;
+          border-bottom: 1px solid #000;
+        }
+      }
     }
   }
-
   .postwrapper {
     display: flex;
     padding-top: 15px;
@@ -45,18 +110,43 @@
 
     .poster {
       width: 50%;
-      height: 500px;
+      height: 550px;
     }
 
     .descriptionwrapper {
       width: 50%;
+      padding-left: 40px;
+      padding-bottom: 25px;
       .description {
+        height: 550px;
+
         display: flex;
         flex-direction: column;
         padding-left: 15px;
-        gap: 30px;
+        justify-content: space-between;
+
+        .explore {
+          display: flex;
+          width: 120px;
+          align-items: center;
+          justify-content: flex-start;
+          border-bottom: 1px solid #000;
+
+          .exploretext {
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 105.5%;
+          }
+
+          .arowicon {
+            width: 13px;
+            height: 13px;
+            margin-left: 20px;
+          }
+        }
         .profiledescription {
           display: flex;
+
           .title {
             font-weight: 700;
             padding-left: 10px;
@@ -71,28 +161,43 @@
 
           }
         }
-        .boldtext{
+        .boldtext {
           font-weight: 700;
           font-size: 22px;
         }
-        .text{
+
+        .text {
+          padding-top: 15px;
           font-size: 16px;
         }
         .like {
-        display: flex;
-        align-items: center;
+          display: flex;
+          align-items: center;
         }
-        .imgtitle{
+
+        .imgtitle {
           padding-left: 7px;
         }
-        .comment{
+        .comment {
           display: flex;
         }
-        .selectwrapper{
+        .selectwrapper {
           display: flex;
           justify-content: space-between;
           align-items: center;
-         
+
+          .customselect {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 210px;
+            height: 34px;
+            background: #DED2FF;
+            border-radius: 23px;
+          }
+
         }
       }
     }

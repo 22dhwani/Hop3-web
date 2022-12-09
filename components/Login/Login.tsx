@@ -6,26 +6,26 @@ import styles from "../../styles/Login.module.scss";
 import LoginCover from "../../public/images/LoginCover.png";
 import Logo from "../../public/images/Logo.svg";
 import Google from "../../public/images/Google.svg";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { auth } from "../firebase";
 import { getThemeColor, refreshToken } from '../../utils/utils'
 import { getUser } from '../../services/auth'
 const provider = new GoogleAuthProvider();
 
 export default function Login() {
+  const router = useRouter()
   const [fieldValues, setFieldValues] = useState({
     email: "",
     password: "",
   });
   useEffect(() => {
-    const token = localStorage.getItem("auth_token");
     const isAuthenticated = localStorage.getItem("isAuthenticated");
-    if (token && isAuthenticated) {
-      Router.push("/dashboard");
+    if (isAuthenticated) {
+      router.push("/dashboard");
     }
   }, []);
   const redirectToUserDetailsPage = () => {
-    Router.push(
+    router.push(
       `/userDetails?user=${JSON.stringify(fieldValues)}`,
       "/userDetails"
     );
@@ -51,7 +51,7 @@ export default function Login() {
 
           const data = await getUser();
           if (data?.id) {
-            Router.push('/dashboard')
+            router.push('/dashboard')
             localStorage.setItem('isAuthenticated', 'true')
           } else {
             redirectToUserDetailsPage()
@@ -81,7 +81,7 @@ export default function Login() {
     <div className={styles.logincontainer}>
       <div className={styles.rightsection}>
         <Image src={Logo} alt={""} />
-        <p className={styles.title}>You are<br/>hopping to the</p>
+        <p className={styles.title}>You are<br />hopping to the</p>
         <span className={styles.transformdivwrraper}>
           <p className={styles.transformText}>right place</p>
         </span>
@@ -97,7 +97,7 @@ export default function Login() {
               &nbsp;&nbsp; Login via Google
             </button>
           </div>
-          <p className={styles.agreetext}> 
+          <p className={styles.agreetext}>
             By logining, I agree to the <a className={styles.link}>Terms of Service</a> and
             <br />
             <a className={styles.link}>Privacy Policy</a>

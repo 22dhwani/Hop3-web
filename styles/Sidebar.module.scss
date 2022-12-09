@@ -8,38 +8,49 @@
     padding: 20px 0;
     transition: all 0.5s ease;
 
-    .container{
+    .container {
         padding: 40px;
+
         .menu {
             padding-top: 50px;
+            padding-left: 5px;
+
             .item {
                 padding: 5px 0px;
                 display: flex;
-                .icon{
+                max-width: 200px;
+
+                .icon {
                     width: 25px;
                     height: 22px;
                 }
-                .text{
-                    padding-left: 10px;                    
+
+                .text {
+                    padding-left: 10px;
                     font-family: 'DM Sans';
                     font-style: normal;
                     font-weight: 400;
                     font-size: 18px;
-                    &:hover{
+                }
+
+                .arowicon {
+                    position: absolute;
+                    right: 105px;
+                }
+
+                &:hover {
+                    border-bottom: 1px solid #000000;
+
+                    .text {
                         font-weight: 700;
                     }
                 }
-                .arowicon{
-                    position: absolute;
-                    right: 40px;
-                }
-                &:hover{
-                    border-bottom: 1px solid #000000;
-                }
             }
         }
-        .buttonwrapper{
+
+        .buttonwrapper {
             padding: 100px 0px;
+
             .menubutton {
                 padding: 5px 35px;
                 background: #70FFC3;
@@ -47,8 +58,9 @@
                 border-radius: 44px;
             }
         }
+
         .textwrapper {
-            .invite{
+            .invite {
 
                 font-family: 'DM Sans';
                 font-style: normal;
@@ -57,7 +69,8 @@
                 letter-spacing: 0.01em;
                 color: #9F7CFF;
             }
-            .help{
+
+            .help {
                 font-family: 'DM Sans';
                 font-style: normal;
                 font-weight: 400;

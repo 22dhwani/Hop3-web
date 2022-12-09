@@ -1,27 +1,30 @@
+import React, { FC, useState, useEffect } from "react";
+import clsx from "clsx";
 import Image from "next/image";
 import styles from "../../styles/Home.module.scss";
 import Profile from "../../public/images/Profile.png";
 import Post from "../../public/images/Post.png";
 import Post2 from "../../public/images/Post2.png";
 import User from "../../public/images/Avtar.png";
+import UpArrow from '../../public/images/UpArrow.svg'
 import Like from "../../public/images/Like.svg";
-
-import { MenuItem, Select } from "@mui/material";
+import NotLike from "../../public/images/like_not.svg";
+import Logout from "../../public/images/Logout.png";
 import ImageSlider from "../ImageSlider";
-import { userAgent } from "next/server";
+import Chip from "../Chip/Chip";
+import { useRouter } from "next/router";
+
 interface StatusColorInterface {
   [key: string]: string;
 }
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+interface StatusType {
+  [key: string]: string
+}
+interface PostDataProps {
+  data: any;
+  selectedStatus: StatusType;
+  setSelectedStatus: (val: (value: StatusType) => StatusType) => void
+}
 const status: string[] = ["Pending", "Approved", "Denied"];
 const statusColor: StatusColorInterface = {
   Pending: "#DED2FF",
@@ -42,7 +45,10 @@ const postData = [
     commentImg: User,
     commentText: "The Dead Rabbit",
     like: 123,
+    category: [{ id: 1, text: 'Deal', bgColor: '#FFC700' }],
+    tags: [{ id: 1, text: 'Nightlife', bgColor: '#F0F0F0' }, { id: 2, text: 'Dating Plan', bgColor: '#F0F0F0' }],
     status: "Pending",
+    isLike: false,
   },
   {
     id: 2,
@@ -57,6 +63,7 @@ const postData = [
     commentText: "The Dead Rabbit",
     like: 123,
     status: "Approved",
+    isLike: false,
   },
   {
     id: 3,
@@ -71,33 +78,71 @@ const postData = [
     commentText: "The Dead Rabbit",
     like: 123,
     status: "Denied",
+    isLike: true,
   },
 ];
+const menu = ['All', 'Boosted', 'Denied', 'Pending']
+
 export default function Dashboard() {
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState(0)
+  const [selectedStatus, setSelectedStatus] = useState<StatusType>({})
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, []);
+  const logout = () => {
+    localStorage.removeItem('isAuthenticated')
+    localStorage.removeItem('auth_token')
+    router.push("/login");
+
+  }
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.right}>
           <div className={styles.profile}>
             <button className={styles.sharebutton}>Share Experience</button>
-            <Image
-              className={styles.profileimg}
-              src={Profile}
-              alt={"profile"}
-            />
+            <div className={styles.dropdown}>
+              <Image
+                className={styles.profileimg}
+                src={Profile}
+                alt={"profile"}
+              />
+              <div className={styles.dropdowncontent}>
+                <div className={styles.menuitem} onClick={logout}>Log out
+                  <Image
+                    className={styles.logout}
+                    src={Logout}
+                    alt={"logout"}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </header>
       <div>
         <div className={styles.filter}>
           filter by:
-          <button className={styles.filterbutton}>All</button>
-          <button className={styles.filterbutton}>Approved</button>
-          <button className={styles.filterbutton}>Denied</button>
-          <button className={styles.filterbutton}>Pending</button>
+          {
+            menu.map((item, index) => (
+              <div key={`btn_${index}`} className={styles.btnwrapper}>
+                <button className={clsx({
+                  [styles.filterbutton]: true,
+                  [styles.active]: activeTab === index,
+
+                })}
+                  onClick={() => setActiveTab(index)}
+                >{item}</button>
+              </div>
+            ))
+          }
         </div>
         {postData.map((data, idx) => (
-          <PostItem key={"post-item" + idx} data={data} />
+          <PostItem key={"post-item" + idx} data={data} setSelectedStatus={setSelectedStatus} selectedStatus={selectedStatus} />
         ))}
       </div>
     </div>
@@ -117,14 +162,21 @@ const UserProfile = (props: any) => {
     </div>
   );
 };
+const PostItem: FC<PostDataProps> = ({ data, selectedStatus, setSelectedStatus }) => {
+  console.log({ data })
+  console.log('color', statusColor?.[data?.status])
+  const handleChange = (index: number, value: string) => {
+    setSelectedStatus((prevSelectedStatus) => {
+      return {
+        ...prevSelectedStatus,
+        [index]: value
+      }
+    })
 
-const PostItem = (props: any) => {
-  const { data } = props;
-  const handleChange = () => {};
+  };
   return (
     <div className={styles.postwrapper} key={data?.id}>
       <div className={styles.poster}>
-        {/* <Image src={data?.postImg} alt={''} /> */}
         <ImageSlider data={data?.postImages} />
       </div>
       <div className={styles.descriptionwrapper}>
@@ -134,45 +186,42 @@ const PostItem = (props: any) => {
             title={data?.prostUserTitle}
             subtitle={data?.prostUserSubTitle}
           />
+          {data?.category?.length > 0 && <Chip chipData={data?.category} />}
           <div>
             <span className={styles.boldtext}>{data?.title}</span>
             <p className={styles.text}>{data?.description}</p>
           </div>
-          <div className={styles.comment}>
+          {/* <div className={styles.comment}>
             <Image src={data?.commentImg} alt={"profile"} />
 
             <p className={styles.imgtitle}>{data?.commentText}</p>
+          </div> */}
+          <div>
+            <div className={styles.badge}></div>
+          </div>
+          {data?.tags?.length > 0 && <Chip chipData={data?.tags} />}
+          <div className={styles.explore}>
+            <p className={styles.exploretext}>Expolre now</p>
+            <Image className={styles.arowicon} src={UpArrow} alt={''} />
           </div>
           <div className={styles.selectwrapper}>
             <span className={styles.like}>
-              <Image src={Like} alt={""} />
+              <Image src={data?.isLike ? Like : NotLike} alt={""} style={{ fill: 'red' }} />
               <p className={styles.imgtitle}> {data?.like} </p>
             </span>
-            <Select
-              labelId="demo-multiple-name-label"
+            <select
               id="demo-multiple-name"
-              value={data?.status}
-              sx={{
-                bgcolor: statusColor?.[data?.status],
-                border: "none",
-                borderColor: "transparent",
-                width: "200px",
-                padding: "0px 20px",
-                borderRadius: "9px",
-                height: "42px",
-                fontWeight: "500",
-                fontSize: "18px",
-                color: data?.status === "Denied" ? "#FFF" : "#000",
-              }}
-              onChange={handleChange}
-              MenuProps={MenuProps}
+              value={selectedStatus[data?.id]}
+              className={styles.customselect}
+              style={{ backgroundColor: statusColor?.[selectedStatus[data?.id]], color: selectedStatus[data?.id] === "Denied" ? "#FFF" : "#000" }}
+              onChange={(event) => handleChange(data?.id, event.target.value)}
             >
               {status.map((name) => (
-                <MenuItem key={name} value={name}>
+                <option key={name} value={name}>
                   {name}
-                </MenuItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
         </div>
       </div>
