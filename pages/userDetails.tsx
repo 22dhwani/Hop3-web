@@ -1,55 +1,125 @@
-import React, { useEffect, useState } from "react";
-import styles from "../styles/UserDetails.module.scss";
-import Image from "next/image";
-import Logo from "../public/images/Logo.svg";
-import Upload from "../public/images/Upload.svg";
-import { getThemeColor } from "../utils/utils";
+import React, { useCallback, useEffect, useState } from 'react';
+import styles from '../styles/UserDetails.module.scss';
+import Image from 'next/image';
+import Logo from '../public/images/Logo.svg';
+import Upload from '../public/images/Upload.svg';
+import { getThemeColor } from '../utils/utils';
 import {
-  TextField,
-  CardContent,
-  Grid,
-  Fab,
-  FormLabel,
-  FormControl,
   Button,
-} from "@mui/material";
-import { useRouter } from "next/router";
-import { createUser } from "../services/auth";
+  CardContent,
+  Fab,
+  FormControl,
+  FormLabel,
+  Grid,
+  TextField,
+} from '@mui/material';
+import { useRouter } from 'next/router';
+import {
+  createProfileImage,
+  createUser,
+  updateImageDetails,
+} from '../services/auth';
+import { useMutation } from 'react-query';
+import { uploadOnS3Bucket } from '../services/post';
 
-export default function UserDetails({ }) {
-  const router = useRouter()
-  const [username, setUsername] = useState("");
-  const handleUploadClick = () => { };
+export default function UserDetails() {
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [imageFile, setImageFile] = useState<any>(null);
+  const createUserMutation = useMutation(createUser);
+  const createProfileImageMutation = useMutation(createProfileImage);
+  const updateProfileImageDetailsMutation = useMutation(updateImageDetails);
 
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
-    if (isAuthenticated || !router?.query?.user) {
-      router.back();
-    }
-  }, []);
-  const handleSubmit = async () => {
-    const userDetail =
-      typeof router?.query?.user === "string"
-        ? JSON.parse(router?.query?.user)
-        : {};
-
-    try {
-      const response = await createUser({
-        username,
-        email: userDetail?.email,
-      });
-      if (response.status === 201) {
-        localStorage.setItem('isAuthenticated', 'true')
-        router.push("/dashboard");
+  // useEffect(() => {
+  //   const isAuthenticated = localStorage.getItem("isAuthenticated");
+  //   if (isAuthenticated || !router?.query?.user) {
+  //     router.back();
+  //   }
+  // }, []);
+  //
+  const handleUploadClick = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e?.target?.files?.length && e?.target?.files[0];
+      if (file) {
+        setImageFile({
+          fileData: file,
+          fileUrl: URL.createObjectURL(file),
+        });
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    },
+    [],
+  );
+
+  const moveToDashBoard = useCallback(() => {
+    localStorage.setItem('isAuthenticated', 'true');
+    router.push('/dashboard');
+  }, []);
+
+  const handleSubmit = useCallback(async () => {
+    createUserMutation.mutate(
+      {
+        username,
+      },
+      {
+        onSuccess: (resp: any) => {
+          if (imageFile && resp?.id) {
+            const payload = {
+              image_media: {
+                content_type: imageFile?.fileData.type,
+                file_size_mb: imageFile?.fileData?.size / 1024 / 1024,
+              },
+            };
+            createProfileImageMutation.mutate(payload, {
+              onSuccess: imageData => {
+                uploadOnS3Bucket({
+                  uploadUrl: imageData.signUrl,
+                  fileData: imageFile.fileData,
+                  fields: imageData.fields,
+                  content_type: imageData.content_type,
+                })
+                  .then(() => {
+                    const payload = {
+                      image_name: imageData.name,
+                    };
+                    updateProfileImageDetailsMutation.mutate(payload, {
+                      onSuccess: () => {
+                        moveToDashBoard();
+                      },
+                      onError: error => {
+                        console.error('Error in update profile details', error);
+                      },
+                    });
+                  })
+                  .catch(error => {
+                    console.error('error in upload', error);
+                  });
+              },
+              onError: error => {
+                console.error('Error in create profile picture', error);
+              },
+            });
+          } else if (resp.id) {
+            moveToDashBoard();
+          }
+        },
+        onError: error => {
+          console.error('Error in create user', error);
+        },
+      },
+    );
+  }, [
+    createProfileImageMutation,
+    createUserMutation,
+    imageFile,
+    moveToDashBoard,
+    updateProfileImageDetailsMutation,
+    username,
+  ]);
+
   return (
     <div className={styles.userdetail}>
       <div>
-        <Image src={Logo} alt={""} />
+        <Image alt={''} src={Logo} />
       </div>
       <div className={styles.userformwrapper}>
         <div className={styles.userform}>
@@ -59,21 +129,29 @@ export default function UserDetails({ }) {
           <CardContent>
             <Grid className={styles.uploadwrapper}>
               <input
-                accept="image/*"
+                accept="image/png,image/jpeg/image/webp"
                 className={styles.input}
                 id="contained-button-file"
-                multiple
-                type="file"
                 onChange={handleUploadClick}
+                type="file"
               />
               <label htmlFor="contained-button-file">
                 <div className={styles.uploaddiv}>
-                  <Image src={Upload} alt={""} />
+                  {imageFile?.fileUrl ? (
+                    <Image
+                      alt={''}
+                      src={imageFile?.fileUrl}
+                      height={110}
+                      width={110}
+                    />
+                  ) : (
+                    <Image alt={''} src={Upload} />
+                  )}
                 </div>
               </label>
               <div className={styles.uploadtextwrapper}>
                 <p className={styles.uploadtitle}>
-                  {" "}
+                  {' '}
                   Click to upload profile photo
                 </p>
                 <p className={styles.graytext}>Less than 2GB </p>
@@ -85,46 +163,44 @@ export default function UserDetails({ }) {
             <FormLabel
               sx={{
                 color: getThemeColor(),
-                fontSize: "18px",
-                paddingBottom: "5px",
-              }}
-            >
+                fontSize: '18px',
+                paddingBottom: '5px',
+              }}>
               Username
             </FormLabel>
             <Grid container direction="column" spacing={10}>
               <Grid item>
                 <TextField
-                  placeholder="Username"
-                  type="text"
                   autoComplete="off"
+                  autoFocus
                   name="username"
-                  onChange={(event) => {
+                  onChange={event => {
                     setUsername(event.target.value);
                   }}
+                  placeholder="Username"
+                  required
                   sx={{
-                    width: "450px",
-                    borderRadius: "4px",
+                    width: '450px',
+                    borderRadius: '4px',
                     border: `1px solid ${getThemeColor()}`,
                   }}
+                  type="text"
                   variant="outlined"
-                  required
-                  autoFocus
                 />
               </Grid>
               <Grid item>
                 <Button
-                  variant="contained"
-                  type="submit"
-                  onClick={handleSubmit}
                   className="button-block"
+                  onClick={handleSubmit}
                   sx={{
-                    width: "250px",
-                    background: "#000000 !important",
-                    border: "1px solid #000000",
-                    borderRadius: "33px",
-                    color: "#FFF",
+                    width: '250px',
+                    background: '#000000 !important',
+                    border: '1px solid #000000',
+                    borderRadius: '33px',
+                    color: '#FFF',
                   }}
-                >
+                  type="submit"
+                  variant="contained">
                   Start hopping
                 </Button>
               </Grid>

@@ -202,7 +202,8 @@ const ShareExperience = () => {
                   for (let i = 0; i < urlData.post_media_data.length; i++) {
                     const resp = await uploadOnS3Bucket({
                       uploadUrl: urlData.post_media_data[i].signUrl,
-                      fileData: postInfo.files[i],
+                      // @ts-ignore
+                      fileData: postInfo.files[i]?.fileObj,
                       fields: urlData.post_media_data[i].fields,
                       content_type: urlData.post_media_data[i].content_type,
                     });

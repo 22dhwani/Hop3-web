@@ -71,10 +71,10 @@ export default function Login() {
         // The email of the user's account used.
         const email = error.email;
         // The AuthCredential type that was used.
-        redirectToUserDetailsPage()
+        // redirectToUserDetailsPage()
 
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log({ errorCode, errorMessage, email, credential });
+        console.log("error in google sign",{ errorCode, errorMessage, email, credential });
       });
   };
   return (
