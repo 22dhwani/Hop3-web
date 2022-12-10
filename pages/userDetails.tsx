@@ -31,7 +31,7 @@ export default function UserDetails() {
   const updateProfileImageDetailsMutation = useMutation(updateImageDetails);
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
     if (isAuthenticated || !router?.query?.user) {
       router.back();
     }
