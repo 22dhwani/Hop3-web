@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const useModal = (isInitiallyActive: boolean) => {
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
   const toggleModalActive = (toSet?: string) => {
-    if (toSet === "open") {
+    if (toSet === 'open') {
       setIsModalActive(() => true);
-    } else if (toSet === "close") {
+    } else if (toSet === 'close') {
       setIsModalActive(() => false);
     } else {
-      setIsModalActive((prevState) => !prevState);
+      setIsModalActive(prevState => !prevState);
     }
   };
 

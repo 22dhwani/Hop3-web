@@ -30,13 +30,13 @@ export default function UserDetails() {
   const createProfileImageMutation = useMutation(createProfileImage);
   const updateProfileImageDetailsMutation = useMutation(updateImageDetails);
 
-  // useEffect(() => {
-  //   const isAuthenticated = localStorage.getItem("isAuthenticated");
-  //   if (isAuthenticated || !router?.query?.user) {
-  //     router.back();
-  //   }
-  // }, []);
-  //
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (isAuthenticated || !router?.query?.user) {
+      router.back();
+    }
+  }, []);
+
   const handleUploadClick = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e?.target?.files?.length && e?.target?.files[0];
