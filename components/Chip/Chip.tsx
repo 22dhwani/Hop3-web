@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import styles from '../../styles/chip.module.scss'
+import React, { FC } from 'react';
+import styles from '../../styles/chip.module.scss';
 interface ChipDataType {
   id: number;
   text: string;
@@ -7,16 +7,20 @@ interface ChipDataType {
   bgColor: string;
 }
 interface ChipDataProps {
-  chipData: ChipDataType[]
+  chipData: ChipDataType[];
 }
 const Chip: FC<ChipDataProps> = ({ chipData }) => {
   return (
     <div className={styles.chipWrapper}>
-      {chipData?.map((data) => (
-        <div key={data?.id} style={{ backgroundColor: data?.bgColor }} className={styles.chip}>{data?.text}</div>
-
+      {chipData?.map(data => (
+        <div
+          key={data?.id}
+          style={{ backgroundColor: data?.bgColor }}
+          className={styles.chip}>
+          {data?.text}
+        </div>
       ))}
     </div>
-  )
-}
-export default Chip
+  );
+};
+export default Chip;

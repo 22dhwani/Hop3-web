@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
 
-import Section from "../../Section";
-import styles from "../../../styles/LandingFooter.module.scss";
-import Image from "next/image";
-import Link from "next/link";
+import Section from '../../Section';
+import styles from '../../../styles/LandingFooter.module.scss';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const links = [
   {
-    label: "Explore the app",
-    href: "",
+    label: 'Explore the app',
+    href: '',
   },
   {
-    label: "Join Discord",
-    href: "",
+    label: 'Join Discord',
+    href: '',
   },
   {
-    label: "Contact us",
-    href: "",
+    label: 'Contact us',
+    href: '',
   },
 ];
 
@@ -26,7 +26,7 @@ const LandingFooter = () => {
       <div className={styles.mid}>
         <div className={styles.left}>
           <h2>
-            The power is in your hands{" "}
+            The power is in your hands{' '}
             <Image
               src="/vectors/logo-footer.svg"
               alt="logo"
@@ -39,7 +39,7 @@ const LandingFooter = () => {
           {links.map((el, idx) => {
             return (
               <Link key={el.label} href={el.href}>
-                {el.label}{" "}
+                {el.label}{' '}
                 <Image
                   src="/vectors/icons/link.svg"
                   alt="link"

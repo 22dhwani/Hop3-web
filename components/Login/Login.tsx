@@ -1,70 +1,71 @@
-import React, { useState, useEffect } from "react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import React, { useEffect, useState } from 'react';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-import Image from "next/image";
-import styles from "../../styles/Login.module.scss";
-import LoginCover from "../../public/images/LoginCover.png";
-import Logo from "../../public/images/Logo.svg";
-import Google from "../../public/images/Google.svg";
-import { useRouter } from "next/router";
-import { auth } from "../firebase";
-import { getThemeColor, refreshToken } from '../../utils/utils'
-import { getUser } from '../../services/auth'
+import Image from 'next/image';
+import styles from '../../styles/Login.module.scss';
+import LoginCover from '../../public/images/LoginCover.png';
+import Logo from '../../public/images/Logo.svg';
+import Google from '../../public/images/Google.svg';
+import { useRouter } from 'next/router';
+import { auth } from '../firebase';
+import { getThemeColor, refreshToken } from '../../utils/utils';
+import { getUser } from '../../services/auth';
 const provider = new GoogleAuthProvider();
 
 export default function Login() {
-  const router = useRouter()
+  const router = useRouter();
   const [fieldValues, setFieldValues] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
     if (isAuthenticated) {
-      router.push("/dashboard");
+      router.push('/dashboard');
     }
   }, []);
   const redirectToUserDetailsPage = () => {
     router.push(
       `/userDetails?user=${JSON.stringify(fieldValues)}`,
-      "/userDetails"
+      '/userDetails',
     );
   };
 
   const login = () => {
     signInWithPopup(auth, provider)
-      .then(async (result) => {
+      .then(async result => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
 
         // The signed-in user info.
         const user = result.user;
-        await refreshToken()
-        setFieldValues((prevFieldValues) => {
+        await refreshToken();
+        setFieldValues(prevFieldValues => {
           return {
             ...prevFieldValues,
             email: user.email || '',
-          }
+          };
         });
         try {
-
           const data = await getUser();
           if (data?.id) {
-            router.push('/dashboard')
-            localStorage.setItem('isAuthenticated', 'true')
+            router.push('/dashboard');
+            localStorage.setItem('isAuthenticated', 'true');
           } else {
-            redirectToUserDetailsPage()
+            redirectToUserDetailsPage();
           }
         } catch (error: any) {
-          console.error("Errror in signin", error)
-          if (error?.response?.status === 404 || error?.response?.status === 500) {
-            redirectToUserDetailsPage()
+          console.error('Errror in signin', error);
+          if (
+            error?.response?.status === 404 ||
+            error?.response?.status === 500
+          ) {
+            redirectToUserDetailsPage();
           }
         }
-
       })
-      .catch((error) => {
+      .catch(error => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -74,14 +75,23 @@ export default function Login() {
         // redirectToUserDetailsPage()
 
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log("error in google sign",{ errorCode, errorMessage, email, credential });
+        console.log('error in google sign', {
+          errorCode,
+          errorMessage,
+          email,
+          credential,
+        });
       });
   };
   return (
     <div className={styles.logincontainer}>
       <div className={styles.rightsection}>
-        <Image src={Logo} alt={""} />
-        <p className={styles.title}>You are<br />hopping to the</p>
+        <Image src={Logo} alt={''} />
+        <p className={styles.title}>
+          You are
+          <br />
+          hopping to the
+        </p>
         <span className={styles.transformdivwrraper}>
           <p className={styles.transformText}>right place</p>
         </span>
@@ -91,21 +101,21 @@ export default function Login() {
               type="submit"
               data-testid="login"
               onClick={login}
-              className="button-block"
-            >
-              <Image src={Google} alt={""} />
+              className="button-block">
+              <Image src={Google} alt={''} />
               &nbsp;&nbsp; Login via Google
             </button>
           </div>
           <p className={styles.agreetext}>
-            By logining, I agree to the <a className={styles.link}>Terms of Service</a> and
+            By logining, I agree to the{' '}
+            <a className={styles.link}>Terms of Service</a> and
             <br />
             <a className={styles.link}>Privacy Policy</a>
           </p>
         </div>
       </div>
       <div className={styles.leftsection}>
-        <Image className={styles.imgcover} src={LoginCover} alt={""} />
+        <Image className={styles.imgcover} src={LoginCover} alt={''} />
       </div>
     </div>
   );

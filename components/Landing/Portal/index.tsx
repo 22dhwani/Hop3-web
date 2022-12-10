@@ -1,8 +1,8 @@
-import Image from "next/image";
-import { Typewriter } from "react-simple-typewriter";
+import Image from 'next/image';
+import { Typewriter } from 'react-simple-typewriter';
 
-import styles from "../../../styles/LandingPortal.module.scss";
-import Section from "../../Section";
+import styles from '../../../styles/LandingPortal.module.scss';
+import Section from '../../Section';
 
 const LandingPortal = () => {
   return (
@@ -12,10 +12,10 @@ const LandingPortal = () => {
         <span className={styles.typeWriter}>
           <Typewriter
             words={[
-              "having fun",
-              "going out",
-              "exploring events",
-              "finding deals",
+              'having fun',
+              'going out',
+              'exploring events',
+              'finding deals',
             ]}
             typeSpeed={50}
             loop

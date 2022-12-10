@@ -1,7 +1,7 @@
-import * as React from "react";
-import Image from "next/image";
-import styles from "../styles/ImageSlider.module.scss";
-import Slider from "react-slick";
+import * as React from 'react';
+import Image from 'next/image';
+import styles from '../styles/ImageSlider.module.scss';
+import Slider from 'react-slick';
 interface Props {
   data: any[];
 }
@@ -12,7 +12,7 @@ const settings = {
   speed: 1000,
   slidesToShow: 1,
   slidesToScroll: 1,
-  className: "slides"
+  className: 'slides',
 };
 export default function ImageSlider({ data }: Props) {
   return (

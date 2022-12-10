@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import FlipNumbers from "react-flip-numbers";
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
+import FlipNumbers from 'react-flip-numbers';
 
-import Section from "../../Section";
-import styles from "../../../styles/LandingHero.module.scss";
-import Button from "../../Button";
+import Section from '../../Section';
+import styles from '../../../styles/LandingHero.module.scss';
+import Button from '../../Button';
 
 const pathVariants = {
   initial: {
@@ -47,7 +47,7 @@ const imgVariants = {
 const LandingHero = () => {
   const [currStep, setCurrStep] = useState(3);
   const [numTime, setNumTime] = useState(2);
-  const [num, setNum] = useState<string>("1259");
+  const [num, setNum] = useState<string>('1259');
   const [delay, setDelay] = useState<number>(0);
   const [numWidth, setNumWidth] = useState(60);
   const [numHeight, setNumHeight] = useState(70);
@@ -65,9 +65,11 @@ const LandingHero = () => {
 
   useEffect(() => {
     const revealCards = () => {
-      setCurrStep((prevState) => {
-        if (prevState === 3) return 1;
-        else return ++prevState;
+      setCurrStep(prevState => {
+        if (prevState === 3) {
+          return 1;
+        }
+        return ++prevState;
       });
     };
     const interval = setInterval(revealCards, 4000);
@@ -82,7 +84,7 @@ const LandingHero = () => {
       setNumTime(1);
 
       inter = setInterval(() => {
-        setNum((num) => (parseInt(num) + 1).toString());
+        setNum(num => (parseInt(num) + 1).toString());
       }, 2500);
     }, 3500);
 
@@ -99,7 +101,7 @@ const LandingHero = () => {
         setNumHeight(70);
       }
     };
-    const bp0 = window.matchMedia("(min-width: 1401px)");
+    const bp0 = window.matchMedia('(min-width: 1401px)');
     bpF0(bp0);
     bp0.addListener(bpF0);
 
@@ -109,7 +111,7 @@ const LandingHero = () => {
         setNumHeight(60);
       }
     };
-    const bp1 = window.matchMedia("(max-width: 1400px)");
+    const bp1 = window.matchMedia('(max-width: 1400px)');
     bpF1(bp1);
     bp1.addListener(bpF1);
 
@@ -119,7 +121,7 @@ const LandingHero = () => {
         setNumHeight(46);
       }
     };
-    const bp3 = window.matchMedia("(max-width: 1280px)");
+    const bp3 = window.matchMedia('(max-width: 1280px)');
     bpF3(bp3);
     bp3.addListener(bpF3);
 
@@ -129,7 +131,7 @@ const LandingHero = () => {
         setNumHeight(42);
       }
     };
-    const bp4 = window.matchMedia("(max-width: 991px)");
+    const bp4 = window.matchMedia('(max-width: 991px)');
     bpF4(bp4);
 
     const bpF5 = function (x?: any) {
@@ -138,7 +140,7 @@ const LandingHero = () => {
         setNumHeight(28);
       }
     };
-    const bp5 = window.matchMedia("(max-width: 575px)");
+    const bp5 = window.matchMedia('(max-width: 575px)');
     bpF5(bp5);
     bp5.addListener(bpF5);
   }, []);
@@ -153,7 +155,7 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step1Card1"}
+              key={'step1Card1'}
               ref={step1Card1}
               transition={{
                 delay: 1,
@@ -169,7 +171,7 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step1Card2"}
+              key={'step1Card2'}
               ref={step1Card2}
               src="/vectors/step-1-card-2.svg"
               className={styles.step1Card2}
@@ -182,7 +184,7 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step1Card3"}
+              key={'step1Card3'}
               ref={step1Card3}
               src="/vectors/step-1-card-3.svg"
               className={styles.step1Card3}
@@ -196,14 +198,13 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step1Line1"}
+              key={'step1Line1'}
               width="419"
               height="394"
               viewBox="0 0 419 394"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className={styles.step1Line1}
-            >
+              className={styles.step1Line1}>
               <g clipPath="url(#clip0_117_19)">
                 <rect
                   x="410.273"
@@ -251,7 +252,7 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step2Card1"}
+              key={'step2Card1'}
               ref={step2Card1}
               src="/vectors/step-2-card-1.svg"
               className={styles.step2Card1}
@@ -264,7 +265,7 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step2Card2"}
+              key={'step2Card2'}
               ref={step2Card2}
               transition={{
                 delay: 1,
@@ -280,14 +281,14 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step2Line1"}
+              key={'step2Line1'}
               ref={step2Line1}
               src="/vectors/step-2-line-1.svg"
               className={styles.step2Line1}
               width={350}
               height={217}
               alt="line"
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
             />
 
             <motion.svg
@@ -300,8 +301,7 @@ const LandingHero = () => {
               variants={imgVariants}
               initial="initial"
               animate="animate"
-              exit="exit"
-            >
+              exit="exit">
               <rect
                 x="476.148"
                 width="8.70096"
@@ -339,7 +339,7 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step3Card1"}
+              key={'step3Card1'}
               ref={step3Card1}
               src="/vectors/step-3-card-1.svg"
               className={styles.step3Card1}
@@ -352,7 +352,7 @@ const LandingHero = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              key={"step3Card2"}
+              key={'step3Card2'}
               ref={step3Card2}
               transition={{
                 delay: 1,
@@ -373,8 +373,7 @@ const LandingHero = () => {
               variants={imgVariants}
               initial="initial"
               animate="animate"
-              exit="exit"
-            >
+              exit="exit">
               <rect
                 x="41.5295"
                 width="8.70096"
@@ -419,7 +418,7 @@ const LandingHero = () => {
             numbers={num}
           />
         </div>
-        <Image src="/vectors/logo-2.svg" width={56} height={56} alt="logo" />{" "}
+        <Image src="/vectors/logo-2.svg" width={56} height={56} alt="logo" />{' '}
         recs
       </h1>
 

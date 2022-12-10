@@ -1,8 +1,8 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
 
-import Button from "../../components/Button";
-import styles from "../../styles/NavbarRight.module.scss";
+import Button from '../../components/Button';
+import styles from '../../styles/NavbarRight.module.scss';
 
 interface Props {
   withoutShareExpBtn?: boolean;

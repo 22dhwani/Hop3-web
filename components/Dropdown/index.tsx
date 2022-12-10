@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
-import Image from "next/image";
-import clsx from "clsx";
+import React, { useRef, useState } from 'react';
+import Image from 'next/image';
+import clsx from 'clsx';
 
-import InputLabel from "../InputLabel";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
-import styles from "../../styles/Dropdown.module.scss";
+import InputLabel from '../InputLabel';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import styles from '../../styles/Dropdown.module.scss';
 
 interface Option {
   label: string;
@@ -30,10 +30,10 @@ const Dropdown = ({
   const inputRef = useRef<HTMLDivElement>(null);
 
   const [isDropdownActive, setIsDropdownActive] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   const toggleOptions = () => {
-    setIsDropdownActive((prevState) => !prevState);
+    setIsDropdownActive(prevState => !prevState);
   };
 
   const hideOptions = () => {
@@ -49,8 +49,7 @@ const Dropdown = ({
       <div className={clsx(styles.inputContainer, listType && styles.listType)}>
         <div
           className={clsx(styles.inputMain, isDropdownActive && styles.active)}
-          ref={inputRef}
-        >
+          ref={inputRef}>
           <div className={styles.input} onClick={toggleOptions}>
             {value ? (
               <div className={styles.value}>{value}</div>
@@ -70,19 +69,17 @@ const Dropdown = ({
           className={clsx(
             styles.options,
             isDropdownActive && styles.active,
-            listType && styles.listType
-          )}
-        >
+            listType && styles.listType,
+          )}>
           {options.map((el, idx) => {
             return (
               <div
-                key={"option" + idx}
+                key={'option' + idx}
                 className={clsx(
                   styles.option,
-                  el.label === value && styles.active
+                  el.label === value && styles.active,
                 )}
-                onClick={() => setValue(el.label)}
-              >
+                onClick={() => setValue(el.label)}>
                 {el.label}
               </div>
             );

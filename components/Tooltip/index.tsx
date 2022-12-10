@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import styles from "../../styles/Tooltip.module.scss";
+import styles from '../../styles/Tooltip.module.scss';
 
 interface Props {
   children: React.ReactNode;

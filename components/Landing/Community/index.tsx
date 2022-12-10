@@ -1,12 +1,12 @@
-import clsx from "clsx";
-import Image from "next/image";
-import React, { useEffect, useRef } from "react";
-import Marquee from "react-fast-marquee";
+import clsx from 'clsx';
+import Image from 'next/image';
+import React, { useEffect, useRef } from 'react';
+import Marquee from 'react-fast-marquee';
 
-import distanceBetweenElements from "../../../utils/distanceBetweenElements";
-import Button from "../../Button";
-import Section from "../../Section";
-import styles from "../../../styles/LandingCommunity.module.scss";
+import distanceBetweenElements from '../../../utils/distanceBetweenElements';
+import Button from '../../Button';
+import Section from '../../Section';
+import styles from '../../../styles/LandingCommunity.module.scss';
 
 const LandingCommunity = () => {
   const firstElRef = useRef<HTMLHeadingElement>(null);
@@ -21,54 +21,64 @@ const LandingCommunity = () => {
 
   useEffect(() => {
     const ev = () => {
-      if (!firstElRef.current || !secondElRef.current) return;
+      if (!firstElRef.current || !secondElRef.current) {
+        return;
+      }
       const height = distanceBetweenElements(
         firstElRef.current as HTMLElement,
-        secondElRef.current as HTMLElement
+        secondElRef.current as HTMLElement,
       );
 
-      if (progressLineRef.current)
-        progressLineRef.current.style.height = height + 0 + "px";
+      if (progressLineRef.current) {
+        progressLineRef.current.style.height = height + 0 + 'px';
+      }
     };
 
-    window.addEventListener("scroll", ev);
+    window.addEventListener('scroll', ev);
 
     return () => {
-      window.removeEventListener("scroll", ev);
+      window.removeEventListener('scroll', ev);
     };
   }, [firstElRef, secondElRef]);
 
   useEffect(() => {
     const markCircle = (el: HTMLDivElement | null, vh: number) => {
-      if (!el) return;
+      if (!el) {
+        return;
+      }
       const top = el.getBoundingClientRect().top - vh / 2;
-      if (top < 0) el.style.backgroundColor = "#000";
-      else el.style.backgroundColor = "#e7e7e7";
+      if (top < 0) {
+        el.style.backgroundColor = '#000';
+      } else {
+        el.style.backgroundColor = '#e7e7e7';
+      }
     };
 
     const ev = () => {
-      if (!progressBarRef.current || !blurryRef.current) return;
+      if (!progressBarRef.current || !blurryRef.current) {
+        return;
+      }
       const vh = Math.max(
         document.documentElement.clientHeight || 0,
-        window.innerHeight || 0
+        window.innerHeight || 0,
       );
 
       const top = progressBarRef.current.getBoundingClientRect().top;
 
       const center = top - vh / 2;
 
-      progressBarRef.current.style.height = -center + "px";
-      blurryRef.current.style.top = -center + vh / 2 + "px";
+      progressBarRef.current.style.height = -center + 'px';
+      blurryRef.current.style.top = -center + vh / 2 + 'px';
 
       markCircle(circle1Ref.current, vh);
       markCircle(circle2Ref.current, vh);
       markCircle(circle3Ref.current, vh);
     };
 
-    document.addEventListener("scroll", ev);
+    document.addEventListener('scroll', ev);
 
     return () => {
-      document.removeEventListener("scroll", ev);
+      document.removeEventListener('scroll', ev);
     };
   }, []);
 
@@ -185,11 +195,10 @@ const LandingCommunity = () => {
       </div>
 
       <div
-        className={clsx(styles.headline, "marquee3k")}
+        className={clsx(styles.headline, 'marquee3k')}
         data-speed="0.25"
         data-reverse="false"
-        data-pausable="false"
-      >
+        data-pausable="false">
         <Marquee>
           the next-gen experience &tilde; hop3 &tilde; the next-gen
           experience&tilde;hop3 the next-gen experience &tilde; hop3 &tilde; the

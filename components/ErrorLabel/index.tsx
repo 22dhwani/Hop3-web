@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "../../styles/ErrorLabel.module.scss";
+import React from 'react';
+import styles from '../../styles/ErrorLabel.module.scss';
 
 interface Props {
   id: string;

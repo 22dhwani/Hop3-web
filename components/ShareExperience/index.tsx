@@ -1,22 +1,22 @@
-import clsx from "clsx";
-import Image from "next/image";
+import clsx from 'clsx';
+import Image from 'next/image';
 
-import styles from "../../styles/ShareExperience.module.scss";
-import tooltipStyles from "../../styles/Tooltip.module.scss";
-import Button from "../Button";
-import Dropdown from "../Dropdown";
-import Input from "../Input";
-import Navbar from "../Navbar";
-import Radios from "../Radios";
-import Tooltip from "../Tooltip";
-import UploaderInput from "../UploaderInput";
+import styles from '../../styles/ShareExperience.module.scss';
+import tooltipStyles from '../../styles/Tooltip.module.scss';
+import Button from '../Button';
+import Dropdown from '../Dropdown';
+import Input from '../Input';
+import Navbar from '../Navbar';
+import Radios from '../Radios';
+import Tooltip from '../Tooltip';
+import UploaderInput from '../UploaderInput';
 import {
   ChangeEvent,
   ChangeEventHandler,
   useCallback,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 import {
   addPostMediaDetails,
   createPost,
@@ -24,10 +24,10 @@ import {
   IPostMedia,
   IPostMediaItem,
   uploadOnS3Bucket,
-} from "../../services/post";
-import { useMutation, useQuery } from "react-query";
-import { useRouter } from "next/router";
-import { getUser } from "../../services/auth";
+} from '../../services/post';
+import { useMutation, useQuery } from 'react-query';
+import { useRouter } from 'next/router';
+import { getUser } from '../../services/auth';
 interface UserDataType {
   username: string;
   email: string;
@@ -36,102 +36,107 @@ interface UserDataType {
 const rewardItems = [
   {
     amount: 2,
-    desc: "a themed post",
+    desc: 'a themed post',
     extra: false,
   },
   {
     amount: 20,
-    desc: "an in-depth post",
+    desc: 'an in-depth post',
     extra: false,
   },
   {
     amount: 100,
-    desc: "when hop3 boost your post",
+    desc: 'when hop3 boost your post',
     extra: true,
   },
 ];
 
 const categories = [
   {
-    label: "Activities & Games",
+    label: 'Activities & Games',
   },
   {
-    label: "Culture, Arts & Fashion",
+    label: 'Culture, Arts & Fashion',
   },
   {
-    label: "Food & Drinks",
+    label: 'Food & Drinks',
   },
   {
-    label: "Cinema",
+    label: 'Cinema',
   },
   {
-    label: "Concerts & Music Festivals",
+    label: 'Concerts & Music Festivals',
   },
   {
-    label: "Nightlife & Bars",
+    label: 'Nightlife & Bars',
   },
   {
-    label: "Attractions, Tours & Trips",
+    label: 'Attractions, Tours & Trips',
   },
   {
-    label: "Apparel",
+    label: 'Apparel',
   },
   {
-    label: "Accessories",
+    label: 'Accessories',
   },
   {
-    label: "Other",
+    label: 'Other',
   },
 ];
 
 const priceRange = [
   {
-    label: "$1-20",
+    label: '$1-20',
   },
   {
-    label: "$20-50",
+    label: '$20-50',
   },
   {
-    label: "$50-100",
+    label: '$50-100',
   },
   {
-    label: "$100 and more",
+    label: '$100 and more',
   },
 ];
 
 const dealOptions = [
   {
-    label: "Yes",
+    label: 'Yes',
   },
   {
-    label: "No",
+    label: 'No',
   },
 ];
 
 const ShareExperience = () => {
-  const { data: userData, isLoading: isUserLoading, error: getUserError, refetch: getUserApi } = useQuery<UserDataType, Error>("getUser", getUser, { enabled: false });
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    error: getUserError,
+    refetch: getUserApi,
+  } = useQuery<UserDataType, Error>('getUser', getUser, { enabled: false });
   const createPostMutation = useMutation(createPost);
   const createPostMediaMutation = useMutation(getSignedUrl);
   const addPostMediaDetailsMutation = useMutation(addPostMediaDetails);
   const router = useRouter();
   const [postInfo, setPostInfo] = useState({
-    title: "",
-    description: "",
-    category: "",
-    location: "",
-    event: "",
-    price: "",
-    hashtags: "",
+    title: '',
+    description: '',
+    category: '',
+    location: '',
+    event: '',
+    price: '',
+    hashtags: '',
     files: [],
   });
   const [error, setError] = useState({
-    title: "",
-    description: "",
-    category: "",
-    location: "",
-    event: "",
-    price: "",
-    hashtags: "",
+    title: '',
+    description: '',
+    category: '',
+    location: '',
+    event: '',
+    price: '',
+    hashtags: '',
   });
 
   useEffect(() => {
@@ -140,27 +145,27 @@ const ShareExperience = () => {
 
   const checkValidation = useCallback(() => {
     const tempError = { ...error };
-    tempError.title = postInfo.title === "" ? "Title is required" : "";
+    tempError.title = postInfo.title === '' ? 'Title is required' : '';
     tempError.description =
-      postInfo.description === "" ? "Description is required" : "";
+      postInfo.description === '' ? 'Description is required' : '';
     setError(tempError);
     return tempError;
   }, [error, postInfo]);
 
-  console.log("Mutation loading", createPostMutation.isLoading);
-  console.log("Mutation error", createPostMutation.error);
+  console.log('Mutation loading', createPostMutation.isLoading);
+  console.log('Mutation error', createPostMutation.error);
 
   const onPressSubmit = useCallback(
     (e: any) => {
       e.preventDefault();
       const tempError = checkValidation();
-      console.log("temp erro", tempError);
+      console.log('temp erro', tempError);
       if (!tempError.title && !tempError.description) {
         const payload: any = {
-          post_type: "Standard",
+          post_type: 'Standard',
           title: postInfo.title,
           description: postInfo.description,
-          media_type: "image",
+          media_type: 'image',
         };
         if (postInfo.category) {
           payload.category = postInfo.category;
@@ -180,14 +185,14 @@ const ShareExperience = () => {
 
         createPostMutation.mutate(payload, {
           onSuccess: (data: any) => {
-            console.log("Valueee", data);
+            console.log('Valueee', data);
             const postId = data.id;
             //@ts-ignore
             const finalFilesData: IPostMediaItem[] = postInfo.files.map(
               (item: any) => ({
                 file_size_mb: item.fileSize / 1024 / 1024,
                 content_type: item.type,
-              })
+              }),
             );
             createPostMediaMutation.mutate(
               {
@@ -207,7 +212,7 @@ const ShareExperience = () => {
                       fields: urlData.post_media_data[i].fields,
                       content_type: urlData.post_media_data[i].content_type,
                     });
-                    console.log("Upload response", resp);
+                    console.log('Upload response', resp);
                     if (resp === 204) {
                       successDetails.push({
                         media_name: urlData.post_media_data[i].name,
@@ -224,64 +229,64 @@ const ShareExperience = () => {
                     },
                     {
                       onSuccess: async (updatedPost: any) => {
-                        console.log("Updated post", updatedPost);
+                        console.log('Updated post', updatedPost);
                       },
-                    }
+                    },
                   );
                 },
-              }
+              },
             );
           },
         });
       }
     },
-    [checkValidation, postInfo]
+    [checkValidation, postInfo],
   );
 
   const onChangeTitle = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setPostInfo((prevState) => ({ ...prevState, title: event.target.value }));
+    setPostInfo(prevState => ({ ...prevState, title: event.target.value }));
   }, []);
 
   const onChangeDescription = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setPostInfo((prevState) => ({
+      setPostInfo(prevState => ({
         ...prevState,
         description: event.target.value,
       }));
     },
-    []
+    [],
   );
 
   const onChangeEvent = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setPostInfo((prevState) => ({ ...prevState, event: event.target.value }));
+    setPostInfo(prevState => ({ ...prevState, event: event.target.value }));
   }, []);
 
   const onChangeLocation = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setPostInfo((prevState) => ({
+      setPostInfo(prevState => ({
         ...prevState,
         location: event.target.value,
       }));
     },
-    []
+    [],
   );
 
   const onChangeHashtags = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setPostInfo((prevState) => ({
+      setPostInfo(prevState => ({
         ...prevState,
         hashtags: event.target.value,
       }));
     },
-    []
+    [],
   );
 
   const onSelectCategory = useCallback((category: string) => {
-    setPostInfo((prevState) => ({ ...prevState, category }));
+    setPostInfo(prevState => ({ ...prevState, category }));
   }, []);
 
   const onSelectPrice = useCallback((price: string) => {
-    setPostInfo((prevState) => ({ ...prevState, price }));
+    setPostInfo(prevState => ({ ...prevState, price }));
   }, []);
 
   // useEffect(()=>{
@@ -293,7 +298,7 @@ const ShareExperience = () => {
   // const isAdminOrCreator = userData?.role === 'admin' || userData?.role === 'creator'
 
   const onFileSelected = useCallback((files: any) => {
-    setPostInfo((prevState) => ({ ...prevState, files }));
+    setPostInfo(prevState => ({ ...prevState, files }));
   }, []);
 
   return (
@@ -332,7 +337,7 @@ const ShareExperience = () => {
 
           <div className={styles.rewards}>
             <div className={styles.head}>
-              You will get rewards when you post{" "}
+              You will get rewards when you post{' '}
               <Image
                 src="/vectors/icons/back.svg"
                 alt="arrow"
@@ -344,7 +349,7 @@ const ShareExperience = () => {
             <div className={styles.items}>
               {rewardItems.map((el, idx) => {
                 return (
-                  <div className={styles.item} key={"award" + idx}>
+                  <div className={styles.item} key={'award' + idx}>
                     <div className={styles.amount}>
                       <Image
                         src="/vectors/icons/h.svg"
@@ -367,10 +372,10 @@ const ShareExperience = () => {
                 id="upload"
                 label="Upload video or image"
                 required
-              // onFilesSelected={onFileSelected}
+                // onFilesSelected={onFileSelected}
               />
               <div className={styles.helper}>
-                Need some help?{" "}
+                Need some help?{' '}
                 <Image
                   src="/vectors/icons/new-tab.svg"
                   width={10}
