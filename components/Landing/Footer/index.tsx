@@ -11,8 +11,8 @@ const links = [
     href: '',
   },
   {
-    label: 'Join Discord',
-    href: '',
+    label: "Join Discord",
+    href: "https://discord.gg/xKhs3bFKa4",
   },
   {
     label: 'Contact us',
