@@ -32,13 +32,6 @@ export default function UserDetails() {
   const createProfileImageMutation = useMutation(createProfileImage);
   const updateProfileImageDetailsMutation = useMutation(updateImageDetails);
 
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
-    if (isAuthenticated || !router?.query?.user) {
-      router.back();
-    }
-  }, []);
-
   const handleUploadClick = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e?.target?.files?.length && e?.target?.files[0];
@@ -53,7 +46,7 @@ export default function UserDetails() {
   );
 
   const moveToDashBoard = useCallback(() => {
-    localStorage.setItem('isAuthenticated', 'true');
+    Cookies.set('loggedin', 'true');
     router.push('/dashboard');
   }, []);
 
@@ -64,8 +57,6 @@ export default function UserDetails() {
       },
       {
         onSuccess: (resp: any) => {
-          Cookies.set('loggedin', 'true');
-
           if (imageFile && resp?.id) {
             const payload = {
               image_media: {
