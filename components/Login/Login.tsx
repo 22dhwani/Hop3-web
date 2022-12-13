@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import styles from '../../styles/Login.module.scss';
 import LoginCover from '../../public/images/LoginCover.png';
@@ -8,8 +8,10 @@ import Logo from '../../public/images/Logo.svg';
 import Google from '../../public/images/Google.svg';
 import { useRouter } from 'next/router';
 import { auth } from '../firebase';
-import { getThemeColor, refreshToken } from '../../utils/utils';
+import { refreshToken } from '../../utils/utils';
 import { getUser } from '../../services/auth';
+import axios from 'axios';
+
 const provider = new GoogleAuthProvider();
 
 export default function Login() {
@@ -19,10 +21,14 @@ export default function Login() {
     password: '',
   });
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
-    if (isAuthenticated) {
-      router.push('/dashboard');
-    }
+    const fetchRoutes = async () => {
+      const routes = Cookies.get('routes');
+      if (!routes) {
+        const response = await axios.get('/api/readfiles');
+        Cookies.set('routes', response?.data);
+      }
+    };
+    fetchRoutes();
   }, []);
   const redirectToUserDetailsPage = () => {
     router.push(
@@ -31,7 +37,7 @@ export default function Login() {
     );
   };
 
-  const login = () => {
+  const login = async () => {
     signInWithPopup(auth, provider)
       .then(async result => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -51,7 +57,7 @@ export default function Login() {
           const data = await getUser();
           if (data?.id) {
             router.push('/dashboard');
-            localStorage.setItem('isAuthenticated', 'true');
+            Cookies.set('loggedin', 'true');
           } else {
             redirectToUserDetailsPage();
           }

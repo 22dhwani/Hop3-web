@@ -35,7 +35,6 @@ instance.interceptors.response.use(
     if (err.response.status === 403) {
       await refreshToken();
     }
-    // localStorage.removeItem('auth_token')
     return Promise.reject(err);
   },
 );

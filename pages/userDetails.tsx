@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import styles from '../styles/UserDetails.module.scss';
 import Image from 'next/image';
 import Logo from '../public/images/Logo.svg';
 import Upload from '../public/images/Upload.svg';
 import { getThemeColor } from '../utils/utils';
+
 import {
   Button,
   CardContent,
@@ -62,6 +64,8 @@ export default function UserDetails() {
       },
       {
         onSuccess: (resp: any) => {
+          Cookies.set('loggedin', 'true');
+
           if (imageFile && resp?.id) {
             const payload = {
               image_media: {

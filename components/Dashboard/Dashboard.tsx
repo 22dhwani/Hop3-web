@@ -1,6 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
+import Cookies from 'js-cookie';
 import styles from '../../styles/Home.module.scss';
 import Profile from '../../public/images/Profile.png';
 import Post from '../../public/images/Post.png';
@@ -90,15 +91,8 @@ export default function Dashboard() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
   const [selectedStatus, setSelectedStatus] = useState<StatusType>({});
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, []);
   const logout = () => {
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('auth_token');
+    Cookies.remove('loggedin');
     router.push('/login');
   };
   return (
@@ -174,8 +168,6 @@ const PostItem: FC<PostDataProps> = ({
   selectedStatus,
   setSelectedStatus,
 }) => {
-  console.log({ data });
-  console.log('color', statusColor?.[data?.status]);
   const handleChange = (index: number, value: string) => {
     setSelectedStatus(prevSelectedStatus => {
       return {

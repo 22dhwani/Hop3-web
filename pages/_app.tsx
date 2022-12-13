@@ -1,8 +1,6 @@
 import '../styles/globals.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import type { AppProps } from 'next/app';
-import Router from 'next/router';
-
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import { getUser } from '../services/auth';
 import { Atom, useAtom } from 'jotai';
@@ -10,17 +8,7 @@ import { setuid } from 'process';
 import { setAuthToken } from '../config/axiosconfig';
 
 export default function App({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    const token = localStorage.getItem('auth_token');
-    token && setAuthToken(token);
-    if (!token) {
-      // Router.push("/landing");
-    }
-  }, []);
   const queryClient = new QueryClient();
-
-  const token =
-    typeof localStorage != 'undefined' && localStorage?.getItem('auth_token');
 
   return (
     <div>
