@@ -11,7 +11,7 @@ export default function handler(
   res: NextApiResponse<Data>,
 ) {
   try {
-    const dir = path.resolve('./pages');
+    const dir = path.join(process.cwd(), 'pages');
 
     const filenames = fs.readdirSync(dir);
     const files: string[] = [];
