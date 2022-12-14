@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import getConfig from 'next/config';
 
 type Data = {
   routes: string[];
@@ -12,7 +11,6 @@ export default function handler(
   res: NextApiResponse<Data>,
 ) {
   try {
-    const { serverRuntimeConfig } = getConfig();
     const dir = path.join('./pages');
 
     const filenames = fs.readdirSync(dir);
