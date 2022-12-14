@@ -11,13 +11,13 @@ export default function handler(
   res: NextApiResponse<Data>,
 ) {
   try {
-    const dir = path.join('./pages');
+    const dir = path.resolve('./pages');
 
     const filenames = fs.readdirSync(dir);
     const files: string[] = [];
     filenames?.forEach(file => {
       if (
-        file?.includes('.tsx') &&
+        (file?.includes('.tsx') || file?.includes('.html')) &&
         !file?.startsWith('_app') &&
         !file?.startsWith('login')
       ) {
