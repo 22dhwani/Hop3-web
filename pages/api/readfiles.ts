@@ -13,7 +13,7 @@ export default function handler(
 ) {
   try {
     const { serverRuntimeConfig } = getConfig();
-    const dir = path.join(serverRuntimeConfig.PROJECT_ROOT, './pages');
+    const dir = path.join('./pages');
 
     const filenames = fs.readdirSync(dir);
     const files: string[] = [];
@@ -23,7 +23,9 @@ export default function handler(
         !file?.startsWith('_app') &&
         !file?.startsWith('login')
       ) {
-        files.push(file?.split('.tsx')?.[0]);
+        files.push(
+          file?.split(files.includes('.tsxt') ? '.tsx' : '.html')?.[0],
+        );
       }
     });
     console.log({ files });
