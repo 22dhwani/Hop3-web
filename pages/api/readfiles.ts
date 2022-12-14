@@ -23,9 +23,7 @@ export default function handler(
         !file?.startsWith('_app') &&
         !file?.startsWith('login')
       ) {
-        files.push(
-          file?.split(files.includes('.tsxt') ? '.tsx' : '.html')?.[0],
-        );
+        files.push(file?.split(file?.includes('.tsx') ? '.tsx' : '.html')?.[0]);
       }
     });
     console.log({ files });
