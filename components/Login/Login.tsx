@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
@@ -20,21 +20,7 @@ export default function Login() {
     email: '',
     password: '',
   });
-  useEffect(() => {
-    const fetchRoutes = async () => {
-      const routes = Cookies.get('routes');
-      if (!routes) {
-        try {
-          const response = await axios.get('/api/readfiles');
-          console.log({ response });
-          Cookies.set('routes', response?.data?.routes);
-        } catch (error) {
-          console.log({ error });
-        }
-      }
-    };
-    fetchRoutes();
-  }, []);
+
   const redirectToUserDetailsPage = () => {
     router.push(
       `/userDetails?user=${JSON.stringify(fieldValues)}`,

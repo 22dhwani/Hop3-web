@@ -15,9 +15,8 @@ export default function middleware(req) {
   if (
     !verify &&
     !url.includes('/userDetails') &&
-    routes?.value
-      ?.split(',')
-      ?.some(item => url.includes(item) || url === `${host}/`)
+    (routes?.value?.split(',')?.some(item => url.includes(item)) ||
+      url === `${host}/`)
   ) {
     return NextResponse.redirect(`${host}/login`);
   }
