@@ -26,12 +26,11 @@ export default function Login() {
       if (!routes) {
         try {
           const response = await axios.get('/api/readfiles');
-          console.log({response})
+          console.log({ response });
           Cookies.set('routes', response?.data?.routes);
         } catch (error) {
-          console.log({error})
+          console.log({ error });
         }
-
       }
     };
     fetchRoutes();
