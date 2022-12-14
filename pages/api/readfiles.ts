@@ -1,8 +1,15 @@
-import fs from 'fs';
-import { NextApiRequest, NextApiResponse } from 'next';
 import path from 'path';
+import fs from 'fs';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-const readfiles = (req: NextApiRequest, res: NextApiResponse) => {
+type Data = {
+  routes: string[];
+};
+
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>,
+) {
   const dir = path.join('./pages');
 
   const filenames = fs.readdirSync(dir);
@@ -17,9 +24,5 @@ const readfiles = (req: NextApiRequest, res: NextApiResponse) => {
     }
   });
   console.log({ files });
-
-  res.statusCode = 200;
-  res.json(files);
-};
-
-export default readfiles;
+  res.status(200).json({ routes: files });
+}

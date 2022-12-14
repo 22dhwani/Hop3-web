@@ -25,7 +25,7 @@ export default function Login() {
       const routes = Cookies.get('routes');
       if (!routes) {
         const response = await axios.get('/api/readfiles');
-        Cookies.set('routes', response?.data);
+        Cookies.set('routes', response?.data?.routes);
       }
     };
     fetchRoutes();
