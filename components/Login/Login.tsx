@@ -24,8 +24,14 @@ export default function Login() {
     const fetchRoutes = async () => {
       const routes = Cookies.get('routes');
       if (!routes) {
-        const response = await axios.get('/api/readfiles');
-        Cookies.set('routes', response?.data?.routes);
+        try {
+          const response = await axios.get('/api/readfiles');
+          console.log({response})
+          Cookies.set('routes', response?.data?.routes);
+        } catch (error) {
+          console.log({error})
+        }
+
       }
     };
     fetchRoutes();
