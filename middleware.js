@@ -21,7 +21,7 @@ export default function middleware(req) {
     return NextResponse.redirect(`${host}/login`);
   }
 
-  if (verify && url.includes('/login')) {
+  if (verify && (url.includes('/login') || url.includes('/userDetails'))) {
     return NextResponse.redirect(`${host}/dashboard`);
   }
 }
