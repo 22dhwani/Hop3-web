@@ -11,21 +11,21 @@ export default function handler(
   res: NextApiResponse<Data>,
 ) {
   try {
-    const dir = path.join(process.cwd(), '.next/server/pages');
+    const dir = path.resolve(process.cwd(), 'pages');
 
     const filenames = fs.readdirSync(dir);
-    // const files: string[] = [];
-    console.log({ filenames });
-    // filenames?.forEach(file => {
-    //   if (
-    //     (file?.includes('.tsx') || file?.includes('.html')) &&
-    //     !file?.startsWith('_app') &&
-    //     !file?.startsWith('login')
-    //   ) {
-    //     files.push(file?.split(file?.includes('.tsx') ? '.tsx' : '.html')?.[0]);
-    //   }
-    // });
-    res.status(200).json({ routes: filenames });
+    const files: string[] = [];
+    filenames?.forEach(file => {
+      if (
+        (file?.includes('.tsx') || file?.includes('.html')) &&
+        !file?.startsWith('_app') &&
+        !/^[0-9].*$/.test(file) &&
+        !file?.startsWith('login')
+      ) {
+        files.push(file?.split(file?.includes('.tsx') ? '.tsx' : '.html')?.[0]);
+      }
+    });
+    res.status(200).json({ routes: files });
   } catch (error: any) {
     res.json({ error: error?.stack, routes: [] });
   }
