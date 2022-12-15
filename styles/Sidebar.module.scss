@@ -45,6 +45,15 @@
                         font-weight: 700;
                     }
                 }
+
+            }
+
+            .isActive {
+                border-bottom: 1px solid #000000;
+
+                .text {
+                    font-weight: 700;
+                }
             }
         }
 

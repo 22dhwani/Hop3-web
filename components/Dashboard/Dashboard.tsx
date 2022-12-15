@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import clsx from 'clsx';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import styles from '../../styles/Home.module.scss';
@@ -14,6 +13,7 @@ import Logout from '../../public/images/Logout.png';
 import ImageSlider from '../ImageSlider';
 import Chip from '../Chip/Chip';
 import { useRouter } from 'next/router';
+import Filter from '../Filter/Filter';
 
 interface StatusColorInterface {
   [key: string]: string;
@@ -122,21 +122,7 @@ export default function Dashboard() {
         </div>
       </header>
       <div>
-        <div className={styles.filter}>
-          filter by:
-          {menu.map((item, index) => (
-            <div key={`btn_${index}`} className={styles.btnwrapper}>
-              <button
-                className={clsx({
-                  [styles.filterbutton]: true,
-                  [styles.active]: activeTab === index,
-                })}
-                onClick={() => setActiveTab(index)}>
-                {item}
-              </button>
-            </div>
-          ))}
-        </div>
+        <Filter menu={menu} setActiveTab={setActiveTab} activeTab={activeTab} />
         {postData.map((data, idx) => (
           <PostItem
             key={'post-item' + idx}

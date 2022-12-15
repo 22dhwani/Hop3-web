@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from '../../styles/Sidebar.module.scss';
 import Logo from '../../public/images/Logo.svg';
@@ -9,13 +9,28 @@ import EarthBlack from '../../public/images/EarthBlack.svg';
 import ShopBlack from '../../public/images/ShopBlack.svg';
 import UserBlack from '../../public/images/UserBlack.svg';
 import UpArrow from '../../public/images/UpArrow.svg';
+import { useRouter } from 'next/router';
+import clsx from 'clsx';
 
 export default function Sidebar() {
+  const route = useRouter();
+  const [isActive, setIsActive] = useState({
+    explore: false,
+    shop: false,
+    creator: false,
+  });
   const [isHover, setIsHover] = useState({
     explore: false,
     shop: false,
     creator: false,
   });
+  useEffect(() => {
+    if (route?.pathname?.includes('creator')) {
+      handleChangActive('creator', true);
+    } else if (route?.pathname?.includes('shop')) {
+      handleChangActive('shop', true);
+    }
+  }, [route?.pathname]);
   const handleChangeHover = (key: string, val: boolean) => {
     setIsHover(previousIsHover => {
       return {
@@ -25,6 +40,16 @@ export default function Sidebar() {
       };
     });
   };
+  const handleChangActive = (key: string, val: boolean) => {
+    setIsActive(previousIsHover => {
+      return {
+        ...previousIsHover,
+
+        [key]: val,
+      };
+    });
+  };
+
   const { creator, explore, shop } = isHover;
   return (
     <div className={styles.sidebar}>
@@ -39,7 +64,9 @@ export default function Sidebar() {
               onMouseOver={() => {
                 handleChangeHover('explore', true);
               }}
-              className={styles.item}>
+              className={clsx(styles.item, {
+                [styles.isActive]: isActive.explore,
+              })}>
               {' '}
               <Image
                 className={styles.icon}
@@ -52,13 +79,16 @@ export default function Sidebar() {
               )}{' '}
             </li>
             <li
+              onClick={() => route.push('/shop')}
               onMouseOut={() => {
                 handleChangeHover('shop', false);
               }}
               onMouseOver={() => {
                 handleChangeHover('shop', true);
               }}
-              className={styles.item}>
+              className={clsx(styles.item, {
+                [styles.isActive]: isActive.shop,
+              })}>
               {' '}
               <Image
                 className={styles.icon}
@@ -71,13 +101,16 @@ export default function Sidebar() {
               )}{' '}
             </li>
             <li
+              onClick={() => route.push('/creator-studio')}
               onMouseOut={() => {
                 handleChangeHover('creator', false);
               }}
               onMouseOver={() => {
                 handleChangeHover('creator', true);
               }}
-              className={styles.item}>
+              className={clsx(styles.item, {
+                [styles.isActive]: isActive.creator,
+              })}>
               {' '}
               <Image
                 className={styles.icon}
