@@ -14,18 +14,18 @@ export default function handler(
     const dir = path.join(process.cwd(), '.next/server/pages');
 
     const filenames = fs.readdirSync(dir);
-    const files: string[] = [];
-    filenames?.forEach(file => {
-      if (
-        (file?.includes('.tsx') || file?.includes('.html')) &&
-        !file?.startsWith('_app') &&
-        !file?.startsWith('login')
-      ) {
-        files.push(file?.split(file?.includes('.tsx') ? '.tsx' : '.html')?.[0]);
-      }
-    });
-    console.log({ files });
-    res.status(200).json({ routes: files });
+    // const files: string[] = [];
+    console.log({ filenames });
+    // filenames?.forEach(file => {
+    //   if (
+    //     (file?.includes('.tsx') || file?.includes('.html')) &&
+    //     !file?.startsWith('_app') &&
+    //     !file?.startsWith('login')
+    //   ) {
+    //     files.push(file?.split(file?.includes('.tsx') ? '.tsx' : '.html')?.[0]);
+    //   }
+    // });
+    res.status(200).json({ routes: filenames });
   } catch (error: any) {
     res.json({ error: error?.stack, routes: [] });
   }
