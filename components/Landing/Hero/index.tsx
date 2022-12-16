@@ -46,7 +46,7 @@ const imgVariants = {
 
 const LandingHero = () => {
   const [currStep, setCurrStep] = useState(3);
-  const [numTime, setNumTime] = useState(2);
+  const [numTime, setNumTime] = useState(4);
   const [num, setNum] = useState<string>("1259");
   const [delay, setDelay] = useState<number>(0);
   const [numWidth, setNumWidth] = useState(60);

@@ -191,9 +191,9 @@ const LandingCommunity = () => {
         data-pausable="false"
       >
         <Marquee>
-          the next-gen experience &tilde; hop3 &tilde; the next-gen
-          experience&tilde;hop3 the next-gen experience &tilde; hop3 &tilde; the
-          next-gen experience&tilde;hop3
+          the next-gen experience &#x7E; hop3 &#x7E; the next-gen
+          experience&#x7E;hop3 &#x7E; the next-gen experience &#x7E; hop3 &#x7E;
+          the next-gen experience&#x7E;hop3
         </Marquee>
       </div>
     </Section>
