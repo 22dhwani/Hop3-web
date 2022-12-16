@@ -12,7 +12,7 @@ const links = [
   },
   {
     label: "Join Discord",
-    href: "",
+    href: "https://discord.gg/xKhs3bFKa4",
   },
   {
     label: "Contact us",
