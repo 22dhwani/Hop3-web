@@ -21,7 +21,13 @@ export default function ImageSlider({ data }: Props) {
         {data?.map((image, index) => {
           return (
             <div className={styles.wrapper} key={`img_${index}`}>
-              <Image className={styles.sliderimage} src={image} alt={''} />
+              <Image
+                className={styles.sliderimage}
+                src={image}
+                alt={''}
+                height={550}
+                width={530}
+              />
             </div>
           );
         })}

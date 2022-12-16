@@ -112,7 +112,7 @@ export const rejectPost = async (postId: string) => {
   return (await hop3Api.put(`/post/reject/${postId}`)).data;
 };
 
-export const getPostForUser = async ({ queryKey }: any) => {
+export const getAllPost = async ({ queryKey }: any) => {
   const [_, limit, page_number] = queryKey;
   return (
     await hop3Api.get(
@@ -124,6 +124,15 @@ export const getPostForUser = async ({ queryKey }: any) => {
 export const getPostForAdmin = async ({ queryKey }: any) => {
   const [_, limit, page_number, status] = queryKey;
   let url = `/post/getPostForAdmin?limit=${limit}&page_number${page_number}`;
+  if (status !== 'All' && status) {
+    url = url + `&status=${status}`;
+  }
+  return (await hop3Api.get(url)).data;
+};
+
+export const getPostForUser = async ({ queryKey }: any) => {
+  const [_, limit, page_number, status] = queryKey;
+  let url = `/post/getPostForMe?limit=${limit}&page_number${page_number}`;
   if (status !== 'All' && status) {
     url = url + `&status=${status}`;
   }

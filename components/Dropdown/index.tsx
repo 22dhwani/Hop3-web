@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 
@@ -17,6 +17,8 @@ interface Props {
   placeholder: string;
   options: Option[];
   listType?: boolean;
+  multiple?: boolean;
+  onSelect: (item: string) => void;
 }
 
 const Dropdown = ({
@@ -26,11 +28,18 @@ const Dropdown = ({
   placeholder,
   options,
   listType,
+  multiple,
+  onSelect,
 }: Props) => {
   const inputRef = useRef<HTMLDivElement>(null);
 
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [value, setValue] = useState('');
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+
+  useEffect(() => {
+    onSelect(selectedValues.join(', '));
+  }, [selectedValues]);
 
   const toggleOptions = () => {
     setIsDropdownActive(prevState => !prevState);
@@ -40,19 +49,41 @@ const Dropdown = ({
     setIsDropdownActive(false);
   };
 
-  useOnClickOutside({ ref: inputRef, handler: hideOptions });
+  const onPressItem = useCallback(
+    (item: string) => {
+      if (!multiple) {
+        setValue(item);
+        setIsDropdownActive(false);
+        onSelect && onSelect(item);
+        return;
+      }
+      if (selectedValues.includes(item)) {
+        setSelectedValues(prevState =>
+          prevState.filter((subItem: any) => item !== subItem),
+        );
+      } else {
+        setSelectedValues(prevState => [...prevState, item]);
+      }
+    },
+    [multiple, selectedValues],
+  );
 
+  useOnClickOutside({ ref: inputRef, handler: hideOptions });
+  console.log('Vlauess', value);
   return (
     <div className={styles.dropdown}>
       <InputLabel id={id} label={label} required={required} />
 
-      <div className={clsx(styles.inputContainer, listType && styles.listType)}>
+      <div
+        className={clsx(styles.inputContainer, listType && styles.listType)}
+        ref={inputRef}>
         <div
-          className={clsx(styles.inputMain, isDropdownActive && styles.active)}
-          ref={inputRef}>
+          className={clsx(styles.inputMain, isDropdownActive && styles.active)}>
           <div className={styles.input} onClick={toggleOptions}>
-            {value ? (
+            {!multiple && value ? (
               <div className={styles.value}>{value}</div>
+            ) : multiple && selectedValues.length ? (
+              <div className={styles.value}>{selectedValues.join(', ')}</div>
             ) : (
               <div className={styles.placeholder}>{placeholder}</div>
             )}
@@ -71,15 +102,17 @@ const Dropdown = ({
             isDropdownActive && styles.active,
             listType && styles.listType,
           )}>
-          {options.map((el, idx) => {
+          {options.map((el: Option, idx) => {
             return (
               <div
                 key={'option' + idx}
                 className={clsx(
                   styles.option,
-                  el.label === value && styles.active,
+                  ((!multiple && el.label === value) ||
+                    (multiple && selectedValues.includes(el?.label))) &&
+                    styles.active,
                 )}
-                onClick={() => setValue(el.label)}>
+                onClick={() => onPressItem(el.label)}>
                 {el.label}
               </div>
             );

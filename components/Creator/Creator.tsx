@@ -1,22 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from '../../styles/Creator.module.scss';
 import Image from 'next/image';
-import Profile from '../../public/images/ProfileLg.png';
 import Posts from '../Posts/Posts';
 import MoneyIcon from '../../public/images/Money.svg';
 import MoneyPurple from '../../public/images/MoneyPurple.svg';
 import UpArrow from '../../public/images/UpArrow.svg';
 import GradientBack from '../../public/images/Gradient.png';
 import ShiningStart from '../../public/images/ShiningStart.png';
+import { useQuery } from 'react-query';
+import { getUser } from '../../services/auth';
+
 export default function Creator() {
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    error: getUserError,
+    refetch: getUserApi,
+  } = useQuery('getUser', getUser, { enabled: false });
+
+  useEffect(() => {
+    getUserApi().then();
+  }, [getUserApi]);
+
   return (
     <div className={styles.creatorstudio}>
       <div className={styles.profilesetting}>
         <div className={styles.profiledescription}>
           <div className={styles.profile}>
-            <Image src={Profile} alt={'profile'} />
+            <Image
+              src={userData?.image}
+              alt={'profile'}
+              height={105}
+              width={105}
+            />
             <div className={styles.text}>
-              <span className={styles.title}>Davis Franci</span>
+              <span className={styles.title}>{userData?.username || ''}</span>
               <p className={styles.subtitle}>hop3 Creator</p>
             </div>
           </div>
@@ -29,7 +47,7 @@ export default function Creator() {
             <p className={styles.smalltext}>{"You've earned"}</p>
             <span className={styles.boldtext}>
               <Image src={MoneyIcon} alt={'money sign'} />
-              1,250
+              {userData?.balance || 0}
             </span>
           </div>
           <div className={styles.rewards}>
@@ -44,15 +62,17 @@ export default function Creator() {
         <div className={styles.boxwrapper}>
           <div className={styles.box}>
             <p className={styles.boxtitle}>Likes</p>
-            <span className={styles.boxvalue}>1530</span>
+            <span className={styles.boxvalue}>{userData?.total_like || 0}</span>
           </div>
           <div className={styles.box}>
             <p className={styles.boxtitle}>Posts</p>
-            <span className={styles.boxvalue}>128</span>
+            <span className={styles.boxvalue}>{userData?.total_post || 0}</span>
           </div>
           <div className={styles.box}>
             <p className={styles.boxtitle}>Boosted Posts</p>
-            <span className={styles.boxvalue}>91</span>
+            <span className={styles.boxvalue}>
+              {userData?.total_approved_post || 0}
+            </span>
           </div>
         </div>
         <div className={styles.experiencewrapper}>
@@ -80,7 +100,7 @@ export default function Creator() {
         </div>
       </div>
       <div className={styles.postswrapper}>
-        <Posts />
+        <Posts userId={userData?.id} />
       </div>
     </div>
   );

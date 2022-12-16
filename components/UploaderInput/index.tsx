@@ -68,10 +68,11 @@ const UploaderInput = ({
     if (onFilesSelected) {
       onFilesSelected(files);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 
-  const thumbs = files.map((file, idx) => (
-    <div className={styles.previewWrap} key={'thumb' + Math.random() + idx}>
+  const thumbs = files.map(file => (
+    <div className={styles.previewWrap} key={file.preview}>
       <Image
         className={styles.preview}
         src={file.preview}

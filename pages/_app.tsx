@@ -13,6 +13,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
   useEffect(() => {
     const fetchRoutes = async () => {
+      const token = localStorage.getItem('authToken');
+      token && setAuthToken(token);
       const routes = Cookies.get('routes');
       if (!routes) {
         try {
@@ -39,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
 const SetUps = () => {
   // const [user, setUser] = useAtom(userAtom);
 
-  const { data, isLoading, error } = useQuery('account', getUser);
+  // const { data, isLoading, error } = useQuery('account', getUser);
 
   return <div></div>;
 };

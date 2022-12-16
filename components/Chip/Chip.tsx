@@ -13,10 +13,7 @@ const Chip: FC<ChipDataProps> = ({ chipData }) => {
   return (
     <div className={styles.chipWrapper}>
       {chipData?.map(data => (
-        <div
-          key={data?.id}
-          style={{ backgroundColor: data?.bgColor }}
-          className={styles.chip}>
+        <div key={data?.id} className={styles.chip}>
           {data?.text}
         </div>
       ))}

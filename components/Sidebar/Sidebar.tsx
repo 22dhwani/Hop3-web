@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from '../../styles/Sidebar.module.scss';
 import Logo from '../../public/images/Logo.svg';
@@ -50,6 +50,22 @@ export default function Sidebar() {
     });
   };
 
+  const onPressShareExperience = useCallback(() => {
+    route.push('/share-experience');
+  }, [route]);
+
+  const onPressDashboard = useCallback(() => {
+    route.push('/dashboard');
+  }, [route]);
+
+  const onPressCreator = useCallback(() => {
+    route.push('/creator-studio');
+  }, [route]);
+
+  const onPressShop = useCallback(() => {
+    route.push('/shop');
+  }, [route]);
+
   const { creator, explore, shop } = isHover;
   return (
     <div className={styles.sidebar}>
@@ -58,6 +74,7 @@ export default function Sidebar() {
         <div>
           <ul className={styles.menu}>
             <li
+              onClick={onPressDashboard}
               onMouseOut={() => {
                 handleChangeHover('explore', false);
               }}
@@ -79,7 +96,7 @@ export default function Sidebar() {
               )}{' '}
             </li>
             <li
-              onClick={() => route.push('/shop')}
+              onClick={onPressShop}
               onMouseOut={() => {
                 handleChangeHover('shop', false);
               }}
@@ -101,7 +118,7 @@ export default function Sidebar() {
               )}{' '}
             </li>
             <li
-              onClick={() => route.push('/creator-studio')}
+              onClick={onPressCreator}
               onMouseOut={() => {
                 handleChangeHover('creator', false);
               }}
@@ -124,7 +141,7 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
-        <div className={styles.buttonwrapper}>
+        <div className={styles.buttonwrapper} onClick={onPressShareExperience}>
           <button className={styles.menubutton}>Share Experience</button>
         </div>
         <div className={styles.textwrapper}>

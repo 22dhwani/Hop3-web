@@ -140,7 +140,7 @@ const ShareExperience = () => {
   });
 
   useEffect(() => {
-    getUserApi();
+    getUserApi().then();
   }, []);
 
   const checkValidation = useCallback(() => {
@@ -151,9 +151,6 @@ const ShareExperience = () => {
     setError(tempError);
     return tempError;
   }, [error, postInfo]);
-
-  console.log('Mutation loading', createPostMutation.isLoading);
-  console.log('Mutation error', createPostMutation.error);
 
   const onPressSubmit = useCallback(
     (e: any) => {
@@ -230,6 +227,7 @@ const ShareExperience = () => {
                     {
                       onSuccess: async (updatedPost: any) => {
                         console.log('Updated post', updatedPost);
+                        router.back();
                       },
                     },
                   );
@@ -240,7 +238,13 @@ const ShareExperience = () => {
         });
       }
     },
-    [checkValidation, postInfo],
+    [
+      addPostMediaDetailsMutation,
+      checkValidation,
+      createPostMediaMutation,
+      createPostMutation,
+      postInfo,
+    ],
   );
 
   const onChangeTitle = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -289,13 +293,15 @@ const ShareExperience = () => {
     setPostInfo(prevState => ({ ...prevState, price }));
   }, []);
 
-  // useEffect(()=>{
-  //   if(createPostMutation.isSuccess){
-  //     router.back()
+  // useEffect(() => {
+  //   if (createPostMutation.isSuccess) {
+  //     router.back();
   //   }
-  // },[createPostMutation.isSuccess])
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [createPostMutation.isSuccess]);
 
-  // const isAdminOrCreator = userData?.role === 'admin' || userData?.role === 'creator'
+  const isAdminOrCreator =
+    userData?.role === 'admin' || userData?.role === 'creator';
 
   const onFileSelected = useCallback((files: any) => {
     setPostInfo(prevState => ({ ...prevState, files }));
@@ -312,6 +318,9 @@ const ShareExperience = () => {
               alt="close"
               width={28}
               height={28}
+              onClick={() => {
+                router.back();
+              }}
             />
           </div>
           <div className={`${styles.box} ${styles.topLeft}`} />
@@ -337,7 +346,7 @@ const ShareExperience = () => {
 
           <div className={styles.rewards}>
             <div className={styles.head}>
-              You will get rewards when you post{' '}
+              You will get rewards when you post
               <Image
                 src="/vectors/icons/back.svg"
                 alt="arrow"
@@ -372,10 +381,10 @@ const ShareExperience = () => {
                 id="upload"
                 label="Upload video or image"
                 required
-                // onFilesSelected={onFileSelected}
+                onFilesSelected={onFileSelected}
               />
               <div className={styles.helper}>
-                Need some help?{' '}
+                Need some help?
                 <Image
                   src="/vectors/icons/new-tab.svg"
                   width={10}
@@ -406,6 +415,8 @@ const ShareExperience = () => {
                 id="title"
                 label="Title"
                 required
+                onChange={onChangeTitle}
+                value={postInfo.title}
                 placeholder="Give your post an attractive title"
               />
             </div>
@@ -416,6 +427,8 @@ const ShareExperience = () => {
                 label="Description"
                 required
                 textarea
+                onChange={onChangeDescription}
+                value={postInfo.description}
                 placeholder="Tell more about..."
               />
             </div>
@@ -426,7 +439,8 @@ const ShareExperience = () => {
                 label="Category"
                 options={categories}
                 placeholder="Select a category for your post"
-                required
+                multiple
+                onSelect={onSelectCategory}
               />
             </div>
 
@@ -435,6 +449,8 @@ const ShareExperience = () => {
                 id="location"
                 label="Location"
                 placeholder="Where is it located?"
+                onChange={onChangeLocation}
+                value={postInfo.location}
               />
             </div>
             <div className={styles.input}>
@@ -444,6 +460,7 @@ const ShareExperience = () => {
                 options={priceRange}
                 placeholder="How much does it cost?"
                 listType
+                onSelect={onSelectPrice}
               />
             </div>
 
@@ -452,29 +469,37 @@ const ShareExperience = () => {
                 id="url"
                 label="URL to the event or resturant"
                 placeholder="Give more information to explore"
+                onChange={onChangeEvent}
+                value={postInfo.event}
               />
             </div>
+            {isAdminOrCreator && (
+              <>
+                <div className={styles.input}>
+                  <Input
+                    id="hash-tags"
+                    label="Hashtags"
+                    placeholder="Give the content great hashtags to help people find it"
+                    required
+                    onChange={onChangeHashtags}
+                    value={postInfo.hashtags}
+                  />
+                </div>
 
-            <div className={styles.input}>
-              <Input
-                id="hash-tags"
-                label="Hashtags"
-                placeholder="Give the content great hashtags to help people find it"
-                required
-              />
-            </div>
-
-            <div className={styles.input}>
-              <Radios
-                id="hash-tags"
-                label="Hashtags"
-                data={dealOptions}
-                required
-              />
-            </div>
-
+                <div className={styles.input}>
+                  <Radios
+                    id="deals"
+                    label="Is it a deal"
+                    data={dealOptions}
+                    required
+                  />
+                </div>
+              </>
+            )}
             <div className={styles.buttons}>
-              <Button variant="purple">Submit</Button>
+              <Button variant="purple" onClick={onPressSubmit}>
+                Submit
+              </Button>
               <Button variant="grey">Cancel</Button>
             </div>
           </form>

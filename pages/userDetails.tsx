@@ -124,7 +124,7 @@ export default function UserDetails() {
           <CardContent>
             <Grid className={styles.uploadwrapper}>
               <input
-                accept="image/png,image/jpeg/image/webp"
+                accept="image/png,image/jpeg,image/webp"
                 className={styles.input}
                 id="contained-button-file"
                 onChange={handleUploadClick}

@@ -11,6 +11,8 @@ export const getThemeColor = () =>
 export const refreshToken = async () => {
   try {
     const token = await auth?.currentUser?.getIdToken(true);
+    console.log('Tokensss', token);
+    token && localStorage.setItem('authToken', token);
     token && setAuthToken(token);
   } catch (e) {
     console.error('Errror in refreshing token', e);
