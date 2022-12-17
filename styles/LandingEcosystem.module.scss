@@ -177,6 +177,20 @@
         height: 218px;
         position: relative;
 
+        @media screen and (min-width: 1441px) {
+          transform: scale(1.1);
+          bottom: 5%;
+        }
+
+        @media screen and (max-width: 767px) {
+          margin-left: auto;
+          margin-right: 6rem;
+        }
+
+        @media screen and (max-width: 575px) {
+          margin-right: 1rem;
+        }
+
         img {
           position: absolute;
 
