@@ -1,9 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
-import styles from "../../styles/Navbar.module.scss";
-import Hamburger from "../Hamburger";
-import NavbarRight from "./NavbarRight";
+import styles from '../../styles/Navbar.module.scss';
+import Hamburger from '../Hamburger';
+import NavbarRight from './NavbarRight';
 
 interface Props {
   openDrawer?: () => void;

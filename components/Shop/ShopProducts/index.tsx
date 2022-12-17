@@ -1,44 +1,44 @@
-import Image from "next/image";
-import clsx from "clsx";
+import Image from 'next/image';
+import clsx from 'clsx';
 
-import useModal from "../../../hooks/useModal";
-import Button from "../../Button";
-import RedeemModal from "../../../modals/RedeemModal";
-import styles from "../../../styles/ShopProducts.module.scss";
+import useModal from '../../../hooks/useModal';
+import Button from '../../Button';
+import RedeemModal from '../../../modals/RedeemModal';
+import styles from '../../../styles/ShopProducts.module.scss';
 
 const data = [
   {
-    img: "/images/prod-1.png",
-    name: "LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10",
-    price: "2,000",
+    img: '/images/prod-1.png',
+    name: 'LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10',
+    price: '2,000',
   },
   {
-    img: "/images/prod-2.png",
-    name: "Advanced Night Repair Eye Concentrate Matrix 0.5oz",
-    price: "8,500",
+    img: '/images/prod-2.png',
+    name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
+    price: '8,500',
     limitedTimeOffer: true,
   },
   {
-    img: "/images/prod-3.png",
-    name: "LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10",
-    price: "2,000",
+    img: '/images/prod-3.png',
+    name: 'LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10',
+    price: '2,000',
   },
   {
-    img: "/images/prod-4.png",
-    name: "Advanced Night Repair Eye Concentrate Matrix 0.5oz",
-    price: "8,500",
+    img: '/images/prod-4.png',
+    name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
+    price: '8,500',
     disabled: true,
   },
   {
-    img: "/images/prod-5.png",
-    name: "LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10",
-    price: "2,000",
+    img: '/images/prod-5.png',
+    name: 'LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10',
+    price: '2,000',
     disabled: true,
   },
   {
-    img: "/images/prod-6.png",
-    name: "Advanced Night Repair Eye Concentrate Matrix 0.5oz",
-    price: "8,500",
+    img: '/images/prod-6.png',
+    name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
+    price: '8,500',
   },
 ];
 
@@ -51,7 +51,7 @@ const ShopProducts = () => {
       <div className={styles.shopProducts}>
         {data.map((el, idx) => {
           return (
-            <div className={styles.item} key={"shop-products" + idx}>
+            <div className={styles.item} key={'shop-products' + idx}>
               {el.limitedTimeOffer && (
                 <div className={styles.limitedTimeOffer}>Limited-Time</div>
               )}
@@ -61,7 +61,7 @@ const ShopProducts = () => {
               <div className={styles.name}>{el.name}</div>
 
               <div className={styles.buy}>
-                <strong className={clsx(styles.price, "fs-20")}>
+                <strong className={clsx(styles.price, 'fs-20')}>
                   <Image
                     src="/vectors/icons/h.svg"
                     width={14}
@@ -73,8 +73,7 @@ const ShopProducts = () => {
                 <Button
                   variant="dark"
                   disabled={el.disabled}
-                  onClick={() => toggleShow()}
-                >
+                  onClick={() => toggleShow()}>
                   Redeem
                 </Button>
               </div>

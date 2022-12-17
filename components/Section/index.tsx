@@ -1,7 +1,7 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
-import styles from "../../styles/Section.module.scss";
+import styles from '../../styles/Section.module.scss';
 
 interface Props {
   mainClassName?: string;

@@ -1,31 +1,31 @@
-import clsx from "clsx";
-import Image from "next/image";
-import { useState } from "react";
+import clsx from 'clsx';
+import Image from 'next/image';
+import { useState } from 'react';
 
-import MainLayout from "../../layouts/MainLayout";
-import ShopProducts from "./ShopProducts";
-import styles from "../../styles/Shop.module.scss";
+import MainLayout from '../../layouts/MainLayout';
+import ShopProducts from './ShopProducts';
+import styles from '../../styles/Shop.module.scss';
 
 const filterOptions = [
   {
-    label: "All",
+    label: 'All',
   },
   {
-    label: "1-50",
+    label: '1-50',
   },
   {
-    label: "51-150",
+    label: '51-150',
   },
   {
-    label: "150-300",
+    label: '150-300',
   },
   {
-    label: "300 and more",
+    label: '300 and more',
   },
 ];
 
 const Shop = () => {
-  const [selectedOption, setSelectedOption] = useState("All");
+  const [selectedOption, setSelectedOption] = useState('All');
 
   return (
     <>
@@ -56,12 +56,11 @@ const Shop = () => {
                   <div
                     className={clsx(
                       styles.option,
-                      el.label === selectedOption && styles.active
+                      el.label === selectedOption && styles.active,
                     )}
-                    key={"filter-option" + idx}
-                    onClick={() => setSelectedOption(el.label)}
-                  >
-                    {el.label !== "All" && (
+                    key={'filter-option' + idx}
+                    onClick={() => setSelectedOption(el.label)}>
+                    {el.label !== 'All' && (
                       <Image
                         src="/vectors/icons/h.svg"
                         width={12}

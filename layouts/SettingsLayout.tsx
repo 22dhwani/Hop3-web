@@ -1,19 +1,19 @@
-import { useState } from "react";
-import clsx from "clsx";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useState } from 'react';
+import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-import Button from "../components/Button";
-import Navbar from "../components/Navbar";
-import Overlay from "../components/Overlay";
-import styles from "../styles/SettingsLayout.module.scss";
+import Button from '../components/Button';
+import Navbar from '../components/Navbar';
+import Overlay from '../components/Overlay';
+import styles from '../styles/SettingsLayout.module.scss';
 
 const navItems = [
-  { label: "Account Settings", href: "/user-settings/account" },
-  { label: "Address", href: "/user-settings/address" },
-  { label: "Terms of Service", href: "/user-settings/tos" },
-  { label: "Privacy Policy", href: "/user-settings/privacy-policy" },
+  { label: 'Account Settings', href: '/user-settings/account' },
+  { label: 'Address', href: '/user-settings/address' },
+  { label: 'Terms of Service', href: '/user-settings/tos' },
+  { label: 'Privacy Policy', href: '/user-settings/privacy-policy' },
 ];
 
 interface Props {
@@ -57,8 +57,7 @@ const SettingsLayout = ({ className, activeLink, children }: Props) => {
 
             <div className={styles.settingsMain}>
               <div
-                className={clsx(styles.nav, isSideBarActive && styles.active)}
-              >
+                className={clsx(styles.nav, isSideBarActive && styles.active)}>
                 <Image
                   className={styles.close}
                   src="/vectors/icons/close.svg"
@@ -73,10 +72,9 @@ const SettingsLayout = ({ className, activeLink, children }: Props) => {
                     href={el.href}
                     className={clsx(
                       styles.navItem,
-                      el.href === activeLink && styles.active
+                      el.href === activeLink && styles.active,
                     )}
-                    key={"nav-item" + idx}
-                  >
+                    key={'nav-item' + idx}>
                     {el.label}
                   </Link>
                 ))}

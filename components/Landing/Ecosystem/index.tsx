@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import Section from "../../Section";
-import styles from "../../../styles/LandingEcosystem.module.scss";
-import Image from "next/image";
-import Button from "../../Button";
+import Section from '../../Section';
+import styles from '../../../styles/LandingEcosystem.module.scss';
+import Image from 'next/image';
+import Button from '../../Button';
 
 const LandingEcosystem = () => {
   return (

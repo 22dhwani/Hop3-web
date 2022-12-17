@@ -1,0 +1,26 @@
+.filterwrapper {
+  .filter {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+
+    .btnwrapper {
+      padding-left: 20px;
+
+      .filterbutton {
+        font-weight: 400;
+        font-size: 20px;
+        background: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+
+        &.active {
+          font-weight: bold;
+          border-bottom: 1px solid #000;
+        }
+      }
+    }
+  }
+}

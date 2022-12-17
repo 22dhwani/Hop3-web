@@ -1,13 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
-import clsx from "clsx";
-import Button from "../components/Button";
-import NavbarRight from "../components/Navbar/NavbarRight";
-import Hamburger from "../components/Hamburger";
+import Image from 'next/image';
+import Link from 'next/link';
+import clsx from 'clsx';
+import Button from '../components/Button';
+import NavbarRight from '../components/Navbar/NavbarRight';
+import Hamburger from '../components/Hamburger';
 
-import styles from "../styles/MainLayout.module.scss";
-import { useState } from "react";
-import Overlay from "../components/Overlay";
+import styles from '../styles/MainLayout.module.scss';
+import { useState } from 'react';
+import Overlay from '../components/Overlay';
 
 interface Props {
   activeLink: string;
@@ -15,9 +15,9 @@ interface Props {
 }
 
 const navLinks = [
-  { href: "/explore", img: "/vectors/icons/explore.svg", text: "Explore" },
-  { href: "/shop", img: "/vectors/icons/shop.svg", text: "hop3 Shop" },
-  { href: "/explore", img: "/vectors/icons/user.svg", text: "Creator Studio" },
+  { href: '/explore', img: '/vectors/icons/explore.svg', text: 'Explore' },
+  { href: '/shop', img: '/vectors/icons/shop.svg', text: 'hop3 Shop' },
+  { href: '/explore', img: '/vectors/icons/user.svg', text: 'Creator Studio' },
 ];
 
 const MainLayout = ({ activeLink, children }: Props) => {
@@ -62,10 +62,9 @@ const MainLayout = ({ activeLink, children }: Props) => {
                     href={el.href}
                     className={clsx(
                       styles.navLink,
-                      activeLink === el.href && styles.active
+                      activeLink === el.href && styles.active,
                     )}
-                    key={"nav-link" + idx}
-                  >
+                    key={'nav-link' + idx}>
                     <Image width={30} height={30} alt={el.text} src={el.img} />
                     <div className={styles.text}>{el.text}</div>
                   </Link>
@@ -88,7 +87,7 @@ const MainLayout = ({ activeLink, children }: Props) => {
                 width={12}
                 height={12}
                 alt="h"
-              />{" "}
+              />{' '}
               100
             </div>
 

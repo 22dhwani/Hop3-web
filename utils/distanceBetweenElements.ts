@@ -1,6 +1,6 @@
 function distanceBetweenElements(
   elementOne: HTMLElement,
-  elementTwo: HTMLElement
+  elementTwo: HTMLElement,
 ): number {
   let distance = -1;
 

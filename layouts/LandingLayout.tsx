@@ -1,11 +1,11 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from 'next/link';
+import Image from 'next/image';
 
-import Button from "../components/Button";
-import styles from "../styles/LandingLayout.module.scss";
-import Section from "../components/Section";
-import { useEffect, useState } from "react";
-import clsx from "clsx";
+import Button from '../components/Button';
+import styles from '../styles/LandingLayout.module.scss';
+import Section from '../components/Section';
+import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 
 interface Props {
   children: React.ReactNode;
@@ -23,10 +23,10 @@ const LandingLayout = ({ children }: Props) => {
       }
     };
 
-    window.addEventListener("scroll", handler);
+    window.addEventListener('scroll', handler);
 
     return () => {
-      window.removeEventListener("scroll", handler);
+      window.removeEventListener('scroll', handler);
     };
   }, []);
 
@@ -46,7 +46,7 @@ const LandingLayout = ({ children }: Props) => {
           <div className={styles.menu}>
             <Link href="#0">How to earn</Link>
             <Button variant="dark-outlined" className={styles.btn}>
-              Launch app{" "}
+              Launch app{' '}
               <Image
                 src="/vectors/icons/beta.svg"
                 alt="beta"

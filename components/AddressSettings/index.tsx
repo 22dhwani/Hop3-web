@@ -1,13 +1,12 @@
-import SettingsLayout from "../../layouts/SettingsLayout";
-import Input from "../Input";
-import classes from "../../styles/AddressSettings.module.scss";
+import SettingsLayout from '../../layouts/SettingsLayout';
+import Input from '../Input';
+import classes from '../../styles/AddressSettings.module.scss';
 
 const AddressSettings = () => {
   return (
     <SettingsLayout
       activeLink="/user-settings/address"
-      className={classes.addressSettings}
-    >
+      className={classes.addressSettings}>
       <div className={classes.input}>
         <Input id="address-line-1" label="Address Line 1" />
       </div>

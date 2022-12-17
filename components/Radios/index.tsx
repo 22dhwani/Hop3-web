@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import styles from "../../styles/Radios.module.scss";
-import InputLabel from "../InputLabel";
+import clsx from 'clsx';
+import styles from '../../styles/Radios.module.scss';
+import InputLabel from '../InputLabel';
 
 interface Option {
   label: string;
@@ -21,7 +21,7 @@ const Radios = ({ id, label, required, data }: Props) => {
       <div className={styles.options}>
         {data.map((el, idx) => {
           return (
-            <div key={"radio-options" + idx} className={clsx(styles.option)}>
+            <div key={'radio-options' + idx} className={clsx(styles.option)}>
               <label className={styles.container}>
                 {el.label}
                 <input type="radio" name={id} value={el.label} />

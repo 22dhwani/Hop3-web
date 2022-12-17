@@ -1,159 +1,118 @@
-import React, { FormEvent, useCallback, useEffect, useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
-import Image from "next/image";
-import styles from "../../styles/Login.module.scss";
-import LoginCover from "../../public/images/LoginCover.png";
-import Logo from "../../public/images/Logo.svg";
-import { Button, TextField, Grid, Link } from "@mui/material";
-import Router from "next/router";
-import { auth } from "../firebase";
-import { getThemeColor } from "../../utils/utils";
-import { getUser } from "../../services/auth";
+import React, { useState } from 'react';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import Cookies from 'js-cookie';
+import Image from 'next/image';
+import styles from '../../styles/Login.module.scss';
+import LoginCover from '../../public/images/LoginCover.png';
+import Logo from '../../public/images/Logo.svg';
+import Google from '../../public/images/Google.svg';
+import { useRouter } from 'next/router';
+import { auth } from '../firebase';
+import { refreshToken } from '../../utils/utils';
+import { getUser } from '../../services/auth';
+import axios from 'axios';
+
+const provider = new GoogleAuthProvider();
 
 export default function Login() {
+  const router = useRouter();
   const [fieldValues, setFieldValues] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
-  useEffect(() => {
-    const token = localStorage.getItem("auth_token");
-    if (token) {
-      Router.push("/dashboard");
-    }
-  }, []);
-  const handleChange = (name: string, value: string) => {
-    setFieldValues((prevFieldValues) => {
-      return {
-        ...prevFieldValues,
-        [name]: value,
-      };
-    });
-  };
+
   const redirectToUserDetailsPage = () => {
-    Router.push(
+    router.push(
       `/userDetails?user=${JSON.stringify(fieldValues)}`,
-      "/userDetails"
+      '/userDetails',
     );
   };
-  const setToken = async () => {
-    const token = await auth?.currentUser?.getIdToken(true);
-    localStorage.setItem("auth_token", token as string);
-  };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault();
-      signInWithEmailAndPassword(auth, fieldValues.email, fieldValues.password)
-        .then(async (user) => {
-          setToken();
-          const response = await getUser();
-          if (response?.status === 200) {
-            Router.push("/dashboard");
+
+  const login = async () => {
+    signInWithPopup(auth, provider)
+      .then(async result => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+
+        // The signed-in user info.
+        const user = result.user;
+        await refreshToken();
+        setFieldValues(prevFieldValues => {
+          return {
+            ...prevFieldValues,
+            email: user.email || '',
+          };
+        });
+        try {
+          const data = await getUser();
+          if (data?.id) {
+            router.push('/dashboard');
+            Cookies.set('loggedin', 'true');
           } else {
             redirectToUserDetailsPage();
           }
-        })
-        .catch((error: any) => {
-          console.log({ error });
-          console.error("Error in sign in", error.message);
-          if (error.code === "auth/user-not-found") {
-            createUserWithEmailAndPassword(
-              auth,
-              fieldValues.email,
-              fieldValues.password
-            )
-              .then((user) => {
-                setToken();
-                redirectToUserDetailsPage();
-              })
-              .catch((err: any) => {
-                console.error("error in create user", err);
-              });
-          } else if (error?.response?.status === 404) {
+        } catch (error: any) {
+          console.error('Errror in signin', error);
+          if (
+            error?.response?.status === 404 ||
+            error?.response?.status === 500
+          ) {
             redirectToUserDetailsPage();
           }
+        }
+      })
+      .catch(error => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        // redirectToUserDetailsPage()
+
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log('error in google sign', {
+          errorCode,
+          errorMessage,
+          email,
+          credential,
         });
-    } catch (error) {
-      console.log(error);
-    }
+      });
   };
   return (
     <div className={styles.logincontainer}>
       <div className={styles.rightsection}>
-        <Image src={Logo} alt={""} />
-        <p className={styles.title}>You are hopping to the</p>
+        <Image src={Logo} alt={''} />
+        <p className={styles.title}>
+          You are
+          <br />
+          hopping to the
+        </p>
         <span className={styles.transformdivwrraper}>
           <p className={styles.transformText}>right place</p>
         </span>
         <div className={styles.loginform}>
-          <form onSubmit={handleSubmit}>
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <TextField
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  sx={{
-                    width: "450px",
-                  }}
-                  variant="outlined"
-                  value={fieldValues.email}
-                  onChange={(event) =>
-                    handleChange(event.target.name, event.target.value)
-                  }
-                  required
-                  autoFocus
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  sx={{
-                    width: "450px",
-                  }}
-                  variant="outlined"
-                  value={fieldValues.password}
-                  onChange={(event) =>
-                    handleChange(event.target.name, event.target.value)
-                  }
-                  required
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  className="button-block"
-                  sx={{
-                    background: "#FFFFFF",
-                    border: "1px solid #000000",
-                    width: "450px",
-                    boxShadow: "4px 4px 0px #70FFC3",
-                    borderRadius: "4px",
-                    color: getThemeColor(),
-                    "&:hover": {
-                      backgroundColor: "#70FFC3",
-                    },
-                  }}
-                >
-                  Login
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-          <p>
-            By logining, I agree to the <Link>Terms of Service</Link> and
+          <div className={styles.formwrapper}>
+            <button
+              type="submit"
+              data-testid="login"
+              onClick={login}
+              className="button-block">
+              <Image src={Google} alt={''} />
+              &nbsp;&nbsp; Login via Google
+            </button>
+          </div>
+          <p className={styles.agreetext}>
+            By logining, I agree to the{' '}
+            <a className={styles.link}>Terms of Service</a> and
             <br />
-            <Link> Privacy Policy</Link>
+            <a className={styles.link}>Privacy Policy</a>
           </p>
         </div>
       </div>
       <div className={styles.leftsection}>
-        <Image className={styles.imgcover} src={LoginCover} alt={""} />
+        <Image className={styles.imgcover} src={LoginCover} alt={''} />
       </div>
     </div>
   );

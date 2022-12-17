@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
-import Image from "next/image";
-import clsx from "clsx";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import clsx from 'clsx';
 
-import InputLabel from "../InputLabel";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
-import styles from "../../styles/Dropdown.module.scss";
+import InputLabel from '../InputLabel';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import styles from '../../styles/Dropdown.module.scss';
 
 interface Option {
   label: string;
@@ -17,6 +17,8 @@ interface Props {
   placeholder: string;
   options: Option[];
   listType?: boolean;
+  multiple?: boolean;
+  onSelect: (item: string) => void;
 }
 
 const Dropdown = ({
@@ -26,34 +28,62 @@ const Dropdown = ({
   placeholder,
   options,
   listType,
+  multiple,
+  onSelect,
 }: Props) => {
   const inputRef = useRef<HTMLDivElement>(null);
 
   const [isDropdownActive, setIsDropdownActive] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+
+  useEffect(() => {
+    onSelect(selectedValues.join(', '));
+  }, [selectedValues]);
 
   const toggleOptions = () => {
-    setIsDropdownActive((prevState) => !prevState);
+    setIsDropdownActive(prevState => !prevState);
   };
 
   const hideOptions = () => {
     setIsDropdownActive(false);
   };
 
-  useOnClickOutside({ ref: inputRef, handler: hideOptions });
+  const onPressItem = useCallback(
+    (item: string) => {
+      if (!multiple) {
+        setValue(item);
+        setIsDropdownActive(false);
+        onSelect && onSelect(item);
+        return;
+      }
+      if (selectedValues.includes(item)) {
+        setSelectedValues(prevState =>
+          prevState.filter((subItem: any) => item !== subItem),
+        );
+      } else {
+        setSelectedValues(prevState => [...prevState, item]);
+      }
+    },
+    [multiple, selectedValues],
+  );
 
+  useOnClickOutside({ ref: inputRef, handler: hideOptions });
+  console.log('Vlauess', value);
   return (
     <div className={styles.dropdown}>
       <InputLabel id={id} label={label} required={required} />
 
-      <div className={clsx(styles.inputContainer, listType && styles.listType)}>
+      <div
+        className={clsx(styles.inputContainer, listType && styles.listType)}
+        ref={inputRef}>
         <div
-          className={clsx(styles.inputMain, isDropdownActive && styles.active)}
-          ref={inputRef}
-        >
+          className={clsx(styles.inputMain, isDropdownActive && styles.active)}>
           <div className={styles.input} onClick={toggleOptions}>
-            {value ? (
+            {!multiple && value ? (
               <div className={styles.value}>{value}</div>
+            ) : multiple && selectedValues.length ? (
+              <div className={styles.value}>{selectedValues.join(', ')}</div>
             ) : (
               <div className={styles.placeholder}>{placeholder}</div>
             )}
@@ -70,19 +100,19 @@ const Dropdown = ({
           className={clsx(
             styles.options,
             isDropdownActive && styles.active,
-            listType && styles.listType
-          )}
-        >
-          {options.map((el, idx) => {
+            listType && styles.listType,
+          )}>
+          {options.map((el: Option, idx) => {
             return (
               <div
-                key={"option" + idx}
+                key={'option' + idx}
                 className={clsx(
                   styles.option,
-                  el.label === value && styles.active
+                  ((!multiple && el.label === value) ||
+                    (multiple && selectedValues.includes(el?.label))) &&
+                    styles.active,
                 )}
-                onClick={() => setValue(el.label)}
-              >
+                onClick={() => onPressItem(el.label)}>
                 {el.label}
               </div>
             );

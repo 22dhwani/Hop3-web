@@ -1,6 +1,6 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
-import styles from "../../styles/Overlay.module.scss";
+import styles from '../../styles/Overlay.module.scss';
 
 interface Props {
   closeDrawer: () => void;

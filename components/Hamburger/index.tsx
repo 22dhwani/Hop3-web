@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import styles from "../../styles/Hamburger.module.scss";
+import clsx from 'clsx';
+import styles from '../../styles/Hamburger.module.scss';
 
 interface Props {
   breakpoint?: number;
@@ -10,8 +10,7 @@ const Hamburger = ({ breakpoint, ...rest }: Props) => {
   return (
     <div
       className={clsx(styles.hamburger, breakpoint === 992 && styles.lg)}
-      {...rest}
-    >
+      {...rest}>
       <div></div>
       <div></div>
       <div></div>

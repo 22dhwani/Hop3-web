@@ -1,8 +1,8 @@
-import clsx from "clsx";
-import Image from "next/image";
-import React from "react";
+import clsx from 'clsx';
+import Image from 'next/image';
+import React from 'react';
 
-import styles from "../styles/RedeemModal.module.scss";
+import styles from '../styles/RedeemModal.module.scss';
 
 interface Props {
   show: boolean;

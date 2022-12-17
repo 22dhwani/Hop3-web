@@ -1,6 +1,6 @@
-import SettingsLayout from "../../layouts/SettingsLayout";
-import Input from "../Input";
-import ProfileUploader from "../ProfileUploader";
+import SettingsLayout from '../../layouts/SettingsLayout';
+import Input from '../Input';
+import ProfileUploader from '../ProfileUploader';
 
 const UserSettings = () => {
   return (

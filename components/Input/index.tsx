@@ -1,7 +1,7 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
-import styles from "../../styles/Input.module.scss";
-import InputLabel from "../InputLabel";
+import styles from '../../styles/Input.module.scss';
+import InputLabel from '../InputLabel';
 
 interface Props {
   className?: string;

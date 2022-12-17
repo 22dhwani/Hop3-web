@@ -1,4 +1,4 @@
-import AddressSettings from "../../components/AddressSettings";
+import AddressSettings from '../../components/AddressSettings';
 
 export default function AddressSettingsPage() {
   return (
