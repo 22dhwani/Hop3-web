@@ -1,6 +1,9 @@
 import { auth } from '../components/firebase';
 import { setAuthToken } from '../config/axiosconfig';
+
+import { FIREBASE_AUTH } from '../components/firebase';
 import Router from 'next/router';
+import ReactGA from 'react-ga';
 export const getThemeColor = () =>
   typeof window !== 'undefined' &&
   window?.matchMedia &&
@@ -18,4 +21,11 @@ export const refreshToken = async () => {
     console.error('Errror in refreshing token', e);
     Router.push('/');
   }
+};
+
+ReactGA.initialize(process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || '');
+
+export const pageview = (url: string) => {
+  ReactGA.set({ page: url });
+  ReactGA.pageview(url);
 };
