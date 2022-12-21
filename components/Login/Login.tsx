@@ -7,7 +7,7 @@ import LoginCover from '../../public/images/LoginCover.png';
 import Logo from '../../public/images/Logo.svg';
 import Google from '../../public/images/Google.svg';
 import { useRouter } from 'next/router';
-import { auth } from '../firebase';
+import { FIREBASE_AUTH } from '../firebase';
 import { refreshToken } from '../../utils/utils';
 import { getUser } from '../../services/auth';
 import axios from 'axios';
@@ -29,7 +29,7 @@ export default function Login() {
   };
 
   const login = async () => {
-    signInWithPopup(auth, provider)
+    signInWithPopup(FIREBASE_AUTH, provider)
       .then(async result => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);

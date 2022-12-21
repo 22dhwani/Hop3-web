@@ -1,6 +1,4 @@
-import { auth } from '../components/firebase';
 import { setAuthToken } from '../config/axiosconfig';
-
 import { FIREBASE_AUTH } from '../components/firebase';
 import Router from 'next/router';
 import ReactGA from 'react-ga';
@@ -13,7 +11,7 @@ export const getThemeColor = () =>
 
 export const refreshToken = async () => {
   try {
-    const token = await auth?.currentUser?.getIdToken(true);
+    const token = await FIREBASE_AUTH?.currentUser?.getIdToken(true);
     console.log('Tokensss', token);
     token && localStorage.setItem('authToken', token);
     token && setAuthToken(token);

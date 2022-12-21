@@ -10,7 +10,7 @@ import UpArrow from '../../public/images/UpArrow.svg';
 import Like from '../../public/images/Like.svg';
 import NotLike from '../../public/images/like_not.svg';
 import Logout from '../../public/images/Logout.png';
-import { auth } from '../firebase';
+import { FIREBASE_AUTH } from '../firebase';
 import ImageSlider from '../ImageSlider';
 import Chip from '../Chip/Chip';
 import { useRouter } from 'next/router';
@@ -213,8 +213,7 @@ export default function Dashboard() {
   console.log('All postss', allPost);
 
   const logout = useCallback(() => {
-    auth
-      .signOut()
+    FIREBASE_AUTH.signOut()
       .then(() => {
         localStorage.removeItem('authToken');
         Cookies.remove('loggedin');

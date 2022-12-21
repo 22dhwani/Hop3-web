@@ -9,20 +9,16 @@ import { setAuthToken } from '../config/axiosconfig';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { FIREBASE_AUTH, FIREBASE_SERVICE } from '../components/firebase';
-import { onAuthStateChanged, User } from '@firebase/auth';
-import { refreshToken } from '../utils/utils';
 import {
-  logEvent,
-  isSupported,
-  initializeAnalytics,
   Analytics,
+  initializeAnalytics,
+  isSupported,
 } from 'firebase/analytics';
 import { useRouter } from 'next/router';
 import { pageview } from '../utils/utils';
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
-  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchRoutes = async () => {
       const token = localStorage.getItem('authToken');
@@ -52,10 +48,6 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const SetUps = () => {
-  // const [user, setUser] = useAtom(userAtom);
-
-  // const { data, isLoading, error } = useQuery('account', getUser);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -67,8 +59,10 @@ const SetUps = () => {
       const GOOGLE_ANALYTICS: Analytics | null = await isSupported().then(yes =>
         yes ? initializeAnalytics(FIREBASE_SERVICE) : null,
       );
-      if (GOOGLE_ANALYTICS)
+
+      if (GOOGLE_ANALYTICS) {
         router.events.on('routeChangeComplete', handleRouteChange);
+      }
     };
     initAnalytics();
     return router.events.off('routeChangeStart', handleRouteChange);
