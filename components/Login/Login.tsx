@@ -10,12 +10,17 @@ import { useRouter } from 'next/router';
 import { FIREBASE_AUTH } from '../firebase';
 import { refreshToken } from '../../utils/utils';
 import { getUser } from '../../services/auth';
-import axios from 'axios';
+import { useStore } from '../../store/store';
+
+import { useQuery } from 'react-query';
 
 const provider = new GoogleAuthProvider();
 
 export default function Login() {
   const router = useRouter();
+  //ts-ignore
+  const { setUserData, setData } = useStore();
+
   const [fieldValues, setFieldValues] = useState({
     email: '',
     password: '',
@@ -47,8 +52,8 @@ export default function Login() {
         try {
           const data = await getUser();
           if (data?.id) {
-            router.push('/dashboard');
-            Cookies.set('loggedin', 'true');
+            router.push('/explore');
+            Cookies.set('hop3_loggedin', 'true');
           } else {
             redirectToUserDetailsPage();
           }
@@ -80,6 +85,7 @@ export default function Login() {
         });
       });
   };
+
   return (
     <div className={styles.logincontainer}>
       <div className={styles.rightsection}>

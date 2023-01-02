@@ -6,80 +6,6 @@
   width: 50%;
   height: 100%;
 
-  .header {
-    height: 100px;
-
-    .right {
-      position: absolute;
-      right: 20%;
-
-      .profile {
-        display: flex;
-
-        .dropdown {
-          position: relative;
-          display: inline-block;
-          cursor: pointer;
-
-          .dropdowncontent {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            left: 18px;
-
-            .menuitem {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-
-              .logout {
-                width: 25px;
-                height: 25px;
-              }
-            }
-          }
-
-          .profileimg {
-            width: 45px;
-            height: 45px;
-
-          }
-
-          .menuitem {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-
-            &:hover {
-              background-color: #f1f1f1
-            }
-          }
-
-          &:hover {
-            .dropdowncontent {
-              display: block;
-            }
-          }
-        }
-
-        .sharebutton {
-          padding: 5px 35px;
-          border: 1px solid #000000;
-          background: none;
-          border-radius: 44px;
-        }
-      }
-
-      img {
-        margin-left: 20px;
-      }
-    }
-  }
-
   .postwrapper {
     display: flex;
     padding-top: 15px;
@@ -185,5 +111,79 @@
       }
     }
 
+  }
+}
+
+.header {
+  height: 100px;
+
+  .right {
+    position: absolute;
+    right: 20%;
+
+    .profile {
+      display: flex;
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+
+        .dropdowncontent {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+          z-index: 1;
+          left: 18px;
+
+          .menuitem {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .logout {
+              width: 25px;
+              height: 25px;
+            }
+          }
+        }
+
+        .profileimg {
+          width: 45px;
+          height: 45px;
+
+        }
+
+        .menuitem {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+
+          &:hover {
+            background-color: #f1f1f1
+          }
+        }
+
+        &:hover {
+          .dropdowncontent {
+            display: block;
+          }
+        }
+      }
+
+      .sharebutton {
+        padding: 5px 35px;
+        border: 1px solid #000000;
+        background: none;
+        border-radius: 44px;
+      }
+    }
+
+    img {
+      margin-left: 20px;
+    }
   }
 }

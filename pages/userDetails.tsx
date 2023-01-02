@@ -47,7 +47,7 @@ export default function UserDetails() {
 
   const moveToDashBoard = useCallback(() => {
     Cookies.set('loggedin', 'true');
-    router.push('/dashboard');
+    router.push('/explore');
   }, []);
 
   const handleSubmit = useCallback(async () => {
@@ -146,10 +146,9 @@ export default function UserDetails() {
               </label>
               <div className={styles.uploadtextwrapper}>
                 <p className={styles.uploadtitle}>
-                  {' '}
                   Click to upload profile photo
                 </p>
-                <p className={styles.graytext}>Less than 2GB </p>
+                <p className={styles.graytext}>Less than 2mb </p>
                 <p className={styles.graytext}>110x110 resolution or higher</p>
               </div>
             </Grid>
@@ -157,11 +156,10 @@ export default function UserDetails() {
           <FormControl className={styles.formcontainer}>
             <FormLabel
               sx={{
-                color: getThemeColor(),
                 fontSize: '18px',
                 paddingBottom: '5px',
               }}>
-              Username
+              Name
             </FormLabel>
             <Grid container direction="column" spacing={10}>
               <Grid item>
@@ -177,7 +175,7 @@ export default function UserDetails() {
                   sx={{
                     width: '450px',
                     borderRadius: '4px',
-                    border: `1px solid ${getThemeColor()}`,
+                    border: `1px solid black`,
                   }}
                   type="text"
                   variant="outlined"

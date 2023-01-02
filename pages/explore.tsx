@@ -1,12 +1,14 @@
 import React from 'react';
-import Dashboard from '../components/Dashboard/Dashboard';
+import Posts from '../components/Posts/Posts';
 import Sidebar from '../components/Sidebar/Sidebar';
-
+import Header from '../components/Header/Header';
 export default function dashboard() {
   return (
     <div>
       <Sidebar />
-      <Dashboard />
+      <Header />
+      {/* <TopBanner/> */}
+      <Posts userId="" />
     </div>
   );
 }

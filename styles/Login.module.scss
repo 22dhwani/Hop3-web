@@ -1,3 +1,5 @@
+@use "common" as *;
+
 .logincontainer {
     display: flex;
     .rightsection {
@@ -47,7 +49,7 @@
                     height: 55px;
                     background: #FFFFFF;
                     border: 1px solid #000000;
-                    box-shadow: 4px 4px 0px #70FFC3;
+                    box-shadow: 4px 4px 0px $color-primary;
                     border-radius: 4px;
                     font-size: 16px;
                     line-height: 20px;
@@ -65,9 +67,10 @@
             display: flex;
             padding-left: 10px;
             align-items: center;
-            background: #70FFC3;
+            background: $color-primary;
             border-radius: 0px 33px 33px 0px;
             transform: rotate(3.67deg);
+            
             .transformText {
                 font-family: 'DM Sans';
                 font-style: normal;

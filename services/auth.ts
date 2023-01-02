@@ -20,6 +20,7 @@ export const createUser = async (userData: userDataType) =>
 
 export const getUser = async () => {
   const response = await axios.get('/user/getMineUser/');
+  console.log(response?.data);
   return response?.data;
 };
 

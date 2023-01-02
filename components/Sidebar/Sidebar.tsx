@@ -54,12 +54,12 @@ export default function Sidebar() {
     route.push('/share-experience');
   }, [route]);
 
-  const onPressDashboard = useCallback(() => {
-    route.push('/dashboard');
+  const onPressExplore = useCallback(() => {
+    route.push('/explore');
   }, [route]);
 
   const onPressCreator = useCallback(() => {
-    route.push('/creator-studio');
+    route.push('/studio');
   }, [route]);
 
   const onPressShop = useCallback(() => {
@@ -74,7 +74,7 @@ export default function Sidebar() {
         <div>
           <ul className={styles.menu}>
             <li
-              onClick={onPressDashboard}
+              onClick={onPressExplore}
               onMouseOut={() => {
                 handleChangeHover('explore', false);
               }}
