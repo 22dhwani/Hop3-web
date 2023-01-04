@@ -7,7 +7,7 @@ import distanceBetweenElements from '../../../utils/distanceBetweenElements';
 import Button from '../../Button';
 import Section from '../../Section';
 import styles from '../../../styles/LandingCommunity.module.scss';
-
+import { AnimatedText } from '../../Text/Text';
 const LandingCommunity = () => {
   const firstElRef = useRef<HTMLHeadingElement>(null);
   const secondElRef = useRef<HTMLHeadingElement>(null);
@@ -84,19 +84,21 @@ const LandingCommunity = () => {
 
   return (
     <Section className={styles.landingCommunity}>
-      <h2>
-        Earn Community Rewards
-        <div className={styles.coinWrap}>
-          <Image
-            className={styles.coin}
-            src="/vectors/coin.svg"
-            alt="coin"
-            width={84}
-            height={114}
-          />
-        </div>
-        in Countless Ways
-      </h2>
+      <AnimatedText>
+        <h2>
+          Earn Community Rewards
+          <div className={styles.coinWrap}>
+            <Image
+              className={styles.coin}
+              src="/vectors/coin.svg"
+              alt="coin"
+              width={84}
+              height={114}
+            />
+          </div>
+          in Countless Ways
+        </h2>
+      </AnimatedText>
 
       <div className={styles.steps} ref={articleRef}>
         <div className={styles.blurry} ref={blurryRef}></div>

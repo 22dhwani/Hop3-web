@@ -8,7 +8,7 @@ export default function dashboard() {
       <Sidebar />
       <Header />
       {/* <TopBanner/> */}
-      <Posts userId="" />
+      <Posts />
     </div>
   );
 }

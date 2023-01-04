@@ -4,11 +4,13 @@ import Section from '../../Section';
 import styles from '../../../styles/LandingEcosystem.module.scss';
 import Image from 'next/image';
 import Button from '../../Button';
-
+import { AnimatedText } from '../../Text/Text';
 const LandingEcosystem = () => {
   return (
     <Section className={styles.landingEcosystem}>
-      <h2>A larger ecosystem that empowers all</h2>
+      <AnimatedText>
+        <h2>A larger ecosystem that empowers all</h2>
+      </AnimatedText>
 
       <div className={styles.descs}>
         <div className={styles.para}>

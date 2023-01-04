@@ -35,7 +35,7 @@ interface StatusType {
 }
 interface PostDataProps {
   data: any;
-  isAdmin: boolean;
+  isAdmin?: boolean;
   onRefresh?: () => void;
 }
 const status: string[] = ['Pending', 'Approved', 'Denied'];

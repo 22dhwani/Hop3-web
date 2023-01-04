@@ -8,7 +8,7 @@ import Link from 'next/link';
 const links = [
   {
     label: 'Explore the app',
-    href: '',
+    href: 'www.hop3.app/login',
   },
   {
     label: 'Join Discord',
@@ -16,7 +16,7 @@ const links = [
   },
   {
     label: 'Contact us',
-    href: '',
+    href: 'https://discord.gg/4fUwddGGRa',
   },
 ];
 
@@ -53,7 +53,7 @@ const LandingFooter = () => {
       </div>
 
       <div className={styles.copyright}>
-        ©2022 hop3 Rewards. All Rights Reserved.
+        ©2023 hop3 Rewards. All Rights Reserved.
       </div>
     </Section>
   );

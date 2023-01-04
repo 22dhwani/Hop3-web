@@ -6,6 +6,7 @@ import FlipNumbers from 'react-flip-numbers';
 import Section from '../../Section';
 import styles from '../../../styles/LandingHero.module.scss';
 import Button from '../../Button';
+import { numberWithCommas } from '../../../utils/utils';
 
 const pathVariants = {
   initial: {
@@ -415,7 +416,7 @@ const LandingHero = () => {
             play
             perspective={500}
             duration={numTime}
-            numbers={num}
+            numbers={numberWithCommas(num)}
           />
         </div>
         <Image src="/vectors/logo-2.svg" width={56} height={56} alt="logo" />{' '}

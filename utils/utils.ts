@@ -27,3 +27,7 @@ export const pageview = (url: string) => {
   ReactGA.set({ page: url });
   ReactGA.pageview(url);
 };
+
+export const numberWithCommas = (x: number | string) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};

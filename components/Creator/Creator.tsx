@@ -100,7 +100,7 @@ export default function Creator() {
         </div>
       </div>
       <div className={styles.postswrapper}>
-        <Posts userId={userData?.id} />
+        <Posts />
       </div>
     </div>
   );
