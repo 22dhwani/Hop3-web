@@ -1,5 +1,7 @@
-.sidebar {
-    background: linear-gradient(124.62deg, #F6F2FF -57.64%, #F5FFFB 81.51%);
+@use 'common' as *;
+.container {
+    // background: linear-gradient(14.62deg, $color-secondary -57.64%, #FBFBFB 81.51%);
+    background: #FBFBFB;
     position: fixed;
     top: 0;
     left: 0;
@@ -7,55 +9,7 @@
     height: 100%;
     padding: 20px 0;
     transition: all 0.5s ease;
-
-    .container {
-        padding: 40px;
-
-        .menu {
-            padding-top: 50px;
-            padding-left: 5px;
-
-            .item {
-                padding: 5px 0px;
-                display: flex;
-                max-width: 200px;
-
-                .icon {
-                    width: 25px;
-                    height: 22px;
-                }
-
-                .text {
-                    padding-left: 10px;
-                    font-family: 'DM Sans';
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 18px;
-                }
-
-                .arowicon {
-                    position: absolute;
-                    right: 105px;
-                }
-
-                &:hover {
-                    border-bottom: 1px solid #000000;
-
-                    .text {
-                        font-weight: 700;
-                    }
-                }
-
-            }
-
-            .isActive {
-                border-bottom: 1px solid #000000;
-
-                .text {
-                    font-weight: 700;
-                }
-            }
-        }
+    padding: 40px;
 
         .buttonwrapper {
             padding: 100px 0px;
@@ -89,4 +43,3 @@
             }
         }
     }
-}

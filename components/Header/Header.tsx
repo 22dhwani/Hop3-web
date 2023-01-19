@@ -7,6 +7,10 @@ import Profile from '../../public/images/Profile.png';
 import { useRouter } from 'next/router';
 import { FIREBASE_AUTH } from '../firebase';
 import Cookies from 'js-cookie';
+import Button from '../Button';
+
+import Logo from '../../public/images/Logo.svg';
+
 const Header = (props: any) => {
   const router = useRouter();
 
@@ -25,12 +29,13 @@ const Header = (props: any) => {
       });
   }, [router]);
   return (
-    <header className={styles.header}>
+    <div className={styles.header}>
+      <Image src={Logo} alt={''} />
       <div className={styles.right}>
         <div className={styles.profile}>
-          <button className={styles.sharebutton} onClick={() => {}}>
+          <Button variant="dark-outlined" onClick={() => {}}>
             Share Experience
-          </button>
+          </Button>
           <div className={styles.dropdown}>
             <Image
               className={styles.profileimg}
@@ -48,7 +53,7 @@ const Header = (props: any) => {
           </div>
         </div>
       </div>
-    </header>
+    </div>
   );
 };
 

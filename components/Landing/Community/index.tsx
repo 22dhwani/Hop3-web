@@ -154,11 +154,17 @@ const LandingCommunity = () => {
 
           <div className={styles.right}>
             <Image
-              src="/vectors/reward-2-.svg"
+              src="/vectors/reward-2.svg"
               alt="reward"
               width={100}
               height={100}
             />
+            <div className={styles.rewardVideo}>
+              <video
+                src="https://images.markup.io/green/message-attachment/54220183-6ec4-490c-8d61-2502c05e26db//9e626eab-b27a-4454-bf14-bd105f3a8644.mp4"
+                autoPlay
+                width="281px"></video>
+            </div>
           </div>
         </div>
         <div className={styles.step}>

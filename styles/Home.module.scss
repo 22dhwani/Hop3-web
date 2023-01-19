@@ -1,3 +1,5 @@
+@use "common" as *;
+
 .container {
   font-family: 'DM Sans';
   font-style: normal;
@@ -115,7 +117,7 @@
 }
 
 .header {
-  height: 100px;
+  padding: 56px;
 
   .right {
     position: absolute;

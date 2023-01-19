@@ -208,7 +208,7 @@
 
       .right {
         width: 50%;
-
+        position:relative;
         @media screen and (max-width: 767px) {
           padding-left: 30px;
           width: 100%;
@@ -222,7 +222,16 @@
           height: auto;
           max-width: 630px;
         }
+
       }
     }
+  }
+  .rewardVideo{
+    position:absolute;
+    top:0;
+    left:0;
+    border-radius: 20px;
+    border-color: #D2FF2D;
+    border-width: thick;
   }
 }

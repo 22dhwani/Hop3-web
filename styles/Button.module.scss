@@ -1,3 +1,5 @@
+@use "common" as *;
+
 .btn {
   height: 40px;
   text-align: center;
@@ -6,11 +8,10 @@
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  background-color: transparent;
   cursor: pointer;
   border-radius: 50px;
   border: none;
-  transition: 0.4s ease;
+  transition: 0.3s ease;
 
   @media screen and (max-width: 575px) {
     font-size: 12px;
@@ -63,13 +64,19 @@
   }
 
   &.darkOutlined {
-    border: 1px solid #000000;
+    border: 1px solid $black;
     min-width: 166px;
     font-weight: 700;
+    background-color: transparent;
 
     &,
     * {
-      color: #000;
+      color: $black;
+    }
+
+    &:hover {
+      background-color: $color-primary;
+    
     }
 
     @media screen and (max-width: 575px) {
@@ -77,14 +84,6 @@
       padding: 0 20px;
     }
 
-    &:hover {
-      background-color: #000000;
-
-      &,
-      * {
-        color: #fff;
-      }
-    }
   }
 
   &.purple,

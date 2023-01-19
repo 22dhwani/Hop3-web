@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/globals.css';
+import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import { getUser } from '../services/auth';
