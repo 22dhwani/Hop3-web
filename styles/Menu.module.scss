@@ -1,3 +1,4 @@
+@use "common" as *;
 .container {
     padding-top: 50px;
     padding-left: 5px;
@@ -7,26 +8,29 @@
     }
 
     .item {
-        padding: 5px 0px;
+        padding: 10px 25px;
         display: flex;
-        max-width: 200px;
+        align-items: center;
+        border-radius: 57px;
 
         .text {
-            padding-left: 10px;
+            margin-left: 20px;
             font-family: 'DM Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 18px;
+            
         }
 
         &:hover {
-            border-bottom: 1px solid #000000;
-
-            .text {
-                font-weight: 700;
-            }
+            // border: 1px solid $color-primary;
+            box-shadow: 2px 2px 5px 0px rgba(113, 103, 140,0.15);
+            cursor:pointer;
+            transition: 0.3s ease;
         }
-
+        &.selected {
+            background-color: $light-yellow;
+        }
     }
 
     .isActive {

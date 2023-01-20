@@ -10,7 +10,9 @@ interface Option {
 
 interface Meun {
   data: Option[];
+  selectedItem: string;
   title?: string;
+  action?: (...args: Array<any>) => void;
 }
 
 interface MenuItem {
@@ -18,11 +20,13 @@ interface MenuItem {
   label: string;
   name?: string;
   required?: boolean;
+  selectedItem: string;
+  action?: (...args: Array<any>) => void;
   icon?: JSX.Element | null;
   data?: Option[];
 }
 
-const Menu = ({ data, title }: Meun) => {
+const Menu = ({ data, title, selectedItem, action }: Meun) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>{title}</div>
@@ -35,6 +39,8 @@ const Menu = ({ data, title }: Meun) => {
             data={data}
             key={idx}
             icon={item.icon}
+            action={action}
+            selectedItem={selectedItem}
           />
         );
       })}
@@ -42,11 +48,26 @@ const Menu = ({ data, title }: Meun) => {
   );
 };
 
-const MenuItem = ({ id, label, required, data, icon }: MenuItem) => {
+const MenuItem = ({
+  id,
+  label,
+  required,
+  data,
+  icon,
+  action,
+  selectedItem,
+}: MenuItem) => {
   return (
-    <div className={styles.item}>
+    <div
+      className={clsx(styles.item, selectedItem === id && styles.selected)}
+      id={id}
+      onClick={e => {
+        if (action) {
+          action(e, id);
+        }
+      }}>
       <div>{icon}</div>
-      <span>{label}</span>
+      <span className={styles.text}>{label}</span>
     </div>
   );
 };

@@ -43,7 +43,7 @@ const data = [
 ];
 
 const ShopProducts = () => {
-  const { show, toggleShow } = useModal(false);
+  const { show, toggleShow } = useModal(true);
 
   return (
     <>

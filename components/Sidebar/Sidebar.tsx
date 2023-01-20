@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from '../../styles/Sidebar.module.scss';
 import Logo from '../../public/images/Logo.svg';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import clsx from 'clsx';
 import { SidebarExploreIcon } from '../Icons/Icons';
 import Menu from '../Menu/Menu';
@@ -24,41 +24,12 @@ export default function Sidebar() {
   ];
 
   const route = useRouter();
-  const [isActive, setIsActive] = useState({
-    explore: false,
-    shop: false,
-    creator: false,
-  });
-  const [isHover, setIsHover] = useState({
-    explore: false,
-    shop: false,
-    creator: false,
-  });
-  useEffect(() => {
-    if (route?.pathname?.includes('creator')) {
-      handleChangActive('creator', true);
-    } else if (route?.pathname?.includes('shop')) {
-      handleChangActive('shop', true);
-    }
-  }, [route?.pathname]);
+  const [activeMenu, setActiveMenu] = useState('explore');
 
-  const handleChangeHover = (key: string, val: boolean) => {
-    setIsHover(previousIsHover => {
-      return {
-        ...previousIsHover,
+  const handleMenuClick = (e: any, id: string) => {
+    e.preventDefault();
 
-        [key]: val,
-      };
-    });
-  };
-  const handleChangActive = (key: string, val: boolean) => {
-    setIsActive(previousIsHover => {
-      return {
-        ...previousIsHover,
-
-        [key]: val,
-      };
-    });
+    setActiveMenu(id);
   };
 
   return (
@@ -66,8 +37,19 @@ export default function Sidebar() {
       <div className={styles.logo}>
         <Image src={Logo} alt={''} />
       </div>
-      <Menu data={menu_data} />
-      <Menu title={'Categories'} data={menu_category_data} />
+      <Menu
+        data={menu_data}
+        selectedItem={activeMenu}
+        action={handleMenuClick}
+        key={'menu' + 1}
+      />
+      <Menu
+        title={'Categories'}
+        data={menu_category_data}
+        action={handleMenuClick}
+        selectedItem={activeMenu}
+        key={'menu' + 2}
+      />
       <div className={styles.textwrapper}>
         <span className={styles.invite}>Invite friends and earn 100</span>
         <p className={styles.help}>Need some help?</p>
