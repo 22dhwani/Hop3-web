@@ -51,7 +51,7 @@ const rewardItems = [
   },
 ];
 
-const categories = [
+export const categories = [
   {
     label: 'Activities & Games',
   },

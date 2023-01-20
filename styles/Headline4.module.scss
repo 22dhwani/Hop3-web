@@ -1,0 +1,10 @@
+@use "common" as *;
+
+.headline4 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 36px;
+    color: $black;
+    margin-bottom : 20px;
+}

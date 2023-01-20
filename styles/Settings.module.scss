@@ -1,0 +1,64 @@
+@use 'common' as *;
+.settings {
+  max-width: 560px;
+
+  .headline4Div {
+    margin-top: 60px;
+  }
+  .emptyAddress {
+    height: 112px;
+    background-color: $color-dark-gray;
+    border-radius: 15px;
+    align-items: center;
+    display: flex;
+    padding-left: 30px;
+  }
+  .emptyAddressText {
+    margin-left: 10px;
+  }
+
+  .input {
+    margin-bottom: 38px;
+  }
+  .emptySpace {
+    flex: 1;
+  }
+
+  .inputRow {
+    display: flex;
+    gap: 44px;
+
+    & > * {
+      flex-grow: 1;
+    }
+  }
+  .mainZipCode {
+    width: 100%;
+  }
+  .preferenceContainer {
+    width: 100%;
+    transition: 0.3s ease;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    .option {
+      height: 30px;
+      background-color: $color-gray;
+      display: flex;
+      border-radius: 50px;
+      justify-content: center;
+      align-items: center;
+      padding-left: 14px;
+      padding-right: 14px;
+      font-weight: 500;
+      font-size: 14px;
+      &:hover {
+        transform: scale(1.05);
+      }
+      &.active {
+        background-color: $color-primary;
+      }
+    }
+  }
+}
