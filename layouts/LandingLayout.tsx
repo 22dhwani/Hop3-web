@@ -44,7 +44,7 @@ const LandingLayout = ({ children }: Props) => {
             />
           </Link>
           <div className={styles.menu}>
-            <Link href="https://www.hop3.app/login">How to earn</Link>
+            <Link href="https://doc.hop3.app/">How to earn</Link>
             <Button variant="dark-outlined" className={styles.btn}>
               Launch app{' '}
               <Image
