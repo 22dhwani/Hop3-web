@@ -1,9 +1,14 @@
 @use 'common' as *;
 .settings {
   max-width: 560px;
+  padding-bottom: 50px;
 
   .headline4Div {
     margin-top: 60px;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 700;
+    color: black;
   }
   .emptyAddress {
     height: 112px;
@@ -35,6 +40,19 @@
   .mainZipCode {
     width: 100%;
   }
+  .buttonContainer{
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    @media screen and (max-width: 575px) {
+      flex-direction: column;
+      margin-top: 50px;
+    }
+  }
+  .otherThingDiv{
+    margin-top: 12px;
+  }
   .preferenceContainer {
     width: 100%;
     transition: 0.3s ease;
@@ -46,6 +64,8 @@
       height: 30px;
       background-color: $color-gray;
       display: flex;
+      cursor: pointer;
+      border-width: 0;
       border-radius: 50px;
       justify-content: center;
       align-items: center;
@@ -53,9 +73,6 @@
       padding-right: 14px;
       font-weight: 500;
       font-size: 14px;
-      &:hover {
-        transform: scale(1.05);
-      }
       &.active {
         background-color: $color-primary;
       }

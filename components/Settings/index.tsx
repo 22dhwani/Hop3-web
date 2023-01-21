@@ -2,12 +2,14 @@ import React, { ChangeEvent, useCallback, useState } from 'react';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import Input from '../Input';
 import ProfileUploader from '../ProfileUploader';
-import Headline4 from '../Headline4';
 import { categories as all_categories } from '../ShareExperience';
 import clsx from 'clsx';
 import Image from 'next/image';
 import BodyText3 from '../BodyText3';
 import classes from '../../styles/Settings.module.scss';
+import Button from '../Button';
+import InputGroup from '../InputGroup';
+import HeaderProfileNotification from '../HeaderProfileNotification';
 
 const Settings = () => {
   const [showAddress, setShowAddress] = useState(false);
@@ -36,70 +38,17 @@ const Settings = () => {
     [categories],
   );
 
-  const onPressShowAddress = useCallback(() => {
+  const onPressToggleAddress = useCallback(() => {
     setShowAddress(prevState => !prevState);
   }, []);
 
-  const onChangeName = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setAddressInfo(prevState => ({ ...prevState, name: event.target.value }));
-  }, []);
-
-  const onChangePhoneNumber = useCallback(
+  const onChangeAddressText = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
+      const id = event.target.id;
+      const value = event.target.value;
       setAddressInfo(prevState => ({
         ...prevState,
-        phone_number: event.target.value,
-      }));
-    },
-    [],
-  );
-
-  const onChangeAddress1 = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setAddressInfo(prevState => ({
-        ...prevState,
-        address_line1: event.target.value,
-      }));
-    },
-    [],
-  );
-
-  const onChangeAddress2 = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setAddressInfo(prevState => ({
-        ...prevState,
-        address_line2: event.target.value,
-      }));
-    },
-    [],
-  );
-
-  const onChangeCity = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setAddressInfo(prevState => ({ ...prevState, city: event.target.value }));
-  }, []);
-
-  const onChangeAddressZipcode = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setAddressInfo(prevState => ({
-        ...prevState,
-        zip_code: event.target.value,
-      }));
-    },
-    [],
-  );
-
-  const onChangeState = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setAddressInfo(prevState => ({
-      ...prevState,
-      state: event.target.value,
-    }));
-  }, []);
-
-  const onChangeCountry = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setAddressInfo(prevState => ({
-        ...prevState,
-        country: event.target.value,
+        [id]: value,
       }));
     },
     [],
@@ -107,12 +56,13 @@ const Settings = () => {
 
   return (
     <SettingsLayout activeLink="/user-settings/account">
-      <ProfileUploader />
       <div className={classes.settings}>
+        <HeaderProfileNotification />
+        <ProfileUploader />
         <Input id="name" label="Name" placeholder="Your First and Last Name" />
-        <Headline4 text={'Shipping Address'} className={classes.headline4Div} />
+        <h2 className={classes.headline4Div}>{'Shipping Address'}</h2>
         {!showAddress ? (
-          <div className={classes.emptyAddress} onClick={onPressShowAddress}>
+          <div className={classes.emptyAddress} onClick={onPressToggleAddress}>
             <Image
               src="/vectors/icons/add.svg"
               alt="add"
@@ -125,13 +75,13 @@ const Settings = () => {
             />
           </div>
         ) : (
-          <div>
+          <InputGroup>
             <div className={classes.inputRow}>
               <div className={classes.input}>
                 <Input
                   id="name"
                   label="Name"
-                  onChange={onChangeName}
+                  onChange={onChangeAddressText}
                   value={addressInfo.name}
                   placeholder="Name"
                 />
@@ -140,7 +90,7 @@ const Settings = () => {
                 <Input
                   id="phone_number"
                   label="Phone number"
-                  onChange={onChangePhoneNumber}
+                  onChange={onChangeAddressText}
                   value={addressInfo.phone_number}
                   placeholder="Phone number"
                 />
@@ -148,18 +98,18 @@ const Settings = () => {
             </div>
             <div className={classes.input}>
               <Input
-                id="address-line-1"
+                id="address_line1"
                 label="Address Line 1"
-                onChange={onChangeAddress1}
+                onChange={onChangeAddressText}
                 value={addressInfo.address_line1}
                 placeholder="Address Line 1"
               />
             </div>
             <div className={classes.input}>
               <Input
-                id="address-line-2"
+                id="address_line2"
                 label="Address Line 2"
-                onChange={onChangeAddress2}
+                onChange={onChangeAddressText}
                 value={addressInfo.address_line2}
                 placeholder="Address Line 2"
               />
@@ -169,16 +119,16 @@ const Settings = () => {
                 <Input
                   id="city"
                   label="City"
-                  onChange={onChangeCity}
+                  onChange={onChangeAddressText}
                   value={addressInfo.city}
                   placeholder="City"
                 />
               </div>
               <div className={classes.input}>
                 <Input
-                  id="zip-code"
+                  id="zip_code"
                   label="Zip Code"
-                  onChange={onChangeAddressZipcode}
+                  onChange={onChangeAddressText}
                   value={addressInfo.zip_code}
                   placeholder="Zip Code"
                 />
@@ -189,7 +139,7 @@ const Settings = () => {
                 <Input
                   id="state"
                   label="State"
-                  onChange={onChangeState}
+                  onChange={onChangeAddressText}
                   value={addressInfo.state}
                   placeholder="State"
                 />
@@ -198,29 +148,37 @@ const Settings = () => {
                 <Input
                   id="country"
                   label="Country"
-                  onChange={onChangeCountry}
+                  onChange={onChangeAddressText}
                   value={addressInfo.country}
                   placeholder="Country"
                 />
               </div>
             </div>
-          </div>
+            <div className={classes.buttonContainer}>
+              <Button variant="transparent" onClick={onPressToggleAddress}>
+                Cancel
+              </Button>
+              <Button variant="primary">Save</Button>
+            </div>
+          </InputGroup>
         )}
-        <Headline4
-          text={'Where are you located?'}
-          className={classes.headline4Div}
-        />
+        <h2 className={classes.headline4Div}>{'Where are you located?'}</h2>
+
         <div className={classes.inputRow}>
           <div className={classes.mainZipCode}>
-            <Input id="main_zip_code" label="Zip Code" />
+            <Input
+              id="main_zip_code"
+              label="Zip Code"
+              placeholder={'Zip code'}
+            />
           </div>
           <div className={classes.mainZipCode} />
         </div>
-        <Headline4 text={'Preferences'} className={classes.headline4Div} />
+        <h2 className={classes.headline4Div}>{'Preferences'}</h2>
         <div className={classes.preferenceContainer}>
           {all_categories.map((el: any, idx) => {
             return (
-              <div
+              <button
                 key={'option' + idx}
                 className={clsx(
                   classes.option,
@@ -230,10 +188,19 @@ const Settings = () => {
                   onSelectCategory(el.label);
                 }}>
                 {el.label}
-              </div>
+              </button>
             );
           })}
         </div>
+        {categories.includes('Other') && (
+          <div className={classes.otherThingDiv}>
+            <Input
+              id="other_category"
+              label=""
+              placeholder={'Other things you want to see'}
+            />
+          </div>
+        )}
       </div>
     </SettingsLayout>
   );

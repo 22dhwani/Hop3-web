@@ -4,7 +4,14 @@ import { useRouter } from 'next/router';
 import styles from '../../styles/Button.module.scss';
 
 interface Props {
-  variant: 'purple' | 'grey' | 'dark-outlined' | 'green' | 'dark';
+  variant:
+    | 'purple'
+    | 'grey'
+    | 'dark-outlined'
+    | 'green'
+    | 'dark'
+    | 'primary'
+    | 'transparent';
   lg?: boolean;
   className?: string;
   children: React.ReactNode;
@@ -37,6 +44,8 @@ const Button = ({
         variant === 'grey' && styles.grey,
         variant === 'green' && styles.green,
         variant === 'dark' && styles.dark,
+        variant === 'primary' && styles.primary,
+        variant === 'transparent' && styles.transparent,
       )}
       {...rest}
       onClick={e => {
