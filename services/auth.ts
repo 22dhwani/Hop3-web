@@ -33,3 +33,8 @@ export const updateImageDetails = async (imageData: IUpdateImageDetails) => {
   const response = await axios.put('/user/updateImageDetails/', imageData);
   return response?.data;
 };
+
+export const updateUser = async (imageData: IUpdateImageDetails) => {
+  const response = await axios.put('/user/updateMyProfile/', imageData);
+  return response?.data;
+};

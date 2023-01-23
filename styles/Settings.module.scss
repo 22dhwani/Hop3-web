@@ -11,15 +11,37 @@
     color: black;
   }
   .emptyAddress {
-    height: 112px;
+    min-height: 112px;
     background-color: $color-dark-gray;
     border-radius: 15px;
     align-items: center;
     display: flex;
-    padding-left: 30px;
+    padding: 16px 30px 16px 30px;
+    .leftView {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex: 1;
+    }
   }
   .emptyAddressText {
     margin-left: 10px;
+  }
+  .rowDiv {
+    align-items: center;
+    display: flex;
+    flexdirection: row;
+  }
+
+  .nameTitle {
+    font-weight: 700;
+    font-size: 16px;
+    color: $black;
+    line-height: 21px;
+    &.addressDescription {
+      font-weight: 400;
+      margin-bottom: 0px;
+    }
   }
 
   .input {
@@ -40,7 +62,20 @@
   .mainZipCode {
     width: 100%;
   }
-  .buttonContainer{
+
+  .iconStyle {
+    height: 24px;
+    width: 24px;
+    margin-left: 20px;
+    border-width: 0px;
+    cursor: pointer;
+    background-color: transparent;
+    :active {
+      opacity: 0.5;
+    }
+  }
+
+  .buttonContainer {
     margin-top: 50px;
     display: flex;
     justify-content: flex-end;
@@ -50,7 +85,10 @@
       margin-top: 50px;
     }
   }
-  .otherThingDiv{
+  .mainButtonContainer {
+    justify-content: flex-start;
+  }
+  .otherThingDiv {
     margin-top: 12px;
   }
   .preferenceContainer {

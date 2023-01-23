@@ -7,20 +7,14 @@ import MoneyPurple from '../../public/images/MoneyPurple.svg';
 import UpArrow from '../../public/images/UpArrow.svg';
 import GradientBack from '../../public/images/Gradient.png';
 import ShiningStart from '../../public/images/ShiningStart.png';
-import { useQuery } from 'react-query';
-import { getUser } from '../../services/auth';
+import { useUserStore } from '../../store/userStore';
 
 export default function Creator() {
-  const {
-    data: userData,
-    isLoading: isUserLoading,
-    error: getUserError,
-    refetch: getUserApi,
-  } = useQuery('getUser', getUser, { enabled: false });
+  const { userDetails: userData, fetchUserData } = useUserStore();
 
   useEffect(() => {
-    getUserApi().then();
-  }, [getUserApi]);
+    fetchUserData().then();
+  }, [fetchUserData]);
 
   return (
     <div className={styles.creatorstudio}>
@@ -28,7 +22,7 @@ export default function Creator() {
         <div className={styles.profiledescription}>
           <div className={styles.profile}>
             <Image
-              src={userData?.image}
+              src={userData?.image || ''}
               alt={'profile'}
               height={105}
               width={105}
