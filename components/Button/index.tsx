@@ -10,7 +10,7 @@ interface Props {
     | 'dark-outlined'
     | 'default'
     | 'dark'
-    | 'underline-text';
+    | 'underline-text'
     | 'primary'
     | 'transparent';
   lg?: boolean;
