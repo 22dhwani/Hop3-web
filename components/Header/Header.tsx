@@ -28,6 +28,11 @@ const Header = (props: any) => {
         router.push('/login');
       });
   }, [router]);
+
+  const onPressSettings = useCallback(() => {
+    router.push('/settings/account-settings').then();
+  }, [router]);
+
   return (
     <div className={styles.header}>
       <Image src={Logo} alt={''} />
@@ -48,6 +53,9 @@ const Header = (props: any) => {
               <div className={styles.menuitem} onClick={logout}>
                 Log out
                 <Image className={styles.logout} src={Logout} alt={'logout'} />
+              </div>
+              <div className={styles.menuitem} onClick={onPressSettings}>
+                Setting
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,8 +10,9 @@ import Overlay from '../components/Overlay';
 import styles from '../styles/SettingsLayout.module.scss';
 
 const navItems = [
-  { label: 'Account Settings', href: '/user-settings/account' },
-  { label: 'Address', href: '/user-settings/address' },
+  { label: 'Account Settings', href: '/settings/account-settings' },
+  { label: 'Wallets', href: '/wallets' },
+  { label: 'Contact Us', href: '/user-settings/contact-us' },
   { label: 'Terms of Service', href: '/user-settings/tos' },
   { label: 'Privacy Policy', href: '/user-settings/privacy-policy' },
 ];
@@ -23,7 +24,7 @@ interface Props {
 }
 
 const SettingsLayout = ({ className, activeLink, children }: Props) => {
-  const { push } = useRouter();
+  const { back } = useRouter();
 
   const [isSideBarActive, setIsSideBarActive] = useState(false);
 
@@ -35,6 +36,10 @@ const SettingsLayout = ({ className, activeLink, children }: Props) => {
     setIsSideBarActive(false);
   };
 
+  const onPressBack = useCallback(() => {
+    back();
+  }, [back]);
+
   return (
     <>
       <Overlay isSideBarActive={isSideBarActive} closeDrawer={closeDrawer} />
@@ -44,7 +49,7 @@ const SettingsLayout = ({ className, activeLink, children }: Props) => {
         <div className={styles.mainContent}>
           <div className={styles.userSettings}>
             <div className={styles.topBar}>
-              <div className={styles.back}>
+              <div className={styles.back} onClick={onPressBack}>
                 <Image
                   src="/vectors/icons/back.svg"
                   width={30}

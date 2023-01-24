@@ -1,0 +1,28 @@
+@use 'common' as *;
+
+.headerNotificationContainer {
+  height: 52px;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+  display: flex;
+  background-color: rgba(159,124,255,0.1);
+  border-radius: 15px;
+  margin-bottom: 32px;
+
+  .headerNotificationTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: $black;
+    flex: 1;
+  }
+  .headerNotificationPercentage {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: $black;
+  }
+}

@@ -11,6 +11,8 @@ interface Props {
     | 'default'
     | 'dark'
     | 'underline-text';
+    | 'primary'
+    | 'transparent';
   lg?: boolean;
   className?: string;
   children: React.ReactNode;
@@ -44,6 +46,8 @@ const Button = ({
         variant === 'default' && styles.default,
         variant === 'dark' && styles.dark,
         variant === 'underline-text' && styles.underlineText,
+        variant === 'primary' && styles.primary,
+        variant === 'transparent' && styles.transparent,
       )}
       {...rest}
       onClick={e => {

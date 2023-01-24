@@ -76,7 +76,7 @@
 
     &:hover {
       background-color: $color-primary;
-    
+
     }
 
     @media screen and (max-width: 575px) {
@@ -86,6 +86,8 @@
 
   }
 
+  &.transparent,
+  &.primary,
   &.purple,
   &.grey {
     min-width: 154px;
@@ -101,6 +103,17 @@
     background-color: #9f7cff;
     color: #fff;
   }
+
+  &.primary {
+    background-color: $color-primary;
+    color: $black;
+  }
+
+  &.transparent {
+    background-color: transparent;
+    color: $black;
+  }
+
 
   &.grey {
     background-color: #e8e8e8;
