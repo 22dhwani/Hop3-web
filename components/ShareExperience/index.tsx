@@ -27,7 +27,7 @@ import {
 } from '../../services/post';
 import { useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import { getUser } from '../../services/auth';
+import { useUserStore } from '../../store/userStore';
 interface UserDataType {
   username: string;
   email: string;
@@ -109,12 +109,7 @@ const dealOptions = [
 ];
 
 const ShareExperience = () => {
-  const {
-    data: userData,
-    isLoading: isUserLoading,
-    error: getUserError,
-    refetch: getUserApi,
-  } = useQuery<UserDataType, Error>('getUser', getUser, { enabled: false });
+  const { userDetails: userData, fetchUserData } = useUserStore();
   const createPostMutation = useMutation(createPost);
   const createPostMediaMutation = useMutation(getSignedUrl);
   const addPostMediaDetailsMutation = useMutation(addPostMediaDetails);
@@ -140,8 +135,8 @@ const ShareExperience = () => {
   });
 
   useEffect(() => {
-    getUserApi().then();
-  }, []);
+    fetchUserData().then();
+  }, [fetchUserData]);
 
   const checkValidation = useCallback(() => {
     const tempError = { ...error };

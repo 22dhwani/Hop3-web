@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import { getUser } from '../services/auth';
 import { Atom, useAtom } from 'jotai';
 import { setuid } from 'process';
 import { setAuthToken } from '../config/axiosconfig';
@@ -16,13 +15,19 @@ import {
 } from 'firebase/analytics';
 import { useRouter } from 'next/router';
 import { pageview } from '../utils/utils';
+import { useUserStore } from '../store/userStore';
+import { useCategoriesStore } from '../store/categoriesStore';
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
+  const { fetchUserData } = useUserStore();
+  const { fetchCategoriesData } = useCategoriesStore();
+
   useEffect(() => {
     const fetchRoutes = async () => {
       const token = localStorage.getItem('authToken');
       token && setAuthToken(token);
+      token && fetchUserData();
       const routes = Cookies.get('routes');
       if (!routes) {
         try {
@@ -34,7 +39,8 @@ export default function App({ Component, pageProps }: AppProps) {
         }
       }
     };
-    fetchRoutes();
+    fetchRoutes().then();
+    fetchCategoriesData().then();
   }, []);
 
   return (
