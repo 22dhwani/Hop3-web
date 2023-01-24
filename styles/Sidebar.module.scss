@@ -1,4 +1,5 @@
 @use 'common' as *;
+
 .container {
     background: $sidebar-bg;
     position: fixed;
@@ -11,15 +12,17 @@
 
     .logo {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+        align-items: center;
 
-        img{
-                display: none;
-            }
         }
 
     &.active{
         padding: 3.2rem 4rem 0 4rem;
+        .logo{
+            justify-content: space-between;
+        }
+
         img{
             display: block;
         }

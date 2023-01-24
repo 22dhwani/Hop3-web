@@ -2,10 +2,7 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import styles from '../../styles/Home.module.scss';
-import Profile from '../../public/images/Profile.png';
-import Post from '../../public/images/Post.png';
-import Post2 from '../../public/images/Post2.png';
-import User from '../../public/images/Avtar.png';
+
 import UpArrow from '../../public/images/UpArrow.svg';
 import Like from '../../public/images/Like.svg';
 import NotLike from '../../public/images/like_not.svg';
@@ -26,6 +23,7 @@ import {
 import { getUser } from '../../services/auth';
 import Deal from '../Deal/Deal';
 import usePostLike from '../../hooks/usePostLike';
+import MainLayout from '../../layouts/MainLayout';
 
 interface StatusColorInterface {
   [key: string]: string;

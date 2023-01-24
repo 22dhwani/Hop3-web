@@ -16,7 +16,13 @@ const NavbarRight = ({ withoutShareExpBtn }: Props) => {
           Share Experience
         </Button>
       )}
-      <Image src="/images/user.png" width={46} height={46} alt="logo" />
+      <Image
+        src="/images/user.png"
+        width={46}
+        height={46}
+        alt="logo"
+        className={styles.profileimg}
+      />
     </div>
   );
 };

@@ -2,13 +2,14 @@ import React from 'react';
 import Posts from '../components/Posts/Posts';
 import Sidebar from '../components/Sidebar/Sidebar';
 import Header from '../components/Header/Header';
-export default function dashboard() {
+import MainLayout from '../layouts/MainLayout';
+export default function Explore() {
   return (
     <div>
-      <Sidebar />
-      <Header />
-      {/* <TopBanner/> */}
-      <Posts />
+      <MainLayout activeLink="/explore">
+        {/* <TopBanner/> */}
+        <Posts />
+      </MainLayout>
     </div>
   );
 }
