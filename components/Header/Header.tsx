@@ -33,12 +33,16 @@ const Header = (props: any) => {
     router.push('/settings/account-settings').then();
   }, [router]);
 
+  const onPressShareExperience = useCallback(() => {
+    router.push('/share-experience');
+  }, [router]);
+
   return (
     <div className={styles.header}>
       <Image src={Logo} alt={''} />
       <div className={styles.right}>
         <div className={styles.profile}>
-          <Button variant="dark-outlined" onClick={() => {}}>
+          <Button variant="dark-outlined" onClick={onPressShareExperience}>
             Share Experience
           </Button>
           <div className={styles.dropdown}>

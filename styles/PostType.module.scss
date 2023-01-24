@@ -1,0 +1,30 @@
+@use "common" as *;
+.radios {
+  flex-direction: column;
+  .postTypeContainer {
+    width: 100%;
+    transition: 0.3s ease;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 24px;
+
+    .option {
+      height: 30px;
+      background-color: $color-gray;
+      display: flex;
+      cursor: pointer;
+      border-width: 0;
+      border-radius: 50px;
+      justify-content: center;
+      align-items: center;
+      padding-left: 14px;
+      padding-right: 14px;
+      font-weight: 500;
+      font-size: 14px;
+      &.active {
+        background-color: $color-light-blue
+      }
+    }
+  }
+}
