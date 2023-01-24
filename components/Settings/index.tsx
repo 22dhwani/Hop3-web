@@ -19,7 +19,13 @@ import {
 import editIcon from '../../public/vectors/icons/edit.svg';
 import deleteIcon from '../../public/vectors/icons/delete.svg';
 import { useCategoriesStore } from '../../store/categoriesStore';
-import { updateUser } from '../../services/auth';
+import {
+  createProfileImage,
+  updateImageDetails,
+  updateUser,
+} from '../../services/auth';
+import { uploadOnS3Bucket } from '../../services/post';
+import { PREFERRED_CITIES } from '../../constant/constant';
 
 const initialAddressInfo = {
   name: '',
@@ -36,6 +42,7 @@ const Settings = () => {
   const { userDetails: userData, fetchUserData } = useUserStore();
   const [showAddress, setShowAddress] = useState(false);
   const [addressInfo, setAddressInfo] = useState(initialAddressInfo);
+  const [imageFile, setImageFile] = useState<any>(null);
   const mainZipCodeLength = userData?.main_zip_code.length || 0;
   const mainzipCode = userData?.main_zip_code[mainZipCodeLength - 1] || '';
   const [userInfo, setUserInfo] = useState({
@@ -45,6 +52,7 @@ const Settings = () => {
     other_category: userData?.other_category || '',
   });
   const [categories, setCategories] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
   const [error, setError] = useState({
     name: '',
     phone_number: '',
@@ -53,6 +61,7 @@ const Settings = () => {
     state: '',
     zip_code: '',
     country: '',
+    username: '',
   });
   const { categories: allCategories } = useCategoriesStore();
 
@@ -60,6 +69,8 @@ const Settings = () => {
   const deleteAddressMutation = useMutation(deleteAddress);
   const updateAddressMutation = useMutation(updateAddress);
   const updateUserMutation = useMutation(updateUser);
+  const createProfileImageMutation = useMutation(createProfileImage);
+  const updateProfileImageDetailsMutation = useMutation(updateImageDetails);
 
   useEffect(() => {
     const localMainZipCodeLength = userData?.main_zip_code.length || 0;
@@ -89,6 +100,12 @@ const Settings = () => {
       setCategories(userData.preferred_categories.map((item: any) => item?.id));
     }
   }, [userData?.preferred_categories, userData?.other_category]);
+
+  useEffect(() => {
+    if (userData?.preferred_cities?.length) {
+      setCities(userData.preferred_cities);
+    }
+  }, [userData?.preferred_cities]);
 
   useEffect(() => {
     if (userData?.addresses.length) {
@@ -124,6 +141,19 @@ const Settings = () => {
       }
     },
     [categories],
+  );
+
+  const onSelectCities = useCallback(
+    (item: string) => {
+      if (cities.includes(item)) {
+        setCities(prevState =>
+          prevState.filter((subItem: any) => item !== subItem),
+        );
+      } else {
+        setCities(prevState => [...prevState, item]);
+      }
+    },
+    [cities],
   );
 
   const onPressToggleAddress = useCallback(() => {
@@ -175,50 +205,50 @@ const Settings = () => {
   }, [error, addressInfo]);
 
   const onPressSaveAddress = useCallback(() => {
-    const tempError = checkValidation();
-    if (
-      !tempError.name &&
-      !tempError.phone_number &&
-      !tempError.address_line_1 &&
-      !tempError.city &&
-      !tempError.state &&
-      !tempError.zip_code &&
-      !tempError.country
-    ) {
-      const payload: any = {
-        name: addressInfo.name.trim(),
-        phone_number: addressInfo.phone_number.trim(),
-        address_line_1: addressInfo.address_line_1.trim(),
-        city: addressInfo.city.trim(),
-        state: addressInfo.state.trim(),
-        country: addressInfo.country.trim(),
-        zip_code: parseInt(addressInfo.zip_code),
-      };
-      if (addressInfo.address_line_2.trim()) {
-        payload.address_line_2 = addressInfo.address_line_2.trim();
-      }
-      const options = {
-        onSuccess: (data: any) => {
-          if (data) {
-            fetchUserData().then();
-            onPressToggleAddress();
-          }
-        },
-        onError: (error: any) => {
-          console.error('Error in save data', error);
-        },
-      };
-      const addressId =
-        userData?.addresses?.length && userData?.addresses[0]?.id;
-      if (addressId) {
-        updateAddressMutation.mutate(
-          { addressId, addressInfo: payload },
-          options,
-        );
-      } else {
-        createAddressMutation.mutate(payload, options);
-      }
+    // VALIDATION ADDRESS FORM
+    // const tempError = checkValidation();
+    // if (
+    //   !tempError.name &&
+    //   !tempError.phone_number &&
+    //   !tempError.address_line_1 &&
+    //   !tempError.city &&
+    //   !tempError.state &&
+    //   !tempError.zip_code &&
+    //   !tempError.country
+    // ) {
+    const payload: any = {
+      name: addressInfo.name.trim(),
+      phone_number: addressInfo.phone_number.trim(),
+      address_line_1: addressInfo.address_line_1.trim(),
+      city: addressInfo.city.trim(),
+      state: addressInfo.state.trim(),
+      country: addressInfo.country.trim(),
+      zip_code: parseInt(addressInfo.zip_code),
+    };
+    if (addressInfo.address_line_2.trim()) {
+      payload.address_line_2 = addressInfo.address_line_2.trim();
     }
+    const options = {
+      onSuccess: (data: any) => {
+        if (data) {
+          fetchUserData().then();
+          onPressToggleAddress();
+        }
+      },
+      onError: (error: any) => {
+        console.error('Error in save data', error);
+      },
+    };
+    const addressId = userData?.addresses?.length && userData?.addresses[0]?.id;
+    if (addressId) {
+      updateAddressMutation.mutate(
+        { addressId, addressInfo: payload },
+        options,
+      );
+    } else {
+      createAddressMutation.mutate(payload, options);
+    }
+    // }
   }, [
     addressInfo,
     checkValidation,
@@ -229,39 +259,126 @@ const Settings = () => {
     userData?.addresses,
   ]);
 
-  const onPressUpdateUser = useCallback(() => {
-    const payload: any = {};
-    if (userInfo.username.trim()) {
-      payload.username = userInfo.username.trim();
+  const uploadImage = useCallback(() => {
+    return new Promise<void>((resolve, reject) => {
+      const userId = userData?.id;
+      if (imageFile && userId) {
+        const payload = {
+          image_media: {
+            content_type: imageFile?.type,
+            file_size_mb: imageFile?.size / 1024 / 1024,
+          },
+        };
+        createProfileImageMutation.mutate(payload, {
+          onSuccess: imageData => {
+            uploadOnS3Bucket({
+              uploadUrl: imageData.signUrl,
+              fileData: imageFile,
+              fields: imageData.fields,
+              content_type: imageData.content_type,
+            })
+              .then(() => {
+                const payload = {
+                  image_name: imageData.name,
+                };
+                updateProfileImageDetailsMutation.mutate(payload, {
+                  onSuccess: () => {
+                    resolve();
+                  },
+                  onError: error => {
+                    reject(error);
+                    console.error('Error in update profile details', error);
+                  },
+                });
+              })
+              .catch(error => {
+                reject(error);
+                console.error('error in upload', error);
+              });
+          },
+          onError: error => {
+            reject(error);
+            console.error('Error in create profile picture', error);
+          },
+        });
+      }
+    });
+  }, [
+    createProfileImageMutation,
+    imageFile,
+    updateProfileImageDetailsMutation,
+    userData?.id,
+  ]);
+
+  const onPressUpdateUser = useCallback(async () => {
+    try {
+      const payload: any = {};
+      if (userInfo.username.trim()) {
+        payload.username = userInfo.username.trim();
+        setError(prevState => ({
+          ...prevState,
+          username: '',
+        }));
+      } else {
+        setError(prevState => ({
+          ...prevState,
+          username: 'Username is require',
+        }));
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        });
+        return;
+      }
+      const mainZipCode = userInfo?.main_zip_code?.trim();
+      if (mainZipCode) {
+        payload.main_zip_code = mainZipCode;
+      }
+      payload.other_category = userInfo.other_category.trim();
+      if (categories.length > 0) {
+        payload.preferred_categories = categories.filter(
+          item => item !== 'other',
+        );
+      }
+      if (cities.length) {
+        payload.preferred_cities = cities;
+      }
+      if (cities.length) {
+        payload.preferred_cities = cities;
+      }
+      const options = {
+        onSuccess: (data: any) => {
+          if (data) {
+            fetchUserData().then();
+          }
+        },
+        onError: (error: any) => {
+          console.error('Error in update user data', error);
+        },
+      };
+      if (imageFile) {
+        await uploadImage();
+      }
+      updateUserMutation.mutate(payload, options);
+    } catch (e) {
+      console.error('Error in update', e);
     }
-    const mainZipCode = userInfo?.main_zip_code?.trim();
-    if (mainZipCode) {
-      payload.main_zip_code = mainZipCode;
-    }
-    payload.other_category = userInfo.other_category.trim();
-    if (categories.length > 0) {
-      payload.preferred_categories = categories.filter(
-        item => item !== 'other',
-      );
-    }
-    const options = {
-      onSuccess: (data: any) => {
-        if (data) {
-          fetchUserData().then();
-        }
-      },
-      onError: (error: any) => {
-        console.error('Error in update user data', error);
-      },
-    };
-    updateUserMutation.mutate(payload, options);
   }, [
     categories,
+    cities,
     fetchUserData,
-    onPressToggleAddress,
+    imageFile,
     updateUserMutation,
-    userInfo,
+    uploadImage,
+    userInfo?.main_zip_code,
+    userInfo.other_category,
+    userInfo.username,
   ]);
+
+  const onChangeImage = useCallback((image: File) => {
+    setImageFile(image);
+  }, []);
 
   const onPressDeleteAddress = useCallback(() => {
     if (userData?.addresses?.length) {
@@ -287,13 +404,15 @@ const Settings = () => {
     <SettingsLayout activeLink="/user-settings/account">
       <div className={classes.settings}>
         <HeaderProfileNotification />
-        <ProfileUploader />
+        <ProfileUploader url={userData?.image} onChangeImage={onChangeImage} />
         <Input
           id="username"
           label="Name"
           placeholder="Your First and Last Name"
           value={userInfo.username}
           onChange={onChangeUserInfo}
+          required
+          errorText={error.username}
         />
         <h2 className={classes.headline4Div}>{'Shipping Address'}</h2>
         {!showAddress ? (
@@ -444,6 +563,24 @@ const Settings = () => {
             />
           </div>
           <div className={classes.mainZipCode} />
+        </div>
+        <h2 className={classes.headline4Div}>{'Preferred Cities'}</h2>
+        <div className={classes.preferenceContainer}>
+          {PREFERRED_CITIES.map((el: any, idx: number) => {
+            return (
+              <button
+                key={'option' + idx}
+                className={clsx(
+                  classes.option,
+                  cities.includes(el) && classes.active,
+                )}
+                onClick={() => {
+                  onSelectCities(el);
+                }}>
+                {el}
+              </button>
+            );
+          })}
         </div>
         <h2 className={classes.headline4Div}>{'Preferences'}</h2>
         <div className={classes.preferenceContainer}>

@@ -1,0 +1,48 @@
+@use 'common' as *;
+
+.mainContainer {
+  display: flex;
+  justify-content: center;
+}
+.subContainer {
+  max-width: 512px;
+  display: flex;
+  flex: 1;
+  padding: 0 16px 0 16px;
+}
+.outer {
+  width: 100%;
+}
+.flexWidth {
+  display: flex;
+  flex-grow: 1;
+}
+.container {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+.circleView {
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-dash-gray;
+  border-radius: 15px;
+  &.activeCircleView {
+    background-color: $black;
+  }
+}
+.filler {
+  display: flex;
+  border-bottom: 1.5px dashed $color-dash-gray;
+  height: 100%;
+  flex: 1;
+}
+.label {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: white;
+}

@@ -48,6 +48,7 @@ const Button = ({
         variant === 'underline-text' && styles.underlineText,
         variant === 'primary' && styles.primary,
         variant === 'transparent' && styles.transparent,
+        disabled && styles.grey,
       )}
       {...rest}
       onClick={e => {

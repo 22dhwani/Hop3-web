@@ -17,7 +17,9 @@ interface UserDetails {
   addresses: any[];
   main_zip_code: string[];
   preferred_categories: string[];
+  preferred_cities: string[];
   other_category: string;
+  is_profile_complete: boolean;
 }
 
 export interface StoreState {
