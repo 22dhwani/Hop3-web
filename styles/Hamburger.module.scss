@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-
+  cursor: pointer;
   div {
     width: 24px;
     height: 4px;
@@ -14,9 +14,9 @@
     }
   }
 
-  &.lg {
-    @media screen and (min-width: 992px) {
-      display: none;
-    }
-  }
+  // &.lg {
+  //   @media screen and (min-width: 992px) {
+  //     display: none;
+  //   }
+  // }
 }

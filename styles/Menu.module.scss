@@ -5,6 +5,7 @@
 
     .title{
       font-weight: bold;
+      display: none;
     }
 
     .item {
@@ -13,12 +14,17 @@
         align-items: center;
         border-radius: 57px;
 
+        &:not(:last-child){
+            margin-bottom: 10px;
+        }
+
         .text {
             margin-left: 20px;
             font-family: 'DM Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 18px;
+            display: none;
             
         }
 
@@ -33,11 +39,13 @@
         }
     }
 
-    .isActive {
-        border-bottom: 1px solid #000000;
-
-        .text {
-            font-weight: 700;
+    &.active {
+        .item{
+            .text {
+                display: block;
+            }
         }
+   
+
     }
 }

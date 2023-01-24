@@ -8,8 +8,9 @@ interface Props {
     | 'purple'
     | 'grey'
     | 'dark-outlined'
-    | 'green'
+    | 'default'
     | 'dark'
+    | 'underline-text';
     | 'primary'
     | 'transparent';
   lg?: boolean;
@@ -42,8 +43,9 @@ const Button = ({
         variant === 'dark-outlined' && styles.darkOutlined,
         variant === 'purple' && styles.purple,
         variant === 'grey' && styles.grey,
-        variant === 'green' && styles.green,
+        variant === 'default' && styles.default,
         variant === 'dark' && styles.dark,
+        variant === 'underline-text' && styles.underlineText,
         variant === 'primary' && styles.primary,
         variant === 'transparent' && styles.transparent,
       )}

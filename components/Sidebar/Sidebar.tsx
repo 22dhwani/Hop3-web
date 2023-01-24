@@ -6,21 +6,31 @@ import { Router, useRouter } from 'next/router';
 import clsx from 'clsx';
 import { SidebarExploreIcon } from '../Icons/Icons';
 import Menu from '../Menu/Menu';
+import Hamburger from '../Hamburger';
 
-export default function Sidebar() {
+export default function Sidebar(props: any) {
+  const { toggleSidebar, isSideBarActive } = props;
   const menu_data = [
     { label: 'Explore', id: 'explore', icon: <SidebarExploreIcon /> },
-    { label: 'hop3 Shop', id: 'shop' },
+    { label: 'hop3 Shop', id: 'shop', icon: <SidebarExploreIcon /> },
   ];
 
   const menu_category_data = [
-    { label: 'Featured', id: 'featured' },
-    { label: 'Deals', id: 'deals' },
-    { label: 'Fun & Leisure', id: 'fun&leisure' },
-    { label: 'Tickets & Events', id: 'tickets&events' },
-    { label: 'Sightseeing & Tours', id: 'sightseeing&tours' },
-    { label: 'Nightlife', id: 'nightlife' },
-    { label: 'Food & Drink', id: 'food&drink' },
+    { label: 'Featured', id: 'featured', icon: <SidebarExploreIcon /> },
+    { label: 'Deals', id: 'deals', icon: <SidebarExploreIcon /> },
+    { label: 'Fun & Leisure', id: 'fun&leisure', icon: <SidebarExploreIcon /> },
+    {
+      label: 'Tickets & Events',
+      id: 'tickets&events',
+      icon: <SidebarExploreIcon />,
+    },
+    {
+      label: 'Sightseeing & Tours',
+      id: 'sightseeing&tours',
+      icon: <SidebarExploreIcon />,
+    },
+    { label: 'Nightlife', id: 'nightlife', icon: <SidebarExploreIcon /> },
+    { label: 'Food & Drink', id: 'food&drink', icon: <SidebarExploreIcon /> },
   ];
 
   const route = useRouter();
@@ -33,15 +43,17 @@ export default function Sidebar() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, isSideBarActive && styles.active)}>
       <div className={styles.logo}>
         <Image src={Logo} alt={''} />
+        <Hamburger breakpoint={992} onClick={toggleSidebar} />
       </div>
       <Menu
         data={menu_data}
         selectedItem={activeMenu}
         action={handleMenuClick}
         key={'menu' + 1}
+        isActive={isSideBarActive}
       />
       <Menu
         title={'Categories'}
@@ -49,6 +61,7 @@ export default function Sidebar() {
         action={handleMenuClick}
         selectedItem={activeMenu}
         key={'menu' + 2}
+        isActive={isSideBarActive}
       />
       <div className={styles.textwrapper}>
         <span className={styles.invite}>Invite friends and earn 100</span>

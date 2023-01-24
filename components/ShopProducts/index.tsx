@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import useModal from '../../hooks/useModal';
 import Button from '../Button';
-import RedeemModal from '../../modals/RedeemModal';
+import Modal from '../../modals/Modal';
 import styles from '../../styles/ShopProducts.module.scss';
 
 const data = [
@@ -47,7 +47,7 @@ const ShopProducts = () => {
 
   return (
     <>
-      <RedeemModal show={show} toggleShow={toggleShow} />
+      <Modal show={show} toggleShow={toggleShow} />
       <div className={styles.shopProducts}>
         {data.map((el, idx) => {
           return (

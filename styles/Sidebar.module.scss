@@ -1,45 +1,86 @@
 @use 'common' as *;
 .container {
-    // background: linear-gradient(14.62deg, $color-secondary -57.64%, #FBFBFB 81.51%);
-    background: #FBFBFB;
+    background: $sidebar-bg;
     position: fixed;
     top: 0;
     left: 0;
-    width: 350px;
     height: 100%;
-    padding: 20px 0;
-    transition: all 0.5s ease;
-    padding: 40px;
+    transition: all 0.3s ease;
+    z-index: 999;
+    padding: 3.2rem 0.58rem 0 2.81rem;
 
-        .buttonwrapper {
-            padding: 100px 0px;
+    .logo {
+        display: flex;
+        justify-content: space-between;
 
-            .menubutton {
-                padding: 5px 35px;
-                background: #70FFC3;
-                border: 1px solid #000000;
-                border-radius: 44px;
+        img{
+                display: none;
             }
         }
 
-        .textwrapper {
-            .invite {
+    &.active{
+        padding: 3.2rem 4rem 0 4rem;
+        img{
+            display: block;
+        }
 
-                font-family: 'DM Sans';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 18px;
-                letter-spacing: 0.01em;
-                color: #9F7CFF;
-            }
+        .textwrapper{
+            display: block;
+            transition: all 0.3s ease;
+        }
 
-            .help {
-                font-family: 'DM Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 18px;
-                letter-spacing: 0.01em;
-                color: #000000;
+    }
+    
+        .nav {
+          margin-top: 66px;
+    
+          .navLink {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 28px;
+    
+            img {
+              filter: invert(90%) sepia(1%) saturate(20%) hue-rotate(354deg)
+                brightness(86%) contrast(81%);
+              transition: 0.4s ease;
             }
+    
+            .text {
+              font-size: 18px;
+              transition: 0.4s ease;
+            }
+    
+            &.active {
+              border-bottom: 1px solid #000;
+    
+              img {
+                filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(64deg)
+                  brightness(95%) contrast(107%);
+              }
+    
+              .text {
+                font-weight: bold;
+              }
+            }
+          }
+        }
+    
+  
+    
+        .textwrapper{
+          margin: 20px 0;
+          display: none;
+    
+          .invite, .help {
+            cursor: pointer;
+    
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .invite{
+            color:$color-secondary;
+          }
         }
     }

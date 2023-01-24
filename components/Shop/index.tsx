@@ -32,7 +32,7 @@ const Shop = () => {
       <MainLayout activeLink="/shop">
         <div className={styles.shop}>
           <div className={styles.header}>
-            <div className={styles.title}>My balance </div>
+            <div className={styles.title}>Hop3 Shop </div>
             <div className={styles.balance}>
               My balance
               <strong>
