@@ -9,17 +9,16 @@ import Google from '../../public/images/Google.svg';
 import { useRouter } from 'next/router';
 import { FIREBASE_AUTH } from '../firebase';
 import { refreshToken } from '../../utils/utils';
-import { getUser } from '../../services/auth';
-import { useStore } from '../../store/store';
 
 import { useQuery } from 'react-query';
+import { useUserStore } from '../../store/userStore';
 
 const provider = new GoogleAuthProvider();
 
 export default function Login() {
   const router = useRouter();
+  const { fetchUserData } = useUserStore();
   //ts-ignore
-  const { setUserData, setData } = useStore();
 
   const [fieldValues, setFieldValues] = useState({
     email: '',
@@ -50,7 +49,7 @@ export default function Login() {
           };
         });
         try {
-          const data = await getUser();
+          const data = await fetchUserData();
           if (data?.id) {
             router.push('/explore');
             Cookies.set('hop3_loggedin', 'true');

@@ -20,10 +20,11 @@ import {
   getPostForAdmin,
   rejectPost,
 } from '../../services/post';
-import { getUser } from '../../services/auth';
 import Deal from '../Deal/Deal';
 import usePostLike from '../../hooks/usePostLike';
 import MainLayout from '../../layouts/MainLayout';
+import { useUserStore } from '../../store/userStore';
+import instance from '../../config/axiosconfig';
 
 interface StatusColorInterface {
   [key: string]: string;
@@ -53,13 +54,7 @@ export default function Posts() {
     page_number: 1,
     limit: 20,
   });
-  const {
-    data: userData,
-    isLoading: isUserLoading,
-    error: getUserError,
-    refetch: getUserApi,
-  } = useQuery('getUser', getUser, { enabled: false });
-
+  const { userDetails: userData } = useUserStore();
   const {
     data: userPostData,
     isLoading: isPostLoading,
@@ -134,10 +129,6 @@ export default function Posts() {
     }
     return [];
   }, [userPostData?.items, userData?.id, userData?.role, adminPostData?.items]);
-
-  useEffect(() => {
-    getUserApi().then();
-  }, [getUserApi]);
 
   useEffect(() => {
     if (userData?.role === 'admin') {

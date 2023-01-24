@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import InputLabel from '../InputLabel';
 import Image from 'next/image';
 import styles from '../../styles/UploaderInput.module.scss';
+import deleteIcon from '../../public/vectors/icons/delete_green.svg';
 
 interface Preview {
   preview: string;
@@ -16,6 +17,7 @@ interface Props {
   label: string;
   id: string;
   required?: boolean;
+  initialFile: Preview[];
   onFilesSelected?: (files: any) => void;
   [x: string]: any;
 }
@@ -27,9 +29,10 @@ const UploaderInput = ({
   id,
   textarea,
   onFilesSelected,
+  initialFile,
   ...rest
 }: Props) => {
-  const [files, setFiles] = useState<Preview[]>([]);
+  const [files, setFiles] = useState<Preview[]>(initialFile);
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 5,
     accept: {
@@ -84,7 +87,7 @@ const UploaderInput = ({
         }}
       />
       <div className={styles.delete} onClick={() => onDeleteItem(file)}>
-        Delete
+        <Image src={deleteIcon} width={40} height={40} alt="delete=image" />
       </div>
     </div>
   ));

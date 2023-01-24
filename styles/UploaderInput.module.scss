@@ -13,14 +13,21 @@
     .previewWrap {
       // margin-bottom: 40px;
       cursor: pointer;
+      height: 102px;
+      width: 102px;
 
       .delete {
-        text-align: center;
-        margin-top: 6px;
-        text-decoration: underline;
-        font-weight: 700;
         opacity: 0;
-        transition: 0.4s ease;
+        transition: 0.3s ease;
+        height: 102px;
+        width: 102px;
+        position: absolute;
+        top:32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+
       }
 
       &:hover {
@@ -32,7 +39,7 @@
   }
 
   .uploaderWrap {
-    min-height: 174px;
+    min-height: 100px;
 
     .miniUploader {
       width: 102px;
