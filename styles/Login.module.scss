@@ -2,6 +2,7 @@
 
 .logincontainer {
     display: flex;
+    height: 100vh;
     .rightsection {
         display: flex;
         flex-direction: column;
@@ -84,13 +85,19 @@
 
     .leftsection {
         width: 50%;
+
         .imgcover {
-            height: 100%;
+            max-height: 100%;
             width: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+            height: 100%;
         }
     }
+
+    @media screen and (max-width: 1110px) {
+       .leftsection{
+           display: none;
+       }
+      }
+
 
 }

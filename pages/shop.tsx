@@ -5,7 +5,7 @@ import { Banner } from '../components/Banner/Banner';
 const ShopPage = () => {
   return (
     <>
-      <Banner variant="static" />
+      {/* <Banner variant="static" /> */}
       <Shop />
     </>
   );

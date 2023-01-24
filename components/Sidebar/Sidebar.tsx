@@ -4,7 +4,7 @@ import styles from '../../styles/Sidebar.module.scss';
 import Logo from '../../public/images/Logo.svg';
 import { Router, useRouter } from 'next/router';
 import clsx from 'clsx';
-import { SidebarExploreIcon } from '../Icons/Icons';
+import { Hop3Icon, SidebarExploreIcon } from '../Icons/Icons';
 import Menu from '../Menu/Menu';
 import Hamburger from '../Hamburger';
 
@@ -45,8 +45,16 @@ export default function Sidebar(props: any) {
   return (
     <div className={clsx(styles.container, isSideBarActive && styles.active)}>
       <div className={styles.logo}>
-        <Image src={Logo} alt={''} />
-        <Hamburger breakpoint={992} onClick={toggleSidebar} />
+        {isSideBarActive ? (
+          <>
+            <Image src={Logo} alt={''} />{' '}
+            <Hamburger breakpoint={992} onClick={toggleSidebar} />
+          </>
+        ) : (
+          <>
+            <Hamburger breakpoint={992} onClick={toggleSidebar} />
+          </>
+        )}
       </div>
       <Menu
         data={menu_data}

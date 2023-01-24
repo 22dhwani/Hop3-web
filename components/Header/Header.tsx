@@ -42,7 +42,7 @@ const Header = (props: any) => {
       <Image src={Logo} alt={''} />
       <div className={styles.right}>
         <div className={styles.profile}>
-          <Button variant="dark-outlined" onClick={onPressShareExperience}>
+          <Button variant="dark-outlined" href="/share-experience">
             Share Experience
           </Button>
           <div className={styles.dropdown}>
