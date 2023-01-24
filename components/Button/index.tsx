@@ -4,7 +4,13 @@ import { useRouter } from 'next/router';
 import styles from '../../styles/Button.module.scss';
 
 interface Props {
-  variant: 'purple' | 'grey' | 'dark-outlined' | 'green' | 'dark';
+  variant:
+    | 'purple'
+    | 'grey'
+    | 'dark-outlined'
+    | 'default'
+    | 'dark'
+    | 'underline-text';
   lg?: boolean;
   className?: string;
   children: React.ReactNode;
@@ -35,8 +41,9 @@ const Button = ({
         variant === 'dark-outlined' && styles.darkOutlined,
         variant === 'purple' && styles.purple,
         variant === 'grey' && styles.grey,
-        variant === 'green' && styles.green,
+        variant === 'default' && styles.default,
         variant === 'dark' && styles.dark,
+        variant === 'underline-text' && styles.underlineText,
       )}
       {...rest}
       onClick={e => {

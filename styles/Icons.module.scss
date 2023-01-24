@@ -1,0 +1,17 @@
+@use "common" as *;
+
+.icon {
+transition: fill 0.2s ease-in-out;
+
+    &.closeIcon {
+    display: block;
+    cursor: pointer;
+    margin-right: 40px;
+    margin-left: auto;
+    fill:$white;
+  }
+
+  &:hover {
+    fill: $icon-primary-hover;
+  }
+}

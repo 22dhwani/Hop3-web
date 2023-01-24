@@ -13,6 +13,7 @@ interface Meun {
   selectedItem: string;
   title?: string;
   action?: (...args: Array<any>) => void;
+  isActive?: boolean;
 }
 
 interface MenuItem {
@@ -26,9 +27,9 @@ interface MenuItem {
   data?: Option[];
 }
 
-const Menu = ({ data, title, selectedItem, action }: Meun) => {
+const Menu = ({ data, title, selectedItem, action, isActive }: Meun) => {
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, isActive && styles.active)}>
       <div className={styles.title}>{title}</div>
       {data.map((item, idx) => {
         return (

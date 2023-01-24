@@ -4,7 +4,14 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   images: {
-    domains: ['hop3-s3-bucket.s3.us-west-1.amazonaws.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'drive.google.com',
+        pathname: '/',
+      },
+    ],
+    domains: ['hop3-s3-bucket.s3.us-west-1.amazonaws.com','drive.google.com'],
   },
 };
 
