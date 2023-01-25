@@ -11,6 +11,7 @@ interface ICategoriesDetails {
 
 export interface CategoryStoreState {
   categories: ICategoriesDetails[] | any;
+  categoryDetails: { [key: string]: string };
   error: string | null;
   loading: boolean;
   fetchCategoriesData: () => Promise<ICategoriesDetails[] | void>;
@@ -19,6 +20,7 @@ export interface CategoryStoreState {
 export const useCategoriesStore = create<CategoryStoreState>()(
   devtools(set => ({
     categories: [{ id: 'other', name: 'Other' }],
+    categoryDetails: {},
     error: null,
     loading: false,
     fetchCategoriesData: async () => {
@@ -26,10 +28,15 @@ export const useCategoriesStore = create<CategoryStoreState>()(
         set({ loading: true });
         const response = await axios.get('/category/allCategories');
         if (response?.data && Array.isArray(response.data)) {
+          const tempObj: any = {};
+          response?.data.forEach((item: ICategoriesDetails) => {
+            tempObj[item.id] = item?.name;
+          });
           set({
             loading: false,
             categories: [...response.data, { id: 'other', name: 'Other' }],
             error: null,
+            categoryDetails: tempObj,
           });
           return [...response.data, { id: 'other', name: 'Other' }];
         }

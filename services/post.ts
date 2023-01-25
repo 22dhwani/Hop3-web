@@ -12,7 +12,7 @@ interface IPostData {
       media_name: string;
     },
   ];
-  category: string;
+  categories: any[];
   media_type: string;
   event?: string;
   location?: string;

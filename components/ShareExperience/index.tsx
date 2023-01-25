@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import Image from 'next/image';
-
 import styles from '../../styles/ShareExperience.module.scss';
 import tooltipStyles from '../../styles/Tooltip.module.scss';
 import Button from '../Button';
@@ -23,6 +22,7 @@ import { Step } from '../Step/Step';
 import { useCategoriesStore } from '../../store/categoriesStore';
 import InputLabel from '../InputLabel';
 import { findHashtags } from '../../helper/common';
+import { GOOGLE_PLACES_API_KEY } from '../../constant/constant';
 
 const rewardItems = [
   {
@@ -51,10 +51,9 @@ const ShareExperience = () => {
   const [postInfo, setPostInfo] = useState({
     title: '',
     description: '',
-    category: '',
     location: '',
     event: '',
-    hashtags: '',
+    hashtags: [],
     other_category: '',
     post_type: 'standard',
     files: [],
@@ -85,7 +84,7 @@ const ShareExperience = () => {
         setCategories(prevState =>
           prevState.filter((subItem: any) => item !== subItem),
         );
-      } else {
+      } else if (categories.length < 5) {
         setCategories(prevState => [...prevState, item]);
       }
     },
@@ -126,10 +125,10 @@ const ShareExperience = () => {
         if (postInfo.post_type) {
           payload.post_type = postInfo.post_type;
         }
-        if (postInfo.category) {
-          payload.category = postInfo.category;
+        if (categories.length) {
+          payload.categories = categories;
         }
-        if (postInfo.hashtags) {
+        if (postInfo.hashtags.length) {
           payload.hashtag = postInfo.hashtags;
         }
         if (postInfo.event) {
@@ -137,6 +136,9 @@ const ShareExperience = () => {
         }
         if (postInfo.location) {
           payload.location = postInfo.location;
+        }
+        if (postInfo.other_category) {
+          payload.other_category = postInfo.other_category;
         }
 
         createPostMutation.mutate(payload, {
@@ -186,7 +188,14 @@ const ShareExperience = () => {
                     {
                       onSuccess: async (updatedPost: any) => {
                         console.log('Updated post', updatedPost);
-                        router.back();
+                        router
+                          .replace({
+                            pathname: '/explore',
+                            query: {
+                              postSuccess: true,
+                            },
+                          })
+                          .then();
                       },
                     },
                   );
@@ -345,7 +354,6 @@ const ShareExperience = () => {
                   {/*  </ul>*/}
                   {/*</Tooltip>*/}
                 </div>
-
                 <div className={styles.input}>
                   <Input
                     id="title"
@@ -356,7 +364,6 @@ const ShareExperience = () => {
                     placeholder="Give your post an attractive title"
                   />
                 </div>
-
                 <div className={styles.input}>
                   <Input
                     id="description"

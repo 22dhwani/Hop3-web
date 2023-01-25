@@ -3,12 +3,14 @@ import Image from 'next/image';
 
 import Button from '../../components/Button';
 import styles from '../../styles/NavbarRight.module.scss';
+import { useUserStore } from '../../store/userStore';
 
 interface Props {
   withoutShareExpBtn?: boolean;
 }
 
 const NavbarRight = ({ withoutShareExpBtn }: Props) => {
+  const { userDetails } = useUserStore();
   return (
     <div className={styles.right}>
       {!withoutShareExpBtn && (
@@ -17,7 +19,7 @@ const NavbarRight = ({ withoutShareExpBtn }: Props) => {
         </Button>
       )}
       <Image
-        src="/images/user.png"
+        src={userDetails?.image || '/images/user.png'}
         width={46}
         height={46}
         alt="logo"
