@@ -17,6 +17,8 @@
     align-items: center;
     display: flex;
     padding: 16px 30px 16px 30px;
+    cursor: pointer;
+
     .leftView {
       display: flex;
       flex-direction: column;
@@ -30,7 +32,7 @@
   .rowDiv {
     align-items: center;
     display: flex;
-    flexdirection: row;
+    flex-direction: row;
   }
 
   .nameTitle {

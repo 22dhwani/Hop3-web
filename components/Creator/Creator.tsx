@@ -8,7 +8,7 @@ import UpArrow from '../../public/images/UpArrow.svg';
 import GradientBack from '../../public/images/Gradient.png';
 import ShiningStart from '../../public/images/ShiningStart.png';
 import { useUserStore } from '../../store/userStore';
-
+import Button from '../Button';
 export default function Creator() {
   const { userDetails: userData, fetchUserData } = useUserStore();
 
@@ -33,7 +33,9 @@ export default function Creator() {
             </div>
           </div>
           <div>
-            <button className={styles.settingbtn}>Settings</button>
+            <Button variant="dark-outlined" href="settings/account-setting">
+              Settings
+            </Button>
           </div>
         </div>
         <div className={styles.earningwrapper}>
@@ -53,7 +55,7 @@ export default function Creator() {
             </button>
           </div>
         </div>
-        <div className={styles.boxwrapper}>
+        {/* <div className={styles.boxwrapper}>
           <div className={styles.box}>
             <p className={styles.boxtitle}>Likes</p>
             <span className={styles.boxvalue}>{userData?.total_like || 0}</span>
@@ -68,7 +70,7 @@ export default function Creator() {
               {userData?.total_approved_post || 0}
             </span>
           </div>
-        </div>
+        </div> */}
         <div className={styles.experiencewrapper}>
           <div className={styles.backgroundcard}>
             <Image src={GradientBack} alt={''} />
