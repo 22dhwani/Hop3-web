@@ -4,7 +4,11 @@ import styles from '../../styles/Sidebar.module.scss';
 import Logo from '../../public/images/Logo.svg';
 import { Router, useRouter } from 'next/router';
 import clsx from 'clsx';
-import { Hop3Icon, SidebarExploreIcon } from '../Icons/Icons';
+import {
+  Hop3Icon,
+  SidebarExploreIcon,
+  ArrowRedirectIcon,
+} from '../Icons/Icons';
 import Menu from '../Menu/Menu';
 import Hamburger from '../Hamburger';
 
@@ -72,8 +76,11 @@ export default function Sidebar(props: any) {
         isActive={isSideBarActive}
       />
       <div className={styles.textwrapper}>
-        <span className={styles.invite}>Invite friends and earn 100</span>
-        <p className={styles.help}>Need some help?</p>
+        <p className={styles.invite}>Invite friends and earn 100</p>
+        <div className={styles.help}>
+          <p>Need some help?</p>
+          <ArrowRedirectIcon />
+        </div>
       </div>
     </div>
   );
