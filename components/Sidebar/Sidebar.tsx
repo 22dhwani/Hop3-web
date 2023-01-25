@@ -5,9 +5,9 @@ import Logo from '../../public/images/Logo.svg';
 import { Router, useRouter } from 'next/router';
 import clsx from 'clsx';
 import {
+  ArrowRedirectIcon,
   Hop3Icon,
   SidebarExploreIcon,
-  ArrowRedirectIcon,
 } from '../Icons/Icons';
 import Menu from '../Menu/Menu';
 import Hamburger from '../Hamburger';
