@@ -29,6 +29,7 @@ import { useCategoriesStore } from '../../store/categoriesStore';
 import Modal from '../../modals/Modal';
 import labels from '../../utils/labels.json';
 import { EmptyState } from '../Exceptions';
+import Link from 'next/link';
 
 interface StatusColorInterface {
   [key: string]: string;
@@ -85,6 +86,8 @@ export default function Posts() {
     getPostForAdmin,
     { enabled: false },
   );
+
+  console.log(userPostData,'POSTS')
 
   const allPost = useMemo(() => {
     const allItems =
@@ -248,6 +251,8 @@ const PostItem: FC<PostDataProps> = props => {
     [approvePostMutation, data?.id, rejectPostMutation],
   );
 
+  console.log(data,'DATA')
+
   return (
     <div className={styles.postwrapper} key={data?.id}>
       <div className={styles.poster}>
@@ -275,7 +280,10 @@ const PostItem: FC<PostDataProps> = props => {
           {/*</div>*/}
           {data.categories.length > 0 && <Chip chipData={data.categories} />}
           <div className={styles.explore}>
+            <Link href={`/explore/post/${data.id}`}>
             <p className={styles.exploretext}>Expolre now</p>
+
+            </Link>
             <Image className={styles.arowicon} src={UpArrow} alt={''} />
           </div>
           <div className={styles.selectwrapper}>
