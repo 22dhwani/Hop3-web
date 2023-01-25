@@ -1,0 +1,33 @@
+@use 'common' as *;
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  font-size: 16px;
+  outline: none;
+  height: 180px;
+  resize: none;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  padding-left: 16px;
+  textarea {
+    border: 1px solid #000;
+    border-radius: 4px;
+    resize: none;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 16px;
+  }
+
+}
+.mentions__mention {
+  position: relative;
+  z-index: 1;
+  color: $color-secondary;
+  font-weight: 700;
+  text-shadow: 1px 1px 1px white, 1px -1px 1px white, -1px 1px 1px white,
+  -1px -1px 1px white;
+  pointer-events: none;
+}
+
+

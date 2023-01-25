@@ -21,7 +21,7 @@ export const Step = (props: Props) => {
           <div className={styles.container}>
             {array.map((item: number) => {
               return (
-                <>
+                <div className={styles.tempContainer} key={`step_key_${item}`}>
                   <div
                     key={item + ''}
                     className={clsx(
@@ -31,7 +31,7 @@ export const Step = (props: Props) => {
                     <div className={styles.label}>{item}</div>
                   </div>
                   {item !== array.length && <div className={styles.filler} />}
-                </>
+                </div>
               );
             })}
           </div>

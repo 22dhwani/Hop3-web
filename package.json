@@ -38,6 +38,7 @@
     "react-flip-numbers": "^3.0.7",
     "react-ga": "^3.3.1",
     "react-google-autocomplete": "^2.7.2",
+    "react-mentions": "^4.4.7",
     "react-number-format": "^5.1.2",
     "react-query": "^3.39.2",
     "react-simple-typewriter": "^5.0.1",

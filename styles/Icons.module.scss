@@ -9,9 +9,23 @@ transition: fill 0.2s ease-in-out;
     margin-right: 40px;
     margin-left: auto;
     fill:$white;
+
+    &:hover {
+      fill: $icon-primary-hover;
+    }
   }
 
-  &:hover {
-    fill: $icon-primary-hover;
+
+  &.onboard-1{
+    position: absolute;
+    top:-20px;
+    left:165px;
   }
+
+  &.onboard-2{
+    position: absolute;
+    top:30px;
+    left:435px;
+  }
+
 }

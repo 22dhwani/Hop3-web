@@ -23,6 +23,8 @@ import { useCategoriesStore } from '../../store/categoriesStore';
 import InputLabel from '../InputLabel';
 import { findHashtags } from '../../helper/common';
 import { GOOGLE_PLACES_API_KEY } from '../../constant/constant';
+import { GoogleLocation } from '../GoogleLocation/GoogleLocation';
+import { DescriptionBox } from '../DescriptionBox/DescriptionBox';
 
 const rewardItems = [
   {
@@ -229,6 +231,12 @@ const ShareExperience = () => {
     [],
   );
 
+  const onChangeLocation = useCallback((location: string) => {
+    setPostInfo(prevState => ({
+      ...prevState,
+      location,
+    }));
+  }, []);
   // useEffect(() => {
   //   if (createPostMutation.isSuccess) {
   //     router.back();
@@ -268,185 +276,184 @@ const ShareExperience = () => {
       <Step numberOfSteps={3} activeStep={stepIndex} />
       <div className={styles.shareExperienceWrap}>
         <div className={styles.modal}>
-          {stepIndex === 1 && (
-            <>
-              <h1 className={styles.title}>Share your unique experiences</h1>
-              <div className={styles.desc}>
-                Share your experience with thousands of hoppers
-                <br />
-                <br />
-                <div>
-                  All you need to do is to tell us:
-                  <ul>
-                    <li>What events to go</li>
-                    <li>Where to eat</li>
-                    <li>What to buy (local-based)</li>
-                  </ul>
-                </div>
+          <div
+            className={
+              stepIndex === 1 ? styles.showComponent : styles.hideComponent
+            }>
+            <h1 className={styles.title}>Share your unique experiences</h1>
+            <div className={styles.desc}>
+              Share your experience with thousands of hoppers
+              <br />
+              <br />
+              <div>
+                All you need to do is to tell us:
+                <ul>
+                  <li>What events to go</li>
+                  <li>Where to eat</li>
+                  <li>What to buy (local-based)</li>
+                </ul>
               </div>
+            </div>
 
-              <div className={styles.rewards}>
-                <div className={styles.head}>
-                  You will get rewards when you post
-                  <Image
-                    src="/vectors/icons/back.svg"
-                    alt="arrow"
-                    width={12}
-                    height={12}
-                  />
-                </div>
-
-                <div className={styles.items}>
-                  {rewardItems.map((el, idx) => {
-                    return (
-                      <div className={styles.item} key={'award' + idx}>
-                        <div className={styles.amount}>
-                          <Image
-                            src="/vectors/icons/h.svg"
-                            width={12}
-                            height={12}
-                            alt="h"
-                          />
-                          <strong>{el.amount}</strong>
-                        </div>
-                        <div className={styles.detail}>{el.desc}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </>
-          )}
-          <form>
-            {stepIndex === 2 && (
-              <>
-                <div className={clsx(styles.input, tooltipStyles.tooltip)}>
-                  <UploaderInput
-                    initialFile={postInfo.files}
-                    id="upload"
-                    label="Upload video or image"
-                    required
-                    onFilesSelected={onFileSelected}
-                  />
-                  {/*<div className={styles.helper}>*/}
-                  {/*  Need some help?*/}
-                  {/*  <Image*/}
-                  {/*    src="/vectors/icons/new-tab.svg"*/}
-                  {/*    width={10}*/}
-                  {/*    height={10}*/}
-                  {/*    alt="new-tab"*/}
-                  {/*  />*/}
-                  {/*</div>*/}
-                  {/*<Tooltip>*/}
-                  {/*  <Image*/}
-                  {/*    src="/images/tooltip-video.png"*/}
-                  {/*    width={245}*/}
-                  {/*    height={140}*/}
-                  {/*    alt="tips"*/}
-                  {/*  />*/}
-
-                  {/*  <ul className="mt-20">*/}
-                  {/*    <li>Here are some tips</li>*/}
-                  {/*    <li>Here are some tips</li>*/}
-                  {/*    <li>Here are some tips</li>*/}
-                  {/*    <li>Here are some tips</li>*/}
-                  {/*    <li>Here are some tips</li>*/}
-                  {/*  </ul>*/}
-                  {/*</Tooltip>*/}
-                </div>
-                <div className={styles.input}>
-                  <Input
-                    id="title"
-                    label="Title"
-                    required
-                    onChange={onChangePostInfo}
-                    value={postInfo.title}
-                    placeholder="Give your post an attractive title"
-                  />
-                </div>
-                <div className={styles.input}>
-                  <Input
-                    id="description"
-                    label="Description"
-                    required
-                    textarea
-                    onChange={onChangePostInfo}
-                    value={postInfo.description}
-                    placeholder="Tell more about..."
-                  />
-                </div>
-              </>
-            )}
-            {stepIndex === 3 && (
-              <>
-                <div className={styles.input}>
-                  <Input
-                    id="location"
-                    label="Location"
-                    placeholder="Location"
-                    onChange={onChangePostInfo}
-                    value={postInfo.location}
-                    className={styles.locationImage}
-                  />
-                </div>
-                <div className={styles.input}>
-                  <Input
-                    id="event"
-                    label="Link"
-                    placeholder="URL"
-                    onChange={onChangePostInfo}
-                    value={postInfo.event}
-                    className={styles.urlImage}
-                  />
-                </div>
-                <InputLabel
-                  id={'categories'}
-                  label={'Select upto 5 categories'}
+            <div className={styles.rewards}>
+              <div className={styles.head}>
+                You will get rewards when you post
+                <Image
+                  src="/vectors/icons/back.svg"
+                  alt="arrow"
+                  width={12}
+                  height={12}
                 />
-                <div className={styles.preferenceContainer}>
-                  {allCategories.map((el: any, idx: number) => {
-                    return (
-                      <button
-                        key={'option' + idx}
-                        className={clsx(
-                          styles.option,
-                          categories.includes(el.id) && styles.active,
-                        )}
-                        onClick={(e: any) => {
-                          e.preventDefault();
-                          onSelectCategory(el.id);
-                        }}>
-                        {el.name}
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className={styles.input}>
-                  {categories.includes('other') && (
-                    <div className={styles.otherThingDiv}>
-                      <Input
-                        id="other_category"
-                        label=""
-                        placeholder={'Other things you want to see'}
-                        value={postInfo.other_category}
-                        onChange={onChangePostInfo}
-                      />
-                    </div>
-                  )}
-                </div>
+              </div>
 
-                {isAdminOrCreator && (
-                  <PostType
-                    onSelect={item => {
-                      setPostInfo(prevState => ({
-                        ...prevState,
-                        post_type: item?.id,
-                      }));
-                    }}
-                  />
+              <div className={styles.items}>
+                {rewardItems.map((el, idx) => {
+                  return (
+                    <div className={styles.item} key={'award' + idx}>
+                      <div className={styles.amount}>
+                        <Image
+                          src="/vectors/icons/h.svg"
+                          width={12}
+                          height={12}
+                          alt="h"
+                        />
+                        <strong>{el.amount}</strong>
+                      </div>
+                      <div className={styles.detail}>{el.desc}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <form>
+            <div
+              className={
+                stepIndex === 2 ? styles.showComponent : styles.hideComponent
+              }>
+              <div className={clsx(styles.input, tooltipStyles.tooltip)}>
+                <UploaderInput
+                  initialFile={postInfo.files}
+                  id="upload"
+                  label="Upload video or image"
+                  required
+                  onFilesSelected={onFileSelected}
+                />
+                {/*<div className={styles.helper}>*/}
+                {/*  Need some help?*/}
+                {/*  <Image*/}
+                {/*    src="/vectors/icons/new-tab.svg"*/}
+                {/*    width={10}*/}
+                {/*    height={10}*/}
+                {/*    alt="new-tab"*/}
+                {/*  />*/}
+                {/*</div>*/}
+                {/*<Tooltip>*/}
+                {/*  <Image*/}
+                {/*    src="/images/tooltip-video.png"*/}
+                {/*    width={245}*/}
+                {/*    height={140}*/}
+                {/*    alt="tips"*/}
+                {/*  />*/}
+
+                {/*  <ul className="mt-20">*/}
+                {/*    <li>Here are some tips</li>*/}
+                {/*    <li>Here are some tips</li>*/}
+                {/*    <li>Here are some tips</li>*/}
+                {/*    <li>Here are some tips</li>*/}
+                {/*    <li>Here are some tips</li>*/}
+                {/*  </ul>*/}
+                {/*</Tooltip>*/}
+              </div>
+              <div className={styles.input}>
+                <Input
+                  id="title"
+                  label="Title"
+                  required
+                  onChange={onChangePostInfo}
+                  value={postInfo.title}
+                  placeholder="Give your post an attractive title"
+                />
+              </div>
+              <div className={styles.input}>
+                <Input
+                  id="description"
+                  label="Description"
+                  required
+                  textarea
+                  onChange={onChangePostInfo}
+                  value={postInfo.description}
+                  placeholder="Tell more about..."
+                />
+              </div>
+              {/*<div className={styles.input}>*/}
+              {/*  <DescriptionBox onValueSelect={() => {}} />*/}
+              {/*</div>*/}
+            </div>
+            <div
+              className={
+                stepIndex === 3 ? styles.showComponent : styles.hideComponent
+              }>
+              <div className={styles.input}>
+                <GoogleLocation onValueSelect={onChangeLocation} />
+              </div>
+              <div className={styles.input}>
+                <Input
+                  id="event"
+                  label="Link"
+                  placeholder="URL"
+                  onChange={onChangePostInfo}
+                  value={postInfo.event}
+                  className={styles.urlImage}
+                />
+              </div>
+              <InputLabel
+                id={'categories'}
+                label={'Select upto 5 categories'}
+              />
+              <div className={styles.preferenceContainer}>
+                {allCategories.map((el: any, idx: number) => {
+                  return (
+                    <button
+                      key={'option' + idx}
+                      className={clsx(
+                        styles.option,
+                        categories.includes(el.id) && styles.active,
+                      )}
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        onSelectCategory(el.id);
+                      }}>
+                      {el.name}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className={styles.input}>
+                {categories.includes('other') && (
+                  <div className={styles.otherThingDiv}>
+                    <Input
+                      id="other_category"
+                      label=""
+                      placeholder={'Other things you want to see'}
+                      value={postInfo.other_category}
+                      onChange={onChangePostInfo}
+                    />
+                  </div>
                 )}
-              </>
-            )}
+              </div>
+
+              {isAdminOrCreator && (
+                <PostType
+                  onSelect={item => {
+                    setPostInfo(prevState => ({
+                      ...prevState,
+                      post_type: item?.id,
+                    }));
+                  }}
+                />
+              )}
+            </div>
             <div className={styles.buttons}>
               <Button
                 variant="transparent"
