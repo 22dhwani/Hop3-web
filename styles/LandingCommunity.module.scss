@@ -1,3 +1,4 @@
+@use 'common' as *;
 .landingCommunity {
   padding-bottom: 150px;
   position: relative;
@@ -230,8 +231,14 @@
     position:absolute;
     top:0;
     left:0;
-    border-radius: 20px;
-    border-color: #D2FF2D;
-    border-width: thick;
+    opacity: 0.9;
+
+
+    video{
+      width: 287px;
+      height: 100%;
+      border-radius: 20px;
+      border:5px solid $color-primary;
+    }
   }
 }

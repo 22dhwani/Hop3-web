@@ -8,6 +8,8 @@ import Button from '../../Button';
 import Section from '../../Section';
 import styles from '../../../styles/LandingCommunity.module.scss';
 import { AnimatedText } from '../../Text/Text';
+import ReactPlayer from 'react-player';
+
 const LandingCommunity = () => {
   const firstElRef = useRef<HTMLHeadingElement>(null);
   const secondElRef = useRef<HTMLHeadingElement>(null);
@@ -160,10 +162,12 @@ const LandingCommunity = () => {
               height={100}
             />
             <div className={styles.rewardVideo}>
-              <video
-                src="https://images.markup.io/green/message-attachment/54220183-6ec4-490c-8d61-2502c05e26db//9e626eab-b27a-4454-bf14-bd105f3a8644.mp4"
-                autoPlay
-                width="281px"></video>
+              <video autoPlay muted loop>
+                <source
+                  src="https://images.markup.io/green/message-attachment/54220183-6ec4-490c-8d61-2502c05e26db//9e626eab-b27a-4454-bf14-bd105f3a8644.mp4"
+                  type="video/mp4"
+                />
+              </video>
             </div>
           </div>
         </div>
