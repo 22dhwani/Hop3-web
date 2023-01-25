@@ -4,7 +4,15 @@ import styles from '../../styles/Sidebar.module.scss';
 import Logo from '../../public/images/Logo.svg';
 import { Router, useRouter } from 'next/router';
 import clsx from 'clsx';
-import { Hop3Icon, SidebarExploreIcon } from '../Icons/Icons';
+import {
+  DealIcon,
+  EventsIcon,
+  FeaturedIcon,
+  FoodsIcon,
+  Hop3Icon,
+  ShopIcon,
+  SidebarExploreIcon,
+} from '../Icons/Icons';
 import Menu from '../Menu/Menu';
 import Hamburger from '../Hamburger';
 
@@ -12,25 +20,25 @@ export default function Sidebar(props: any) {
   const { toggleSidebar, isSideBarActive } = props;
   const menu_data = [
     { label: 'Explore', id: 'explore', icon: <SidebarExploreIcon /> },
-    { label: 'hop3 Shop', id: 'shop', icon: <SidebarExploreIcon /> },
+    { label: 'hop3 Shop', id: 'shop', icon: <ShopIcon /> },
   ];
 
   const menu_category_data = [
-    { label: 'Featured', id: 'featured', icon: <SidebarExploreIcon /> },
-    { label: 'Deals', id: 'deals', icon: <SidebarExploreIcon /> },
-    { label: 'Fun & Leisure', id: 'fun&leisure', icon: <SidebarExploreIcon /> },
+    { label: 'Featured', id: 'featured', icon: <FeaturedIcon /> },
+    { label: 'Deals', id: 'deals', icon: <DealIcon /> },
+    { label: 'Fun & Leisure', id: 'fun&leisure', icon: <EventsIcon /> },
     {
       label: 'Tickets & Events',
       id: 'tickets&events',
-      icon: <SidebarExploreIcon />,
+      icon: <FoodsIcon />,
     },
     {
       label: 'Sightseeing & Tours',
       id: 'sightseeing&tours',
-      icon: <SidebarExploreIcon />,
+      icon: <FeaturedIcon />,
     },
-    { label: 'Nightlife', id: 'nightlife', icon: <SidebarExploreIcon /> },
-    { label: 'Food & Drink', id: 'food&drink', icon: <SidebarExploreIcon /> },
+    { label: 'Nightlife', id: 'nightlife', icon: <FoodsIcon /> },
+    { label: 'Food & Drink', id: 'food&drink', icon: <FeaturedIcon /> },
   ];
 
   const route = useRouter();
