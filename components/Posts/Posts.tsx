@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
-import styles from '../../styles/Home.module.scss';
+import styles from '../../styles/Posts.module.scss';
 
 import UpArrow from '../../public/images/UpArrow.svg';
 import Like from '../../public/images/Like.svg';

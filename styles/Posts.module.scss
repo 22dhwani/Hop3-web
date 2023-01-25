@@ -30,3 +30,128 @@
 
   }
 }
+
+.container {
+  font-family: 'DM Sans';
+  font-style: normal;
+  padding: 10px;
+  height: 100%;
+  min-width:801px;
+
+  .postwrapper {
+    display: flex;
+    gap: 20px;
+    border-bottom: 0.5px solid;
+    border-bottom: 0.5px solid #cbcbcb;
+
+    .poster {
+      flex: 0 0 auto;
+      position:relative;
+      width:50%;
+      height:66%;
+      background-color: black;
+      max-width: 510px;
+
+      img{
+        object-fit: contain;
+    
+      }
+    }
+
+    .descriptionwrapper {
+      width: 50%;
+      padding-left: 40px;
+      padding-bottom: 25px;
+
+      .description {
+        display: flex;
+        flex-direction: column;
+        padding-left: 15px;
+        justify-content: space-between;
+
+        .explore {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding-bottom: 7px;
+          border-bottom: 1px solid #000;
+          width: 110px;
+          cursor: pointer;
+
+          .exploretext {
+            font-weight: bold;
+            font-size: 14px;
+
+          }
+
+          .arowicon {
+            width: 13px;
+            height: 13px;
+            margin-left: 10px;
+          }
+        }
+
+        .profiledescription {
+          display: flex;
+
+          .title {
+            font-weight: 700;
+            padding-left: 10px;
+            font-size: 18px;
+          }
+
+          .subtitle {
+            padding-left: 10px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #9F7CFF;
+
+          }
+        }
+
+        .boldtext {
+          font-weight: 700;
+          font-size: 22px;
+        }
+
+        .text {
+          padding-top: 15px;
+          font-size: 16px;
+        }
+
+        .like {
+          display: flex;
+          align-items: center;
+        }
+
+        .imgtitle {
+          padding-left: 7px;
+        }
+
+        .comment {
+          display: flex;
+        }
+
+        .selectwrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .customselect {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 210px;
+            height: 34px;
+            background: #DED2FF;
+            border-radius: 23px;
+          }
+
+        }
+      }
+    }
+
+  }
+}

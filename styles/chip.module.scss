@@ -1,5 +1,7 @@
 .chipWrapper {
     flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
     .chip {
         font-weight: 500;
         font-size: 14px;
