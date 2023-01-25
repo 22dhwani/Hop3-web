@@ -200,6 +200,19 @@ export const Hop3Icon = (props: IconProps) => {
   );
 };
 
+export const ArrowRedirectIcon = () => {
+  return (
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <path
+        d="M7.58332 19.8436L6.37306 18.6333L16.6199 8.38652L16.9897 8.01665H16.4667H7.36665V6.28332H19.9333V18.85H18.2V9.74998V9.2269L17.8301 9.59678L7.58332 19.8436Z"
+        fill="black"
+        stroke="white"
+        stroke-width="0.433333"
+      />
+    </svg>
+  );
+};
+
 export const HandDrawnIcon1 = ({ classnames }: any) => {
   return (
     <svg

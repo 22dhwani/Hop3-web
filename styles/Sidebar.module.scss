@@ -77,14 +77,17 @@
     
           .invite, .help {
             cursor: pointer;
-    
-            &:hover {
-              text-decoration: underline;
-            }
+  
           }
 
           .invite{
             color:$color-secondary;
+            font-weight: bold;
+            margin-bottom: 1rem;
+          }
+
+          .help{
+            display: flex;
           }
         }
     }

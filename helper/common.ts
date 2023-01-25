@@ -8,9 +8,9 @@ export const createArray = (numberOfArray: number) => {
 
 export const findHashtags = (searchText: string) => {
   const regexp = /\B#\w\w+\b/g;
-  const result = searchText.match(regexp);
+  const result: any = searchText.match(regexp);
   if (result) {
-    return result.join(',');
+    return result;
   }
-  return '';
+  return [];
 };

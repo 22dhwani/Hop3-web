@@ -24,6 +24,9 @@ import Deal from '../Deal/Deal';
 import usePostLike from '../../hooks/usePostLike';
 import MainLayout from '../../layouts/MainLayout';
 import { useUserStore } from '../../store/userStore';
+import instance from '../../config/axiosconfig';
+import { useCategoriesStore } from '../../store/categoriesStore';
+import Modal from '../../modals/Modal';
 import labels from '../../utils/labels.json';
 import { EmptyState } from '../Exceptions';
 
@@ -50,12 +53,14 @@ const menu = ['All', 'Boosted', 'Denied', 'Pending'];
 export default function Posts() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
+  const [showUploadPostModal, setShowUploadPostModal] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<StatusType>({});
   const [pagination, setPagination] = useState({
     page_number: 1,
     limit: 20,
   });
   const { userDetails: userData } = useUserStore();
+  const { categoryDetails } = useCategoriesStore();
   const {
     data: userPostData,
     isLoading: isPostLoading,
@@ -110,10 +115,11 @@ export default function Posts() {
         if (allReactions.includes(userData?.id)) {
           isLikeByMe = true;
         }
-        tempItem.category = tempItem.category
-          ? tempItem.category
-              .split(',')
-              .map((item: string) => ({ text: item, id: item }))
+        tempItem.categories = tempItem.categories.length
+          ? tempItem.categories.map((item: string) => ({
+              text: categoryDetails[item] || '',
+              id: item,
+            }))
           : [];
         tempItem.postImages = Array.isArray(tempItem.media_url)
           ? tempItem.media_url.map((item: any) => item.signUrl)
@@ -130,6 +136,12 @@ export default function Posts() {
     }
     return [];
   }, [userPostData?.items, userData?.id, userData?.role, adminPostData?.items]);
+
+  useEffect(() => {
+    if (router.query?.postSuccess) {
+      setShowUploadPostModal(true);
+    }
+  }, [router.query]);
 
   useEffect(() => {
     if (userData?.role === 'admin') {
@@ -156,10 +168,16 @@ export default function Posts() {
     getAdminPost();
   }, [getAdminPost]);
 
+  const onPressCloseModal = useCallback(() => {
+    setShowUploadPostModal(false);
+    router.replace('/explore');
+  }, [router]);
+
   const isAdmin = userData?.role === 'admin';
 
   return (
     <div className={styles.container}>
+      <Modal show={showUploadPostModal} toggleShow={onPressCloseModal} />
       <div>
         {isAdmin && (
           <Filter
@@ -255,7 +273,7 @@ const PostItem: FC<PostDataProps> = props => {
           {/*<div>*/}
           {/*  <div className={styles.badge}></div>*/}
           {/*</div>*/}
-          {data.category.length > 0 && <Chip chipData={data.category} />}
+          {data.categories.length > 0 && <Chip chipData={data.categories} />}
           <div className={styles.explore}>
             <p className={styles.exploretext}>Expolre now</p>
             <Image className={styles.arowicon} src={UpArrow} alt={''} />
