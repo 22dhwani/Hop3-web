@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from '../../styles/Creator.module.scss';
+import styles from '../../styles/Dashboard.module.scss';
 import Image from 'next/image';
 import Posts from '../Posts/Posts';
 import MoneyIcon from '../../public/images/Money.svg';
