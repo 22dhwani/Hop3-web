@@ -33,7 +33,7 @@ export default function Creator() {
             </div>
           </div>
           <div>
-            <Button variant="dark-outlined" href="settings/account-setting">
+            <Button variant="dark-outlined" href="settings/account-settings">
               Settings
             </Button>
           </div>
