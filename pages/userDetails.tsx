@@ -23,6 +23,7 @@ import {
 } from '../services/auth';
 import { useMutation } from 'react-query';
 import { uploadOnS3Bucket } from '../services/post';
+import { HandDrawnIcon1, HandDrawnIcon2 } from '../components/Icons/Icons';
 
 export default function UserDetails() {
   const router = useRouter();
@@ -118,9 +119,12 @@ export default function UserDetails() {
       </div>
       <div className={styles.userformwrapper}>
         <div className={styles.userform}>
-          <p className={styles.title}>
+          <div className={styles.title}>
             Update your profile photo and name to finalize account information
-          </p>
+            <HandDrawnIcon1 classnames="onboard-1" />
+            <HandDrawnIcon2 classnames="onboard-2" />
+          </div>
+
           <CardContent>
             <Grid className={styles.uploadwrapper}>
               <input
@@ -194,7 +198,7 @@ export default function UserDetails() {
                   }}
                   type="submit"
                   variant="contained">
-                  Start hopping
+                  Start Hopping
                 </Button>
               </Grid>
             </Grid>

@@ -199,3 +199,41 @@ export const Hop3Icon = (props: IconProps) => {
     </svg>
   );
 };
+
+export const HandDrawnIcon1 = ({ classnames }: any) => {
+  return (
+    <svg
+      width="196"
+      height="59"
+      viewBox="0 0 196 59"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={clsx(styles.handDrawnIcon2, styles.icon, styles[classnames])}>
+      <path
+        d="M159.037 2.41471C122.586 1.84444 41.6209 7.1937 9.36745 33.1529C-30.9493 65.602 98.8917 57.9535 147.458 49.0334C176.516 43.6963 197.866 36.8054 193.076 22.6938C189.458 12.0332 157.986 5.64274 98.0435 13.4691"
+        stroke="#C8FF2B"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+    </svg>
+  );
+};
+
+export const HandDrawnIcon2 = ({ classnames }: any) => {
+  return (
+    <svg
+      width="86"
+      height="8"
+      viewBox="0 0 86 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={clsx(styles.handDrawnIcon2, styles.icon, styles[classnames])}>
+      <path
+        d="M2 6C14.7464 3.61936 48.9914 -0.191278 84 3.61124"
+        stroke="#C8FF2B"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+    </svg>
+  );
+};

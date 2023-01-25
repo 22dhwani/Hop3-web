@@ -24,7 +24,8 @@ import Deal from '../Deal/Deal';
 import usePostLike from '../../hooks/usePostLike';
 import MainLayout from '../../layouts/MainLayout';
 import { useUserStore } from '../../store/userStore';
-import instance from '../../config/axiosconfig';
+import labels from '../../utils/labels.json';
+import { EmptyState } from '../Exceptions';
 
 interface StatusColorInterface {
   [key: string]: string;
@@ -167,14 +168,18 @@ export default function Posts() {
             activeTab={activeTab}
           />
         )}
-        {allPost.map((data: any, idx: number): any => (
-          <PostItem
-            key={'post-item' + idx}
-            data={data}
-            onRefresh={onRefresh}
-            isAdmin={isAdmin}
-          />
-        ))}
+        {allPost.length ? (
+          allPost.map((data: any, idx: number): any => (
+            <PostItem
+              key={'post-item' + idx}
+              data={data}
+              onRefresh={onRefresh}
+              isAdmin={isAdmin}
+            />
+          ))
+        ) : (
+          <EmptyState message={labels.emptyMessage} />
+        )}
       </div>
     </div>
   );
@@ -193,6 +198,7 @@ const UserProfile = (props: any) => {
     </div>
   );
 };
+
 const PostItem: FC<PostDataProps> = props => {
   const { data, isAdmin, onRefresh } = props;
   const [selectedStatus, setSelectedStatus] = useState(data.status);
