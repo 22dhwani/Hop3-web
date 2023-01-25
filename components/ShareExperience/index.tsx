@@ -126,7 +126,7 @@ const ShareExperience = () => {
           payload.post_type = postInfo.post_type;
         }
         if (categories.length) {
-          payload.categories = categories;
+          payload.categories = categories.filter(item => item !== 'other');
         }
         if (postInfo.hashtags.length) {
           payload.hashtag = postInfo.hashtags;
