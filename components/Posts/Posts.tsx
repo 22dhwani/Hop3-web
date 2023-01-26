@@ -29,6 +29,7 @@ import { useCategoriesStore } from '../../store/categoriesStore';
 import Modal from '../../modals/Modal';
 import labels from '../../utils/labels.json';
 import { EmptyState } from '../Exceptions';
+import Link from 'next/link';
 
 interface StatusColorInterface {
   [key: string]: string;
@@ -40,6 +41,12 @@ interface PostDataProps {
   data: any;
   isAdmin?: boolean;
   onRefresh?: () => void;
+}
+
+interface UserProfileProps {
+  imgUrl: string;
+  title: string;
+  subtitle: string;
 }
 const status: string[] = ['Pending', 'Approved', 'Denied'];
 const statusColor: StatusColorInterface = {
@@ -85,6 +92,8 @@ export default function Posts() {
     getPostForAdmin,
     { enabled: false },
   );
+
+  console.log(userPostData, 'POSTS');
 
   const allPost = useMemo(() => {
     const allItems =
@@ -203,12 +212,12 @@ export default function Posts() {
   );
 }
 
-const UserProfile = (props: any) => {
-  const { userImgUrl, title, subtitle } = props;
+const UserProfile = (props: UserProfileProps) => {
+  const { imgUrl, title, subtitle } = props;
 
   return (
     <div className={styles.profiledescription}>
-      <Image src={userImgUrl} alt={'profile'} height={38} width={38} />
+      <Image src={imgUrl} alt={'profile'} height={38} width={38} />
       <div>
         <span className={styles.title}>{title}</span>
         <p className={styles.subtitle}>{subtitle}</p>
@@ -248,19 +257,21 @@ const PostItem: FC<PostDataProps> = props => {
     [approvePostMutation, data?.id, rejectPostMutation],
   );
 
+  console.log(data, 'DATA');
+
   return (
     <div className={styles.postwrapper} key={data?.id}>
       <div className={styles.poster}>
-        <ImageSlider data={data.postImages} />
+        <ImageSlider data={data?.postImages} />
       </div>
       <div className={styles.descriptionwrapper}>
         <div className={styles.description}>
           <UserProfile
-            userImgUrl={data?.user.image}
-            title={data?.user.username}
+            imgUrl={data?.user?.image || ''}
+            title={data?.user?.username}
             subtitle={'Hop3'}
           />
-          {data.post_type === 'deal' && <Deal />}
+          {data?.post_type === 'deal' && <Deal />}
           <div>
             <span className={styles.boldtext}>{data?.title}</span>
             <p className={styles.text}>{data?.description}</p>
@@ -273,9 +284,11 @@ const PostItem: FC<PostDataProps> = props => {
           {/*<div>*/}
           {/*  <div className={styles.badge}></div>*/}
           {/*</div>*/}
-          {data.categories.length > 0 && <Chip chipData={data.categories} />}
+          {data?.categories.length > 0 && <Chip chipData={data?.categories} />}
           <div className={styles.explore}>
-            <p className={styles.exploretext}>Expolre now</p>
+            <Link href={`/explore/post/${data.id}`}>
+              <p className={styles.exploretext}>Expolre now</p>
+            </Link>
             <Image className={styles.arowicon} src={UpArrow} alt={''} />
           </div>
           <div className={styles.selectwrapper}>

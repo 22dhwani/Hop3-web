@@ -56,6 +56,10 @@ interface IAddPostMediaApi {
   };
 }
 
+interface IGetPostId {
+  postId: string;
+}
+
 export interface IPostDataItem extends IPostData {
   id: string;
   createdAt: string;
@@ -145,3 +149,12 @@ export const addPostMediaDetails = async (data: IAddPostMediaApi) => {
   return (await hop3Api.put(`/post/addPostMediaDetails/${postId}`, mediaData))
     .data;
 };
+
+export const getPostById = async ({ queryKey }: any) => {
+  const postId = queryKey[1];
+  console.log(queryKey,'QUERY')
+  // post/getPostById/63d0b3590dc5a1fe7a532d84
+  let url = `/post/getPostById/${postId}`;
+  return (await hop3Api.get(url)).data;
+
+}
