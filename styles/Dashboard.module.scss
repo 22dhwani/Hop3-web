@@ -9,7 +9,7 @@
         width: 45%;
         padding: 0px 20px 10px 10px;
 
-        .profiledescription {
+        .profileDescription {
             display: flex;
             gap: 15px;
             justify-content: space-between;
@@ -20,6 +20,7 @@
                 img {
                     width: 105px;
                     height: 105px;
+                    border-radius: 10px;
 
                 }
 

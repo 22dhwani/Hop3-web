@@ -19,7 +19,7 @@ export default function Creator() {
   return (
     <div className={styles.creatorstudio}>
       <div className={styles.profilesetting}>
-        <div className={styles.profiledescription}>
+        <div className={styles.profileDescription}>
           <div className={styles.profile}>
             <Image
               src={userData?.image || ''}

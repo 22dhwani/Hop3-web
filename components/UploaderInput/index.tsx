@@ -74,23 +74,41 @@ const UploaderInput = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 
-  const thumbs = files.map(file => (
-    <div className={styles.previewWrap} key={file.preview}>
-      <Image
-        className={styles.preview}
-        src={file.preview}
-        width={102}
-        height={102}
-        alt="upload-img"
-        onLoad={() => {
-          URL.revokeObjectURL(file.preview);
-        }}
-      />
-      <div className={styles.delete} onClick={() => onDeleteItem(file)}>
-        <Image src={deleteIcon} width={40} height={40} alt="delete=image" />
+  const thumbs = files.map(file => {
+    console.log(file);
+    const { type } = file;
+    return (
+      <div className={styles.previewWrap} key={file.preview}>
+        {type === 'video/mp4' ? (
+          <video
+            className={styles.preview}
+            src={file.preview}
+            width={102}
+            height={102}
+            autoPlay
+            loop
+            muted
+            onLoad={() => {
+              URL.revokeObjectURL(file.preview);
+            }}></video>
+        ) : (
+          <Image
+            className={styles.preview}
+            src={file.preview}
+            width={102}
+            height={102}
+            alt="upload-img"
+            onLoad={() => {
+              URL.revokeObjectURL(file.preview);
+            }}
+          />
+        )}
+        <div className={styles.delete} onClick={() => onDeleteItem(file)}>
+          <Image src={deleteIcon} width={40} height={40} alt="delete=image" />
+        </div>
       </div>
-    </div>
-  ));
+    );
+  });
 
   return (
     <div className={clsx(styles.uploaderInput, styles.className)}>

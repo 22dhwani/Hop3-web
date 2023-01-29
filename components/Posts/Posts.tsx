@@ -216,7 +216,7 @@ const UserProfile = (props: UserProfileProps) => {
   const { imgUrl, title, subtitle } = props;
 
   return (
-    <div className={styles.profiledescription}>
+    <div className={styles.profileDescription}>
       <Image src={imgUrl} alt={'profile'} height={38} width={38} />
       <div>
         <span className={styles.title}>{title}</span>
@@ -270,21 +270,13 @@ const PostItem: FC<PostDataProps> = props => {
             <UserProfile
               imgUrl={data?.user?.image || ''}
               title={data?.user?.username}
-              subtitle={'Hop3'}
+              subtitle={'Hop3 Creator'}
             />
             {data?.post_type === 'deal' && <Deal />}
             <div>
               <span className={styles.boldtext}>{data?.title}</span>
               <p className={styles.text}>{data?.description}</p>
             </div>
-            {/* <div className={styles.comment}>
-            <Image src={data?.commentImg} alt={"profile"} />
-
-            <p className={styles.imgtitle}>{data?.commentText}</p>
-          </div> */}
-            {/*<div>*/}
-            {/*  <div className={styles.badge}></div>*/}
-            {/*</div>*/}
             {data?.categories.length > 0 && (
               <Chip chipData={data?.categories} />
             )}

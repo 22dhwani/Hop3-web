@@ -11,7 +11,7 @@ export default function Filter({ menu, setActiveTab, activeTab }: FilterProps) {
   return (
     <div className={styles.filterwrapper}>
       <div className={styles.filter}>
-        filter by:
+        Filter by:
         {menu.map((item, index) => (
           <div key={`btn_${index}`} className={styles.btnwrapper}>
             <button

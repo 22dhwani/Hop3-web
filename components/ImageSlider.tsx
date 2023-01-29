@@ -19,6 +19,7 @@ export default function ImageSlider({ data }: Props) {
     <div className={styles.imageslidercontainer}>
       <Slider {...settings}>
         {data?.map((image, index) => {
+          console.log('slider', image);
           return (
             <div className={styles.wrapper} key={`img_${index}`}>
               <Image
