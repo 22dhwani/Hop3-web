@@ -10,6 +10,7 @@ import deleteIcon from '../../public/vectors/icons/delete_green.svg';
 interface Preview {
   preview: string;
   fileSize: number;
+  type: string;
 }
 
 interface Props {
@@ -75,7 +76,6 @@ const UploaderInput = ({
   }, [files]);
 
   const thumbs = files.map(file => {
-    console.log(file);
     const { type } = file;
     return (
       <div className={styles.previewWrap} key={file.preview}>
