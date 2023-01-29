@@ -75,6 +75,20 @@ export default function Creator() {
           <div className={styles.backgroundcard}>
             <Image src={GradientBack} alt={''} />
           </div>
+          <div className={styles.card} style={{ marginBottom: '21px' }}>
+            <span className={styles.cardtitle}>
+              <Image src={ShiningStart} alt={''} />
+
+              <p>
+                Redeem Item
+                <br />
+                Upload to earn rewards!
+              </p>
+            </span>
+            <Button variant="purple" href="/shop">
+              Browse Shop
+            </Button>
+          </div>
           <div className={styles.card}>
             <span className={styles.cardtitle}>
               <Image src={ShiningStart} alt={''} />
@@ -85,9 +99,9 @@ export default function Creator() {
                 Upload to earn rewards!
               </p>
             </span>
-            <button className={styles.sharebtn}>
-              Share my fun experiences
-            </button>
+            <Button variant="dark" href="/shop">
+              Share My Experiences
+            </Button>
           </div>
           <p className={styles.bottomtext}>
             Invite a friend and earn{' '}

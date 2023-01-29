@@ -260,64 +260,68 @@ const PostItem: FC<PostDataProps> = props => {
   console.log(data, 'DATA');
 
   return (
-    <div className={styles.postwrapper} key={data?.id}>
-      <div className={styles.poster}>
-        <ImageSlider data={data?.postImages} />
-      </div>
-      <div className={styles.descriptionwrapper}>
-        <div className={styles.description}>
-          <UserProfile
-            imgUrl={data?.user?.image || ''}
-            title={data?.user?.username}
-            subtitle={'Hop3'}
-          />
-          {data?.post_type === 'deal' && <Deal />}
-          <div>
-            <span className={styles.boldtext}>{data?.title}</span>
-            <p className={styles.text}>{data?.description}</p>
-          </div>
-          {/* <div className={styles.comment}>
+    <div className={styles.postscontainer}>
+      <div className={styles.postwrapper} key={data?.id}>
+        <div className={styles.poster}>
+          <ImageSlider data={data?.postImages} />
+        </div>
+        <div className={styles.descriptionwrapper}>
+          <div className={styles.description}>
+            <UserProfile
+              imgUrl={data?.user?.image || ''}
+              title={data?.user?.username}
+              subtitle={'Hop3'}
+            />
+            {data?.post_type === 'deal' && <Deal />}
+            <div>
+              <span className={styles.boldtext}>{data?.title}</span>
+              <p className={styles.text}>{data?.description}</p>
+            </div>
+            {/* <div className={styles.comment}>
             <Image src={data?.commentImg} alt={"profile"} />
 
             <p className={styles.imgtitle}>{data?.commentText}</p>
           </div> */}
-          {/*<div>*/}
-          {/*  <div className={styles.badge}></div>*/}
-          {/*</div>*/}
-          {data?.categories.length > 0 && <Chip chipData={data?.categories} />}
-          <div className={styles.explore}>
-            <Link href={`/explore/post/${data.id}`}>
-              <p className={styles.exploretext}>Expolre now</p>
-            </Link>
-            <Image className={styles.arowicon} src={UpArrow} alt={''} />
-          </div>
-          <div className={styles.selectwrapper}>
-            <span className={styles.like}>
-              <Image
-                src={isLikeByMe ? Like : NotLike}
-                alt={''}
-                style={{ fill: 'red' }}
-                onClick={onPressLike}
-              />
-              <p className={styles.imgtitle}> {totalLikes} </p>
-            </span>
-            {isAdmin && (
-              <select
-                id="demo-multiple-name"
-                value={selectedStatus}
-                className={styles.customselect}
-                style={{
-                  backgroundColor: statusColor[selectedStatus],
-                  color: selectedStatus === 'Denied' ? '#FFF' : '#000',
-                }}
-                onChange={handleChange}>
-                {status.map(name => (
-                  <option key={name} value={name}>
-                    {name}
-                  </option>
-                ))}
-              </select>
+            {/*<div>*/}
+            {/*  <div className={styles.badge}></div>*/}
+            {/*</div>*/}
+            {data?.categories.length > 0 && (
+              <Chip chipData={data?.categories} />
             )}
+            <div className={styles.explore}>
+              <Link href={`/explore/post/${data.id}`}>
+                <p className={styles.exploretext}>Expolre now</p>
+              </Link>
+              <Image className={styles.arowicon} src={UpArrow} alt={''} />
+            </div>
+            <div className={styles.selectwrapper}>
+              <span className={styles.like}>
+                <Image
+                  src={isLikeByMe ? Like : NotLike}
+                  alt={''}
+                  style={{ fill: 'red' }}
+                  onClick={onPressLike}
+                />
+                <p className={styles.imgtitle}> {totalLikes} </p>
+              </span>
+              {isAdmin && (
+                <select
+                  id="demo-multiple-name"
+                  value={selectedStatus}
+                  className={styles.customselect}
+                  style={{
+                    backgroundColor: statusColor[selectedStatus],
+                    color: selectedStatus === 'Denied' ? '#FFF' : '#000',
+                  }}
+                  onChange={handleChange}>
+                  {status.map(name => (
+                    <option key={name} value={name}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
         </div>
       </div>
