@@ -46,9 +46,10 @@
   &.dark {
     background-color: #000000;
     border: 1px solid transparent;
-    min-width: 148px;
+    min-width: 166px;
     font-weight: 700;
     color: #fff;
+    font-size: 18px;
 
     &:hover {
       border-color: #000000;
@@ -60,6 +61,8 @@
       background-color: #e7e6e6;
       color: #858585;
       border-color: transparent;
+      font-size: 18px;
+      font-weight: 500;
     }
   }
 

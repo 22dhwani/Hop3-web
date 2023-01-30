@@ -4,8 +4,10 @@ import Image from 'next/image';
 import Button from '../components/Button';
 import styles from '../styles/LandingLayout.module.scss';
 import Section from '../components/Section';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
+import { FIREBASE_AUTH } from '../components/firebase';
 
 interface Props {
   children: React.ReactNode;
@@ -13,6 +15,15 @@ interface Props {
 
 const LandingLayout = ({ children }: Props) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const router = useRouter();
+
+  const onPressLaunchApp = useCallback(async () => {
+    if (FIREBASE_AUTH.currentUser) {
+      await router.replace('/explore');
+    } else {
+      await router.push('/login');
+    }
+  }, [router]);
 
   useEffect(() => {
     const handler = () => {
@@ -45,7 +56,10 @@ const LandingLayout = ({ children }: Props) => {
           </Link>
           <div className={styles.menu}>
             <Link href="https://doc.hop3.app/">How to earn</Link>
-            <Button variant="dark-outlined" className={styles.btn}>
+            <Button
+              variant="dark-outlined"
+              className={styles.btn}
+              onClick={onPressLaunchApp}>
               Launch app{' '}
               <Image
                 src="/vectors/icons/beta.svg"

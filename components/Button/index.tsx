@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
 import styles from '../../styles/Button.module.scss';
+import Loader from '../Loader/Loader';
 
 interface Props {
   variant:
@@ -19,6 +20,7 @@ interface Props {
   disabled?: boolean;
   href?: string;
   [x: string]: any;
+  isLoading?: boolean;
 }
 
 const Button = ({
@@ -29,13 +31,14 @@ const Button = ({
   children,
   href,
   onClick,
+  isLoading,
   ...rest
 }: Props) => {
   const { push } = useRouter();
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || isLoading}
       className={clsx(
         styles.btn,
         className,
@@ -59,7 +62,7 @@ const Button = ({
           push(href);
         }
       }}>
-      {children}
+      {isLoading ? <Loader /> : children}
     </button>
   );
 };

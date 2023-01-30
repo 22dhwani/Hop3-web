@@ -8,6 +8,7 @@ import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import Overlay from '../components/Overlay';
 import styles from '../styles/SettingsLayout.module.scss';
+import { FIREBASE_AUTH } from '../components/firebase';
 
 const navItems = [
   { label: 'Account Settings', href: '/settings/account-settings' },
@@ -24,9 +25,18 @@ interface Props {
 }
 
 const SettingsLayout = ({ className, activeLink, children }: Props) => {
-  const { back } = useRouter();
+  const { back, replace } = useRouter();
 
   const [isSideBarActive, setIsSideBarActive] = useState(false);
+
+  const onPressLogout = useCallback(async () => {
+    try {
+      await FIREBASE_AUTH.signOut();
+    } catch (e) {
+      console.log('Error in logout', e);
+      await replace('/login');
+    }
+  }, [replace]);
 
   const openDrawer = () => {
     setIsSideBarActive(true);
@@ -84,7 +94,9 @@ const SettingsLayout = ({ className, activeLink, children }: Props) => {
                   </Link>
                 ))}
 
-                <Button variant="dark-outlined">Log out</Button>
+                <Button variant="dark-outlined" onClick={onPressLogout}>
+                  Log out
+                </Button>
 
                 <div className={styles.shareExpBtn}>
                   <Button href="/share-experience" variant="dark-outlined">

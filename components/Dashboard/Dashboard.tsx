@@ -21,12 +21,14 @@ export default function Creator() {
       <div className={styles.profilesetting}>
         <div className={styles.profileDescription}>
           <div className={styles.profile}>
-            <Image
-              src={userData?.image || ''}
-              alt={'profile'}
-              height={105}
-              width={105}
-            />
+            {userData?.image && (
+              <Image
+                src={userData?.image}
+                alt={'profile'}
+                height={105}
+                width={105}
+              />
+            )}
             <div className={styles.text}>
               <span className={styles.title}>{userData?.username || ''}</span>
               <p className={styles.subtitle}>hop3 Creator</p>

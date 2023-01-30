@@ -6,6 +6,7 @@ import InputLabel from '../InputLabel';
 import Image from 'next/image';
 import styles from '../../styles/UploaderInput.module.scss';
 import deleteIcon from '../../public/vectors/icons/delete_green.svg';
+import ReactPlayer from 'react-player';
 
 interface Preview {
   preview: string;
@@ -80,17 +81,14 @@ const UploaderInput = ({
     return (
       <div className={styles.previewWrap} key={file.preview}>
         {type === 'video/mp4' ? (
-          <video
-            className={styles.preview}
-            src={file.preview}
-            width={102}
+          <ReactPlayer
+            url={file.preview}
             height={102}
-            autoPlay
-            loop
-            muted
-            onLoad={() => {
-              URL.revokeObjectURL(file.preview);
-            }}></video>
+            width={102}
+            playing={true}
+            muted={true}
+            loop={true}
+          />
         ) : (
           <Image
             className={styles.preview}

@@ -1,20 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
+import React, { useCallback, useState } from 'react';
 import styles from '../styles/UserDetails.module.scss';
 import Image from 'next/image';
 import Logo from '../public/images/Logo.svg';
-import Upload from '../public/images/Upload.svg';
-import { getThemeColor } from '../utils/utils';
-
-import {
-  Button,
-  CardContent,
-  Fab,
-  FormControl,
-  FormLabel,
-  Grid,
-  TextField,
-} from '@mui/material';
 import { useRouter } from 'next/router';
 import {
   createProfileImage,
@@ -24,34 +11,33 @@ import {
 import { useMutation } from 'react-query';
 import { uploadOnS3Bucket } from '../services/post';
 import { HandDrawnIcon1, HandDrawnIcon2 } from '../components/Icons/Icons';
+import Button from '../components/Button';
+import Input from '../components/Input';
+import ProfileUploader from '../components/ProfileUploader';
+import { useUserStore } from '../store/userStore';
 
 export default function UserDetails() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [imageFile, setImageFile] = useState<any>(null);
+  const [isSubmitting, SetIsSubmitting] = useState<any>(false);
   const createUserMutation = useMutation(createUser);
   const createProfileImageMutation = useMutation(createProfileImage);
   const updateProfileImageDetailsMutation = useMutation(updateImageDetails);
-
-  const handleUploadClick = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e?.target?.files?.length && e?.target?.files[0];
-      if (file) {
-        setImageFile({
-          fileData: file,
-          fileUrl: URL.createObjectURL(file),
-        });
-      }
-    },
-    [],
-  );
-
-  const moveToDashBoard = useCallback(() => {
-    Cookies.set('loggedin', 'true');
-    router.push('/explore');
+  const { fetchUserData } = useUserStore();
+  const onChangeImage = useCallback((image: File) => {
+    setImageFile(image);
   }, []);
 
+  const moveToDashBoard = useCallback(async () => {
+    fetchUserData().then();
+    await router.replace('/explore');
+    SetIsSubmitting(false);
+  }, [fetchUserData, router]);
+
   const handleSubmit = useCallback(async () => {
+    SetIsSubmitting(true);
+
     createUserMutation.mutate(
       {
         username,
@@ -61,15 +47,15 @@ export default function UserDetails() {
           if (imageFile && resp?.id) {
             const payload = {
               image_media: {
-                content_type: imageFile?.fileData.type,
-                file_size_mb: imageFile?.fileData?.size / 1024 / 1024,
+                content_type: imageFile?.type,
+                file_size_mb: imageFile?.size / 1024 / 1024,
               },
             };
             createProfileImageMutation.mutate(payload, {
               onSuccess: imageData => {
                 uploadOnS3Bucket({
                   uploadUrl: imageData.signUrl,
-                  fileData: imageFile.fileData,
+                  fileData: imageFile,
                   fields: imageData.fields,
                   content_type: imageData.content_type,
                 })
@@ -82,15 +68,18 @@ export default function UserDetails() {
                         moveToDashBoard();
                       },
                       onError: error => {
+                        SetIsSubmitting(false);
                         console.error('Error in update profile details', error);
                       },
                     });
                   })
                   .catch(error => {
+                    SetIsSubmitting(false);
                     console.error('error in upload', error);
                   });
               },
               onError: error => {
+                SetIsSubmitting(false);
                 console.error('Error in create profile picture', error);
               },
             });
@@ -99,6 +88,7 @@ export default function UserDetails() {
           }
         },
         onError: error => {
+          SetIsSubmitting(false);
           console.error('Error in create user', error);
         },
       },
@@ -114,9 +104,7 @@ export default function UserDetails() {
 
   return (
     <div className={styles.userdetail}>
-      <div>
-        <Image alt={''} src={Logo} />
-      </div>
+      <Image alt={''} src={Logo} />
       <div className={styles.userformwrapper}>
         <div className={styles.userform}>
           <div className={styles.title}>
@@ -124,85 +112,27 @@ export default function UserDetails() {
             <HandDrawnIcon1 classnames="onboard-1" />
             <HandDrawnIcon2 classnames="onboard-2" />
           </div>
-
-          <CardContent>
-            <Grid className={styles.uploadwrapper}>
-              <input
-                accept="image/png,image/jpeg,image/webp"
-                className={styles.input}
-                id="contained-button-file"
-                onChange={handleUploadClick}
-                type="file"
-              />
-              <label htmlFor="contained-button-file">
-                <div className={styles.uploaddiv}>
-                  {imageFile?.fileUrl ? (
-                    <Image
-                      alt={''}
-                      src={imageFile?.fileUrl}
-                      height={110}
-                      width={110}
-                    />
-                  ) : (
-                    <Image alt={''} src={Upload} />
-                  )}
-                </div>
-              </label>
-              <div className={styles.uploadtextwrapper}>
-                <p className={styles.uploadtitle}>
-                  Click to upload profile photo
-                </p>
-                <p className={styles.graytext}>Less than 2mb </p>
-                <p className={styles.graytext}>110x110 resolution or higher</p>
-              </div>
-            </Grid>
-          </CardContent>
-          <FormControl className={styles.formcontainer}>
-            <FormLabel
-              sx={{
-                fontSize: '18px',
-                paddingBottom: '5px',
-              }}>
-              Name
-            </FormLabel>
-            <Grid container direction="column" spacing={10}>
-              <Grid item>
-                <TextField
-                  autoComplete="off"
-                  autoFocus
-                  name="username"
-                  onChange={event => {
-                    setUsername(event.target.value);
-                  }}
-                  placeholder="Username"
-                  required
-                  sx={{
-                    width: '450px',
-                    borderRadius: '4px',
-                    border: `1px solid black`,
-                  }}
-                  type="text"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  className="button-block"
-                  onClick={handleSubmit}
-                  sx={{
-                    width: '250px',
-                    background: '#000000 !important',
-                    border: '1px solid #000000',
-                    borderRadius: '33px',
-                    color: '#FFF',
-                  }}
-                  type="submit"
-                  variant="contained">
-                  Start Hopping
-                </Button>
-              </Grid>
-            </Grid>
-          </FormControl>
+          <ProfileUploader onChangeImage={onChangeImage} />
+          <div className={styles.formcontainer}>
+            <Input
+              label={'Name'}
+              autoComplete="off"
+              name="username"
+              onChange={(event: any) => {
+                setUsername(event.target.value);
+              }}
+              placeholder="Your first name and last name"
+              required
+              id={'onboarding_username'}
+            />
+          </div>
+          <Button
+            variant={'dark'}
+            isLoading={isSubmitting}
+            disabled={!username.trim()}
+            onClick={handleSubmit}>
+            Start Hopping
+          </Button>
         </div>
       </div>
     </div>
