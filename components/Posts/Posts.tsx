@@ -93,8 +93,6 @@ export default function Posts() {
     { enabled: false },
   );
 
-  console.log(userPostData, 'POSTS');
-
   const allPost = useMemo(() => {
     const allItems =
       userData?.role === 'user' ? userPostData?.items : adminPostData?.items;
@@ -131,9 +129,15 @@ export default function Posts() {
             }))
           : [];
         tempItem.postImages = Array.isArray(tempItem.media_url)
-          ? tempItem.media_url.map((item: any) => item.signUrl)
+          ? tempItem.media_url.map((item: any) => ({
+              url: item.signUrl,
+              contentType: item.content_type,
+            }))
           : Array.isArray(tempItem.publicUrls)
-          ? tempItem.publicUrls.map((item: any) => item.media_url)
+          ? tempItem.publicUrls.map((item: any) => ({
+              url: item.media_url,
+              contentType: item.content_type,
+            }))
           : [];
         tempItem.isLikeByMe = isLikeByMe;
         tempItem.totalLike = allReactions.length;
@@ -217,7 +221,7 @@ const UserProfile = (props: UserProfileProps) => {
 
   return (
     <div className={styles.profileDescription}>
-      <Image src={imgUrl} alt={'profile'} height={38} width={38} />
+      {imgUrl && <Image src={imgUrl} alt={'profile'} height={38} width={38} />}
       <div>
         <span className={styles.title}>{title}</span>
         <p className={styles.subtitle}>{subtitle}</p>
@@ -256,8 +260,6 @@ const PostItem: FC<PostDataProps> = props => {
     },
     [approvePostMutation, data?.id, rejectPostMutation],
   );
-
-  console.log(data, 'DATA');
 
   return (
     <div className={styles.postscontainer}>

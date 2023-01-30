@@ -2,6 +2,8 @@ import * as React from 'react';
 import Image from 'next/image';
 import styles from '../styles/ImageSlider.module.scss';
 import Slider from 'react-slick';
+import ReactPlayer from 'react-player';
+
 interface Props {
   data: any[];
 }
@@ -18,17 +20,25 @@ export default function ImageSlider({ data }: Props) {
   return (
     <div className={styles.imageslidercontainer}>
       <Slider {...settings}>
-        {data?.map((image, index) => {
-          console.log('slider', image);
+        {data?.map((item, index) => {
           return (
             <div className={styles.wrapper} key={`img_${index}`}>
-              <Image
-                className={styles.sliderimage}
-                src={image}
-                alt={''}
-                height={550}
-                width={530}
-              />
+              {item?.contentType?.toLowerCase() === 'video/mp4' ? (
+                <ReactPlayer
+                  url={item.url}
+                  width="100%"
+                  height={530}
+                  controls={true}
+                />
+              ) : (
+                <Image
+                  className={styles.sliderimage}
+                  src={item.url}
+                  alt={''}
+                  height={550}
+                  width={530}
+                />
+              )}
             </div>
           );
         })}

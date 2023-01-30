@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Hop3Api_Dev as Hop3_Service_Url } from '../serviceConfig';
+import { Hop3Api_Local as Hop3_Service_Url } from '../serviceConfig';
 
 import { AxiosRequestConfig } from 'axios';
 import { refreshToken } from '../utils/utils';
@@ -13,6 +13,10 @@ const instance = axios.create({
 export const setAuthToken = (token: string) => {
   console.log({ token });
   instance.defaults.headers.Authorization = 'Bearer ' + token;
+};
+
+export const resetAuthToken = () => {
+  instance.defaults.headers.Authorization = null;
 };
 
 // instance.interceptors.request.use(
@@ -33,9 +37,18 @@ instance.interceptors.response.use(
     const originalConfig = err.config;
     console.log('Errrorr', err.response.status);
     if (err.response.status === 403) {
-      await refreshToken();
+      refreshToken()
+        .then(token => {
+          originalConfig.headers.Authorization = 'Bearer ' + token;
+          originalConfig.baseURL = undefined;
+          return instance.request(originalConfig);
+        })
+        .catch(() => {
+          return Promise.reject(err);
+        });
+    } else {
+      return Promise.reject(err);
     }
-    return Promise.reject(err);
   },
 );
 

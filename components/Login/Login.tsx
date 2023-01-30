@@ -33,56 +33,23 @@ export default function Login() {
   };
 
   const login = async () => {
-    signInWithPopup(FIREBASE_AUTH, provider)
-      .then(async result => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
+    signInWithPopup(FIREBASE_AUTH, provider).catch(error => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      // redirectToUserDetailsPage()
 
-        // The signed-in user info.
-        const user = result.user;
-        await refreshToken();
-        setFieldValues(prevFieldValues => {
-          return {
-            ...prevFieldValues,
-            email: user.email || '',
-          };
-        });
-        try {
-          const data = await fetchUserData();
-          if (data?.id) {
-            router.push('/explore');
-            Cookies.set('hop3_loggedin', 'true');
-          } else {
-            redirectToUserDetailsPage();
-          }
-        } catch (error: any) {
-          console.error('Errror in signin', error);
-          if (
-            error?.response?.status === 404 ||
-            error?.response?.status === 500
-          ) {
-            redirectToUserDetailsPage();
-          }
-        }
-      })
-      .catch(error => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        // redirectToUserDetailsPage()
-
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log('error in google sign', {
-          errorCode,
-          errorMessage,
-          email,
-          credential,
-        });
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      console.log('error in google sign', {
+        errorCode,
+        errorMessage,
+        email,
+        credential,
       });
+    });
   };
 
   return (

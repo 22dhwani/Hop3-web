@@ -59,6 +59,7 @@ const ShareExperience = () => {
     other_category: '',
     post_type: 'standard',
     files: [],
+    isSubmitting: false,
   });
   const [error, setError] = useState({
     title: '',
@@ -119,6 +120,7 @@ const ShareExperience = () => {
       }
       const tempError = checkValidation();
       if (!tempError.title && !tempError.description) {
+        setPostInfo(prevState => ({ ...prevState, isSubmitting: true }));
         const payload: any = {
           title: postInfo.title,
           description: postInfo.description,
@@ -190,20 +192,45 @@ const ShareExperience = () => {
                     {
                       onSuccess: async (updatedPost: any) => {
                         console.log('Updated post', updatedPost);
-                        router
-                          .replace({
-                            pathname: '/explore',
-                            query: {
-                              postSuccess: true,
-                            },
-                          })
-                          .then();
+
+                        await router.replace({
+                          pathname: '/explore',
+                          query: {
+                            postSuccess: true,
+                          },
+                        });
+
+                        setPostInfo(prevState => ({
+                          ...prevState,
+                          isSubmitting: false,
+                        }));
+                      },
+                      onError: error => {
+                        console.log('Error in add post media', error);
+                        setPostInfo(prevState => ({
+                          ...prevState,
+                          isSubmitting: false,
+                        }));
                       },
                     },
                   );
                 },
+                onError: error => {
+                  console.log('Error in createPostMediaMutation', error);
+                  setPostInfo(prevState => ({
+                    ...prevState,
+                    isSubmitting: false,
+                  }));
+                },
               },
             );
+          },
+          onError: error => {
+            console.log('Error in main create post', error);
+            setPostInfo(prevState => ({
+              ...prevState,
+              isSubmitting: false,
+            }));
           },
         });
       }
@@ -464,6 +491,7 @@ const ShareExperience = () => {
               <Button
                 variant="primary"
                 className={styles.buttonStyle}
+                isLoading={postInfo.isSubmitting}
                 disabled={isButtonDisabled}
                 onClick={onPressSubmit}>
                 {stepIndex === 1

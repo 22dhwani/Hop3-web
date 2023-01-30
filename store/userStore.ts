@@ -46,6 +46,7 @@ export const useUserStore = create<StoreState>()(
       } catch (error: any) {
         console.log('Error in fetching user', error);
         set({ loading: false, error: error?.message });
+        throw error;
       }
     },
   })),

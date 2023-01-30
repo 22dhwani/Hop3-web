@@ -13,11 +13,16 @@ export const refreshToken = async () => {
   try {
     const token = await FIREBASE_AUTH?.currentUser?.getIdToken(true);
     console.log('Tokensss', token);
-    token && localStorage.setItem('authToken', token);
-    token && setAuthToken(token);
+    if (token) {
+      token && setAuthToken(token);
+      token && localStorage.setItem('authToken', token);
+      return token;
+    }
+    throw new Error('Token not found');
   } catch (e) {
     console.error('Errror in refreshing token', e);
-    Router.push('/');
+    await Router.push('/login');
+    throw e;
   }
 };
 
