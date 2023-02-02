@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Hop3Api_Local as Hop3_Service_Url } from '../serviceConfig';
+import { Hop3Api_Dev as Hop3_Service_Url } from '../serviceConfig';
 
 import { AxiosRequestConfig } from 'axios';
 import { refreshToken } from '../utils/utils';
