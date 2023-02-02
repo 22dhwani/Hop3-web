@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useCallback, useState } from 'react';
 import styles from '../styles/UserDetails.module.scss';
 import Image from 'next/image';
@@ -20,6 +21,8 @@ export default function UserDetails() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [imageFile, setImageFile] = useState<any>(null);
+  const [imageerror, setImagError] = useState<any>('');
+  const [usernamerror, setUsernameError] = useState<any>('');
   const [isSubmitting, SetIsSubmitting] = useState<any>(false);
   const createUserMutation = useMutation(createUser);
   const createProfileImageMutation = useMutation(createProfileImage);
@@ -70,17 +73,20 @@ export default function UserDetails() {
                       onError: error => {
                         SetIsSubmitting(false);
                         console.error('Error in update profile details', error);
+                        setImagError('Error in update profile details');
                       },
                     });
                   })
                   .catch(error => {
                     SetIsSubmitting(false);
                     console.error('error in upload', error);
+                    setImagError('error in upload');
                   });
               },
               onError: error => {
                 SetIsSubmitting(false);
                 console.error('Error in create profile picture', error);
+                setImagError('Error in create profile picture');
               },
             });
           } else if (resp.id) {
@@ -90,6 +96,7 @@ export default function UserDetails() {
         onError: error => {
           SetIsSubmitting(false);
           console.error('Error in create user', error);
+          setImagError('Error in create user');
         },
       },
     );
@@ -104,7 +111,7 @@ export default function UserDetails() {
 
   return (
     <div className={styles.userdetail}>
-      <Image alt={''} src={Logo} />
+      <Image alt={''} src={Logo} className={styles.logoblack} />
       <div className={styles.userformwrapper}>
         <div className={styles.userform}>
           <div className={styles.title}>
@@ -113,6 +120,7 @@ export default function UserDetails() {
             <HandDrawnIcon2 classnames="onboard-2" />
           </div>
           <ProfileUploader onChangeImage={onChangeImage} />
+          {imageerror && <p className="text-red-600">{imageerror}</p>}
           <div className={styles.formcontainer}>
             <Input
               label={'Name'}
@@ -125,8 +133,12 @@ export default function UserDetails() {
               required
               id={'onboarding_username'}
             />
+            {usernamerror.trim() === '' && (
+              <p className="text-red-600 my-2">What should we call you ?</p>
+            )}
           </div>
           <Button
+            className={styles.hoppingbutton}
             variant={'dark'}
             isLoading={isSubmitting}
             disabled={!username.trim()}

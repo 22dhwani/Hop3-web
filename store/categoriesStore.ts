@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import axios from '../config/axiosconfig';

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from '../../styles/Sidebar.module.scss';
@@ -64,24 +65,28 @@ export default function Sidebar(props: any) {
           </>
         )}
       </div>
-      <Menu
-        data={menu_data}
-        selectedItem={activeMenu}
-        action={handleMenuClick}
-        key={'menu' + 1}
-        isActive={isSideBarActive}
-      />
-      <Menu
-        title={'Categories'}
-        data={menu_category_data}
-        action={handleMenuClick}
-        selectedItem={activeMenu}
-        key={'menu' + 2}
-        isActive={isSideBarActive}
-      />
-      <div className={styles.textwrapper}>
-        <span className={styles.invite}>Invite friends and earn 100</span>
-        <p className={styles.help}>Need some help?</p>
+      <div className={styles.menulist}>
+        <Menu
+          data={menu_data}
+          selectedItem={activeMenu}
+          action={handleMenuClick}
+          key={'menu' + 1}
+          isActive={isSideBarActive}
+        />
+
+        <Menu
+          title={'Categories'}
+          data={menu_category_data}
+          action={handleMenuClick}
+          selectedItem={activeMenu}
+          key={'menu' + 2}
+          isActive={isSideBarActive}
+        />
+
+        <div className={styles.textwrapper}>
+          <span className={styles.invite}>Invite friends and earn 100</span>
+          <p className={styles.help}>Need some help?</p>
+        </div>
       </div>
     </div>
   );

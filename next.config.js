@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 /** @type {import('next').NextConfig} */
 const path = require('path')
 const nextConfig = {

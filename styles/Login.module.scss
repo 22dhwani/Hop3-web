@@ -1,103 +1,174 @@
-@use "common" as *;
+@use 'common' as *;
 
 .logincontainer {
+  display: flex;
+  height: 100vh;
+  .rightsection {
     display: flex;
-    height: 100vh;
-    .rightsection {
+    flex-direction: column;
+    width: 50%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 50px 100px;
+    gap: 20px;
+    .title {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 64.0111px;
+      line-height: 74px;
+      max-width: 470px;
+      .horizontal-bar {
+        display: block;
+      }
+    }
+
+    .loginform {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+      padding-top: 30px;
+      .link {
+        cursor: pointer;
+        border-bottom: 1px solid #9f7cff;
+        color: #9f7cff;
+      }
+      .agreetext {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
+      }
+      .formwrapper {
         display: flex;
         flex-direction: column;
-        width: 50%;
-        align-items: flex-start;
-        justify-content: flex-start;
-        padding: 50px 100px;
         gap: 20px;
-        .title {
-            font-family: 'DM Sans';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 64.0111px;
-            line-height: 74px;
-            max-width: 470px;
+        button {
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          width: 450px;
+          height: 55px;
+          background: #ffffff;
+          border: 1px solid #000000;
+          box-shadow: 4px 4px 0px $color-primary;
+          border-radius: 4px;
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 700;
         }
-
-        .loginform {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 40px;
-            padding-top: 30px;
-            .link{
-                cursor: pointer;
-                border-bottom: 1px solid #9F7CFF;
-                color: #9F7CFF;
-            }
-            .agreetext{                
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 21px;
-            }
-            .formwrapper{
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                button{
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    align-items: center;
-                    width: 450px;
-                    height: 55px;
-                    background: #FFFFFF;
-                    border: 1px solid #000000;
-                    box-shadow: 4px 4px 0px $color-primary;
-                    border-radius: 4px;
-                    font-size: 16px;
-                    line-height: 20px;
-                    font-weight: 700;
-                }
-            }
-        }
-
-        .transformdivwrraper {
-            width: 296px;
-            height: 80px;
-            left: 110px;
-            top: 315px;
-            text-align: center;
-            display: flex;
-            padding-left: 10px;
-            align-items: center;
-            background: $color-primary;
-            border-radius: 0px 33px 33px 0px;
-            transform: rotate(3.67deg);
-            
-            .transformText {
-                font-family: 'DM Sans';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 47.7388px;
-                line-height: 51px;
-                 transform: rotate(3deg)
-            }
-        }
+      }
     }
 
-    .leftsection {
-        width: 50%;
+    .transformdivwrraper {
+      width: 296px;
+      height: 80px;
+      left: 110px;
+      top: 315px;
+      text-align: center;
+      display: flex;
+      padding-left: 10px;
+      align-items: center;
+      background: $color-primary;
+      border-radius: 0px 33px 33px 0px;
+      transform: rotate(3.67deg);
 
-        .imgcover {
-            max-height: 100%;
+      .transformText {
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 47.7388px;
+        line-height: 51px;
+        transform: rotate(3deg);
+      }
+    }
+  }
+
+  .leftsection {
+    width: 50%;
+
+    .imgcover {
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+    }
+    .imgmobile {
+      display: none;
+    }
+    .logoimage {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 1110px) {
+  }
+}
+@media screen and (max-width: 768px) {
+  .logincontainer {
+    flex-direction: column-reverse;
+    // margin-top: -10vh;
+    height: auto;
+    .rightsection {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 20px 5vw;
+      gap: 20px;
+      .logoblack {
+        display: none;
+      }
+      .title {
+        font-size: 2.5rem;
+        line-height: 3.5rem;
+      }
+      .loginform {
+        padding-top: 10px;
+        gap: 30px !important;
+        .agreetext {
+          width: 80%;
+          margin: 0 auto;
+        }
+        .link {
+          margin-left: 2vw;
+        }
+        .formwrapper {
+          button {
             width: 100%;
-            height: 100%;
+          }
         }
+      }
+      .transformdivwrraper {
+        height: 7vh;
+        .transformText {
+          font-size: 2.5rem;
+        }
+      }
     }
-
-    @media screen and (max-width: 1110px) {
-       .leftsection{
-           display: none;
-       }
+    .leftsection {
+      width: 100%;
+      .imgcover {
+        display: none;
+      }
+      .imgmobile {
+        display: block;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
       }
 
-
+      .logoimage {
+        display: block;
+        z-index: 1000;
+        position: fixed;
+        top: 4vh;
+        left: 5vw;
+        height: 4vh;
+        width: 25vw;
+      }
+    }
+  }
 }

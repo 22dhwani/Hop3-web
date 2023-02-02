@@ -26,3 +26,23 @@
     }
   }
 }
+@media screen and (max-width: 768px) {
+  .profileUploader {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    .uploader {
+      width: 40%;
+      height: 20vh;
+    }
+    .text {
+      .title {
+        font-size: 1.5rem;
+      }
+      .subTitle {
+        font-size: 1.3rem;
+      }
+    }
+
+  }
+}

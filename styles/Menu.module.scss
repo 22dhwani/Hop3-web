@@ -1,55 +1,68 @@
-@use "common" as *;
+@use 'common' as *;
 .container {
-    padding-top: 50px;
-    padding-left: 5px;
+  padding-top: 50px;
+  padding-left: 5px;
 
-    .title{
-      font-weight: bold;
-      margin-bottom: 1.8rem;
+  .title {
+    font-weight: bold;
+    margin-bottom: 1.8rem;
+    display: none;
+  }
+
+  .item {
+    padding: 10px 25px;
+    display: flex;
+    align-items: center;
+    border-radius: 57px;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    .text {
+      margin-left: 20px;
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
       display: none;
     }
 
+    &:hover {
+      // border: 1px solid $color-primary;
+      box-shadow: 2px 2px 5px 0px rgba(113, 103, 140, 0.15);
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    &.selected {
+      background-color: $light-yellow;
+    }
+  }
+
+  &.active {
+    .title {
+      display: block;
+    }
     .item {
-        padding: 10px 25px;
-        display: flex;
-        align-items: center;
-        border-radius: 57px;
-
-        &:not(:last-child){
-            margin-bottom: 10px;
-        }
-
-        .text {
-            margin-left: 20px;
-            font-family: 'DM Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 18px;
-            display: none;
-            
-        }
-
-        &:hover {
-            // border: 1px solid $color-primary;
-            box-shadow: 2px 2px 5px 0px rgba(113, 103, 140,0.15);
-            cursor:pointer;
-            transition: 0.3s ease;
-        }
-        &.selected {
-            background-color: $light-yellow;
-        }
+      .text {
+        display: block;
+      }
     }
+  }
+}
+@media screen and (max-width: 768px) {
+  .container {
+    padding-top: 0px;
 
-    &.active {
-        .title{
-            display: block;
-        }
-        .item{
-            .text {
-                display: block;
-            }
-        }
-   
-
+    .title {
+      margin-bottom: 1.8rem;
     }
+    .item {
+      padding: 10px 25px;
+
+      &:not(:last-child) {
+        margin-bottom: 0px;
+      }
+    }
+  }
 }

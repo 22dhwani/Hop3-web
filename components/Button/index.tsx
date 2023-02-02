@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 

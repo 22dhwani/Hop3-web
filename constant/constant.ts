@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export const PREFERRED_CITIES = [
   'New Your',
   'Los Angeles',

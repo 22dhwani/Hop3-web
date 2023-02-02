@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
@@ -48,6 +49,7 @@ const MainLayout = ({ activeLink, children }: Props) => {
                 width={128}
                 height={50}
                 alt="logo"
+                className={styles.logoimage}
               />
             </Link>
           </div>

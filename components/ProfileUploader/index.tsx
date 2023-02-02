@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
