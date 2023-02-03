@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from '../../styles/DescriptionBox.module.scss';
 import { Mention, MentionsInput } from 'react-mentions';

@@ -4,3 +4,10 @@
   display: block;
   margin-bottom: 8px;
 }
+
+@media screen and (max-width: 768px) {
+  .label{
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+}

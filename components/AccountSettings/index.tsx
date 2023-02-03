@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import SettingsLayout from '../../layouts/SettingsLayout';
 import Input from '../Input';
 import ProfileUploader from '../ProfileUploader';

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useEffect } from 'react';
 import styles from '../../styles/Dashboard.module.scss';
 import Image from 'next/image';

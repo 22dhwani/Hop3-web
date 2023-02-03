@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import clsx from 'clsx';
 import styles from '../../styles/Menu.module.scss';
 
@@ -30,7 +31,7 @@ interface MenuItem {
 const Menu = ({ data, title, selectedItem, action, isActive }: Meun) => {
   return (
     <div className={clsx(styles.container, isActive && styles.active)}>
-      <div className={styles.title}>{title}</div>
+      <div className={styles.title}>{title}</div>{' '}
       {data.map((item, idx) => {
         return (
           <MenuItem

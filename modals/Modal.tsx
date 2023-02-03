@@ -1,12 +1,13 @@
+/* eslint-disable prettier/prettier */
 import clsx from 'clsx';
 import Image from 'next/image';
 import React from 'react';
 
 import styles from '../styles/Modal.module.scss';
 import {
-  ModalIcon2,
   CloseIcon,
   Hop3TokenIcon,
+  ModalIcon2,
 } from '../components/Icons/Icons';
 import Button from '../components/Button';
 
