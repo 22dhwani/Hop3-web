@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import Shop from '../components/Shop';
-import { Banner } from '../components/Banner/Banner';
+import Shop from '../../components/Shop';
+import { Banner } from '../../components/Banner/Banner';
 
 const ShopPage = () => {
   return (

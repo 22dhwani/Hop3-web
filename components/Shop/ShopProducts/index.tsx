@@ -31,7 +31,7 @@ const data = [
     time: '1D 16h',
   },
   {
-    img: '/images/product1.png',
+    img: '/images/product6.png',
     name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
     price: '8,500',
     disabled: true,
@@ -47,14 +47,14 @@ const data = [
     time: '1D ',
   },
   {
-    img: '/images/product3.png',
+    img: '/images/product5.png',
     name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
     price: '8,500',
     text: 'Redeem',
     time: '1D 16h',
   },
   {
-    img: '/images/product1.png',
+    img: '/images/product4.png',
     name: 'LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10',
     price: '2,000',
     disabled: true,
@@ -62,7 +62,14 @@ const data = [
     time: '1D 16h',
   },
   {
-    img: '/images/product2.png',
+    img: '/images/product5.png',
+    name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
+    price: '8,500',
+    text: 'Redeem',
+    time: '1D 16h',
+  },
+  {
+    img: '/images/product6.png',
     name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
     price: '8,500',
     text: 'Redeem',
@@ -79,13 +86,15 @@ const ShopProducts = () => {
       <div className={styles.shopProducts}>
         {data.map((el, idx) => {
           return (
-            <div className={styles.item} key={'shop-products' + idx}>
+            <div
+              className={`${styles.item} hover:shadow-lg`}
+              key={'shop-products' + idx}>
               {el.limitedTimeOffer && (
                 <div className={styles.limitedTimeOffer}>Limited-Time</div>
               )}
 
               <img src={el.img} alt={el.img} className={styles.productimage} />
-              <div className="px-2">
+              <div className={`px-2 ${styles.productcard}`}>
                 <div className={styles.name}>{el.name}</div>
 
                 <div className={styles.buy}>
