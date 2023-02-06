@@ -1,4 +1,3 @@
-
 .postscontainer {
   font-family: 'DM Sans';
   font-style: normal;
@@ -15,25 +14,25 @@
 
     .poster {
       flex: 0 0 auto;
-      position:relative;
-      width:50%;
-      height:66%;
+      position: relative;
+      width: 50%;
+      height: 66%;
       background-color: black;
       max-width: 510px;
-      border-radius: 10px;
 
-      img{
-        object-fit: contain;
-    
+      img {
+        object-fit: cover;
       }
     }
 
     .descriptionwrapper {
       width: 50%;
-      padding-left: 40px;
+      padding-top: 10px;
       padding-bottom: 25px;
-
+      justify-content: space-between;
+      align-items: flex-end;
       .description {
+        height: 100%;
         display: flex;
         flex-direction: column;
         padding-left: 15px;
@@ -41,8 +40,8 @@
 
         .explore {
           display: flex;
-          align-items: center;
-          justify-content: flex-start;
+          align-items: baseline;
+
           padding-bottom: 7px;
           border-bottom: 1px solid #000;
           width: 110px;
@@ -63,7 +62,7 @@
 
         .profileDescription {
           display: flex;
-          margin-bottom: 40px;
+          margin-bottom: 30px;
 
           .title {
             font-weight: 700;
@@ -75,11 +74,10 @@
             padding-left: 10px;
             font-weight: 500;
             font-size: 14px;
-            color: #9F7CFF;
-
+            color: #9f7cff;
           }
 
-          img{
+          img {
             border-radius: 50%;
           }
         }
@@ -93,7 +91,7 @@
         .text {
           padding-top: 15px;
           font-size: 16px;
-          margin-top: 40px;
+
           margin-bottom: 20px;
         }
 
@@ -113,7 +111,7 @@
         .selectwrapper {
           display: flex;
           justify-content: space-between;
-          align-items: center;
+          align-items: flex-end;
 
           .customselect {
             display: flex;
@@ -123,13 +121,32 @@
             text-align: center;
             width: 210px;
             height: 34px;
-            background: #DED2FF;
+            background: #ded2ff;
             border-radius: 23px;
           }
-
         }
       }
     }
-
+  }
+}
+@media screen and (max-width: 767px) {
+  .postscontainer {
+    .postwrapper {
+      flex-direction: column-reverse;
+      .poster {
+        width: 100%;
+      }
+      .descriptionwrapper {
+        width: 100%;
+        .description {
+          .explore {
+            margin-top: 3vh;
+          }
+          .like {
+            margin-top: 5vh;
+          }
+        }
+      }
+    }
   }
 }

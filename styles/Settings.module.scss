@@ -1,6 +1,6 @@
 @use 'common' as *;
 .settings {
-  max-width: 560px;
+  max-width: 660px;
   padding-bottom: 50px;
 
   .headline4Div {
@@ -78,13 +78,19 @@
   }
 
   .buttonContainer {
-    margin-top: 50px;
+    // margin-top: 50px;
     display: flex;
     justify-content: flex-end;
-    gap: 18px;
-    @media screen and (max-width: 575px) {
-      flex-direction: column;
-      margin-top: 50px;
+
+    @media screen and (max-width: 768px) {
+      margin: 50px 0;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row-reverse;
+      .button {
+        width: 100% !important;
+      }
     }
   }
   .mainButtonContainer {

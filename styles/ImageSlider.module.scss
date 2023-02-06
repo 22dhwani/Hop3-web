@@ -3,12 +3,10 @@
 
 .imageslidercontainer {
   .wrapper {
-    display: flex !important;
-    flex-flow: column wrap;
   }
 
   .sliderimage {
-    width: fit-content;
-    height: fit-content;
+    // width: min-content;
+    // height: 70vh;
   }
 }

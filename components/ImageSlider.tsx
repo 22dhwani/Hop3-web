@@ -24,12 +24,14 @@ export default function ImageSlider({ data, className }: Props) {
       <Slider {...settings}>
         {data?.map((item, index) => {
           return (
-            <div className={styles.wrapper} key={`img_${index}`}>
+            <div
+              className={`${styles.wrapper} max-h-[70vh] w-full`}
+              key={`img_${index}`}>
               {item?.contentType?.toLowerCase() === 'video/mp4' ? (
                 <ReactPlayer url={item.url} controls={true} />
               ) : (
                 <img
-                  className={`${styles.sliderimage} ${className}`}
+                  className={`${styles.sliderimage} ${className} h-full object-cover w-full `}
                   src={item.url}
                   alt={''}
                 />

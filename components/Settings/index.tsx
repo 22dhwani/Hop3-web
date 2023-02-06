@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import Input from '../Input';
@@ -403,6 +404,25 @@ const Settings = () => {
   return (
     <SettingsLayout activeLink="/user-settings/account">
       <div className={classes.settings}>
+        <div className="flex md:flex-row md:items-center xs:flex-col xs:items-start md:mb-10 justify-between">
+          <div>
+            <h1 className="text-2xl">Account Settings</h1>
+          </div>
+          <div className={`${classes.buttonContainer} items-end `}>
+            <Button
+              variant="grey"
+              onClick={onPressToggleAddress}
+              className={classes.button}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={onPressSaveAddress}
+              className={classes.button}>
+              Save
+            </Button>
+          </div>
+        </div>
         <HeaderProfileNotification />
         <ProfileUploader url={userData?.image} onChangeImage={onChangeImage} />
         <Input
@@ -411,6 +431,8 @@ const Settings = () => {
           placeholder="Your First and Last Name"
           value={userInfo.username}
           onChange={onChangeUserInfo}
+          className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+          labelclassName="font-sans md:text-xl xs:text-sm"
           required
           errorText={error.username}
         />
@@ -468,6 +490,8 @@ const Settings = () => {
                   id="name"
                   label="Name"
                   onChange={onChangeAddressText}
+                  className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+                  labelclassName="font-sans md:text-xl xs:text-sm"
                   value={addressInfo.name}
                   placeholder="Name"
                 />
@@ -477,6 +501,8 @@ const Settings = () => {
                   id="phone_number"
                   label="Phone number"
                   onChange={onChangeAddressText}
+                  className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+                  labelclassName="font-sans md:text-xl xs:text-sm"
                   value={addressInfo.phone_number}
                   placeholder="Phone number"
                 />
@@ -487,6 +513,8 @@ const Settings = () => {
                 id="address_line_1"
                 label="Address Line 1"
                 onChange={onChangeAddressText}
+                className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+                labelclassName="font-sans md:text-xl xs:text-sm"
                 value={addressInfo.address_line_1}
                 placeholder="Address Line 1"
               />
@@ -496,6 +524,8 @@ const Settings = () => {
                 id="address_line_2"
                 label="Address Line 2"
                 onChange={onChangeAddressText}
+                className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+                labelclassName="font-sans md:text-xl xs:text-sm"
                 value={addressInfo.address_line_2}
                 placeholder="Address Line 2"
               />
@@ -506,6 +536,8 @@ const Settings = () => {
                   id="city"
                   label="City"
                   onChange={onChangeAddressText}
+                  className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+                  labelclassName="font-sans md:text-xl xs:text-sm"
                   value={addressInfo.city}
                   placeholder="City"
                 />
@@ -515,6 +547,8 @@ const Settings = () => {
                   id="zip_code"
                   label="Zip Code"
                   onChange={onChangeAddressText}
+                  className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+                  labelclassName="font-sans md:text-xl xs:text-sm"
                   value={addressInfo.zip_code}
                   placeholder="Zip Code"
                 />
@@ -526,6 +560,8 @@ const Settings = () => {
                   id="state"
                   label="State"
                   onChange={onChangeAddressText}
+                  className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+                  labelclassName="font-sans md:text-xl xs:text-sm"
                   value={addressInfo.state}
                   placeholder="State"
                 />
@@ -535,19 +571,21 @@ const Settings = () => {
                   id="country"
                   label="Country"
                   onChange={onChangeAddressText}
+                  className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+                  labelclassName="font-sans md:text-xl xs:text-sm"
                   value={addressInfo.country}
                   placeholder="Country"
                 />
               </div>
             </div>
-            <div className={classes.buttonContainer}>
+            {/* <div className={classes.buttonContainer}>
               <Button variant="transparent" onClick={onPressToggleAddress}>
                 Cancel
               </Button>
               <Button variant="primary" onClick={onPressSaveAddress}>
                 Save
               </Button>
-            </div>
+            </div> */}
           </InputGroup>
         )}
         <h2 className={classes.headline4Div}>{'Where are you located?'}</h2>
@@ -557,6 +595,8 @@ const Settings = () => {
             <Input
               id="main_zip_code"
               label="Zip Code"
+              className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+              labelclassName="font-sans md:text-xl xs:text-sm"
               placeholder={'Zip code'}
               value={userInfo.main_zip_code}
               onChange={onChangeUserInfo}
@@ -606,6 +646,8 @@ const Settings = () => {
               id="other_category"
               label=""
               placeholder={'Other things you want to see'}
+              className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full !max-w-full"
+              labelclassName="font-sans md:text-xl xs:text-sm"
               value={userInfo.other_category}
               onChange={onChangeUserInfo}
             />
@@ -616,7 +658,10 @@ const Settings = () => {
             classes.buttonContainer,
             classes.mainButtonContainer,
           )}>
-          <Button variant="primary" onClick={onPressUpdateUser}>
+          <Button
+            variant="primary"
+            onClick={onPressUpdateUser}
+            className="mt-5">
             Update
           </Button>
         </div>
