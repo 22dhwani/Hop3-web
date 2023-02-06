@@ -12,28 +12,19 @@ import styles from '../../styles/Login.module.scss';
 import { FIREBASE_AUTH } from '../firebase';
 
 import { useUserStore } from '../../store/userStore';
+import { useLoginProcess } from '../../store/loginProcess';
 
 const provider = new GoogleAuthProvider();
 
 export default function Login() {
-  const router = useRouter();
-  const { fetchUserData } = useUserStore();
+  const { setLoginProcess } = useLoginProcess();
   //ts-ignore
 
-  const [fieldValues, setFieldValues] = useState({
-    email: '',
-    password: '',
-  });
-
-  const redirectToUserDetailsPage = () => {
-    router.push(
-      `/userDetails?user=${JSON.stringify(fieldValues)}`,
-      '/userDetails',
-    );
-  };
-
   const login = async () => {
+    setLoginProcess(true);
     signInWithPopup(FIREBASE_AUTH, provider).catch(error => {
+      setLoginProcess(false);
+
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;

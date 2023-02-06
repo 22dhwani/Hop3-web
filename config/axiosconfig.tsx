@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Hop3Api_Local as Hop3_Service_Url } from '../serviceConfig';
+import { Hop3Api_Dev as Hop3_Service_Url } from '../serviceConfig';
 
 import { AxiosRequestConfig } from 'axios';
 import { refreshToken } from '../utils/utils';
@@ -35,17 +35,14 @@ instance.interceptors.response.use(
   },
   async err => {
     const originalConfig = err.config;
-    console.log('Errrorr', err.response.status);
-    if (err.response.status === 403) {
-      refreshToken()
-        .then(token => {
-          originalConfig.headers.Authorization = 'Bearer ' + token;
-          originalConfig.baseURL = undefined;
-          return instance.request(originalConfig);
-        })
-        .catch(() => {
-          return Promise.reject(err);
-        });
+    if (err?.response?.status === 403) {
+      try {
+        const token = await refreshToken();
+        originalConfig.headers.Authorization = 'Bearer ' + token;
+        return await axios.request(originalConfig);
+      } catch (e) {
+        return Promise.reject(err);
+      }
     } else {
       return Promise.reject(err);
     }
