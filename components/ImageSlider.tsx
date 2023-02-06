@@ -7,6 +7,7 @@ import ReactPlayer from 'react-player';
 
 interface Props {
   data: any[];
+  className?: string;
 }
 const settings = {
   dots: true,
@@ -17,7 +18,7 @@ const settings = {
   slidesToScroll: 1,
   className: 'slides',
 };
-export default function ImageSlider({ data }: Props) {
+export default function ImageSlider({ data, className }: Props) {
   return (
     <div className={styles.imageslidercontainer}>
       <Slider {...settings}>
@@ -25,19 +26,12 @@ export default function ImageSlider({ data }: Props) {
           return (
             <div className={styles.wrapper} key={`img_${index}`}>
               {item?.contentType?.toLowerCase() === 'video/mp4' ? (
-                <ReactPlayer
-                  url={item.url}
-                  width="100%"
-                  height={530}
-                  controls={true}
-                />
+                <ReactPlayer url={item.url} controls={true} />
               ) : (
                 <Image
-                  className={styles.sliderimage}
+                  className={`${styles.sliderimage} ${className}`}
                   src={item.url}
                   alt={''}
-                  height={550}
-                  width={530}
                 />
               )}
             </div>

@@ -1,7 +1,7 @@
 .inputControl {
   textarea,
   input {
-    border: 1px solid #000;
+    // border: 1px solid #000;
     border-radius: 4px;
     width: 100%;
     max-width: 560px;
@@ -21,9 +21,9 @@
     padding-bottom: 13px;
   }
 
-  input {
-    height: 44px;
-  }
+  // input {
+  //   height: 44px;
+  // }
   .errorText {
     font-size: 16px;
     font-weight: 700;
@@ -33,12 +33,10 @@
 }
 @media screen and (max-width: 768px) {
   .inputControl {
-  
-   
-  input {
-    height: 8vh;
-    font-size: 1.3rem;
-    padding:3vh 4vw ;
+    input {
+      // height: 8vh;
+      font-size: 1.3rem;
+      padding: 3vh 4vw;
+    }
   }
- 
-}}
+}

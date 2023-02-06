@@ -14,6 +14,8 @@ import Button from '../components/Button';
 interface Props {
   show: boolean;
   toggleShow: (toSet?: string) => void;
+  bodyheader?: string;
+  bodycontent?: string;
 }
 
 const Modal = ({ show, toggleShow }: Props) => {
