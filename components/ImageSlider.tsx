@@ -28,7 +28,7 @@ export default function ImageSlider({ data, className }: Props) {
               {item?.contentType?.toLowerCase() === 'video/mp4' ? (
                 <ReactPlayer url={item.url} controls={true} />
               ) : (
-                <Image
+                <img
                   className={`${styles.sliderimage} ${className}`}
                   src={item.url}
                   alt={''}

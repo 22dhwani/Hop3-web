@@ -82,10 +82,10 @@ export default function Posts() {
     activeTab === 1
       ? 'Approved'
       : activeTab === 2
-      ? 'Rejected'
-      : activeTab === 3
-      ? 'Pending'
-      : null;
+        ? 'Rejected'
+        : activeTab === 3
+          ? 'Pending'
+          : null;
 
   const { data: adminPostData, refetch: getAdminPost } = useQuery(
     ['getAdminPost', pagination.limit, pagination.page_number, postFilter],
@@ -124,21 +124,21 @@ export default function Posts() {
         }
         tempItem.categories = tempItem.categories.length
           ? tempItem.categories.map((item: string) => ({
-              text: categoryDetails[item] || '',
-              id: item,
-            }))
+            text: categoryDetails[item] || '',
+            id: item,
+          }))
           : [];
         tempItem.postImages = Array.isArray(tempItem.media_url)
           ? tempItem.media_url.map((item: any) => ({
-              url: item.signUrl,
-              contentType: item.content_type,
-            }))
+            url: item.signUrl,
+            contentType: item.content_type,
+          }))
           : Array.isArray(tempItem.publicUrls)
-          ? tempItem.publicUrls.map((item: any) => ({
+            ? tempItem.publicUrls.map((item: any) => ({
               url: item.media_url,
               contentType: item.content_type,
             }))
-          : [];
+            : [];
         tempItem.isLikeByMe = isLikeByMe;
         tempItem.totalLike = allReactions.length;
         tempItem.status =
