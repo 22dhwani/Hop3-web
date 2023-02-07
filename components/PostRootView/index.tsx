@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import styles from '../../styles/Posts.module.scss';
 
 const PostRootView = ({ children }: any) => {

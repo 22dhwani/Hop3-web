@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
@@ -7,6 +8,7 @@ import ImageSlider from '../../../components/ImageSlider';
 import styles from '../../../styles/Posts.module.scss';
 import { useCategoriesStore } from '../../../store/categoriesStore';
 import PostRootView from '../../../components/PostRootView';
+import ExplorePostDetails from '../../../components/Explore/ExplorePostDetails';
 
 function ExploreDetails(props: any) {
   const router = useRouter();
@@ -35,10 +37,18 @@ function ExploreDetails(props: any) {
       : [];
     return tempItem.postImages;
   };
-
+  console.log(userPostData);
   return (
     <>
-      <PostRootView>
+      <ExplorePostDetails />
+    </>
+  );
+}
+
+export default ExploreDetails;
+
+{
+  /* <PostRootView>
         <div className={styles.poster}>
           <ImageSlider data={renderPostMedia()} />
         </div>
@@ -53,9 +63,5 @@ function ExploreDetails(props: any) {
             )}
           </div>
         </div>
-      </PostRootView>
-    </>
-  );
+      </PostRootView> */
 }
-
-export default ExploreDetails;

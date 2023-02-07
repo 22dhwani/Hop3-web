@@ -217,7 +217,7 @@ export default function Posts() {
   );
 }
 
-const UserProfile = (props: UserProfileProps) => {
+export function UserProfile(props: UserProfileProps) {
   const { imgUrl, title, subtitle } = props;
 
   return (
@@ -229,7 +229,7 @@ const UserProfile = (props: UserProfileProps) => {
       </div>
     </div>
   );
-};
+}
 
 const PostItem: FC<PostDataProps> = props => {
   const { data, isAdmin, onRefresh } = props;

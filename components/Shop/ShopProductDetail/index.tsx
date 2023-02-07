@@ -71,7 +71,7 @@ const ShopProductDetail = () => {
               <strong className="text-2xl font-sans">
                 Chi Forest Sparkling Water - Lychee Fizzy
               </strong>
-              <p className="font-sm mt-1 text-justify">
+              <p className="text-sm mt-1 text-justify">
                 Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc
                 viverra tortor malesuada id non. Lorem ipsum dolor sit amet
                 consectetur. Vitae accumsan nunc viverra tortor malesuada id
