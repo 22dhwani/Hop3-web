@@ -15,8 +15,8 @@ import Product4 from '../../public/images/product4.png';
 import Product5 from '../../public/images/product5.png';
 import Product6 from '../../public/images/product6.png';
 import { useUserStore } from '../../store/userStore';
-import Post1 from '../../public/images/post.png';
-import Post2 from '../../public/images/post2.png';
+import Post1 from '../../public/images/Post.png';
+import Post2 from '../../public/images/Post2.png';
 import Settings from '../../public/images/settings.svg';
 import Button from '../Button';
 export default function Creator() {
