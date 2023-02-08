@@ -5,7 +5,7 @@ import LeftArrow from '../../../public/images/LeftArrow.svg';
 import styles from '../../../styles/ExplorePostDetails.module.scss';
 import Button from '../../Button';
 import UpArrow from '../../../public/images/UpArrow.svg';
-import PostCover from '../../../public/images/post.png';
+import PostCover from '../../../public/images/Post.png';
 import Like from '../../../public/images/Like.svg';
 import UserProfileImage from '../../../public/images/ProfileLg.png';
 import ProductCover from '../../../public/images/productcover.png';
