@@ -13,6 +13,7 @@ import { FIREBASE_AUTH } from '../firebase';
 
 import { useUserStore } from '../../store/userStore';
 import { useLoginProcess } from '../../store/loginProcess';
+import Cookies from 'js-cookie';
 
 const provider = new GoogleAuthProvider();
 
@@ -21,6 +22,11 @@ export default function Login() {
   //ts-ignore
 
   const login = async () => {
+    await FIREBASE_AUTH.signOut().catch(err => {
+      console.error('error in signouit', err);
+    });
+    localStorage.removeItem('authToken');
+    Cookies.remove('loggedin');
     setLoginProcess(true);
     signInWithPopup(FIREBASE_AUTH, provider).catch(error => {
       setLoginProcess(false);
