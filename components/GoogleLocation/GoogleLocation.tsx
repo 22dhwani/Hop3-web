@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useCallback, useEffect, useState } from 'react';
 import usePlacesService from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
 import Input from '../Input';
@@ -63,7 +64,8 @@ export const GoogleLocation = (props: Props) => {
         placeholder="Location"
         onChange={onChangeText}
         value={locationInfo.searchText}
-        className={styles.urlImage}
+        className={`${styles.urlImage} lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full`}
+        labelclassName="font-sans md:text-xl xs:text-sm"
       />
       <div
         className={clsx(

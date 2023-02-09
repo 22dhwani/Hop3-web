@@ -408,7 +408,7 @@ const Settings = () => {
           <div>
             <h1 className="text-2xl">Account Settings</h1>
           </div>
-          <div className={`${classes.buttonContainer} items-end `}>
+          <div className={`${classes.buttonContainer} items-end gap-4`}>
             <Button
               variant="grey"
               onClick={onPressToggleAddress}

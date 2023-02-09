@@ -5,13 +5,15 @@ import LeftArrow from '../../../public/images/LeftArrow.svg';
 import styles from '../../../styles/ExplorePostDetails.module.scss';
 import Button from '../../Button';
 import UpArrow from '../../../public/images/UpArrow.svg';
-import PostCover from '../../../public/images/post.png';
+import Post1 from '../../../public/images/post.png';
+import Post2 from '../../../public/images/post2.png';
 import Like from '../../../public/images/Like.svg';
 import UserProfileImage from '../../../public/images/ProfileLg.png';
 import ProductCover from '../../../public/images/productcover.png';
 import Thunderstorms from '../../../public/images/thunderstorms.svg';
 import Chip from '../../Chip/Chip';
 import { bgcolor } from '@mui/system';
+import ImageSlider from '../../ImageSlider';
 
 const ExplorePostDetails = () => {
   const categoriesData = [
@@ -28,6 +30,14 @@ const ExplorePostDetails = () => {
       bgColor: 'bg-slate-500',
     },
   ];
+  const image_data = [
+    {
+      url: Post1,
+    },
+    {
+      url: Post2,
+    },
+  ];
   return (
     <MainLayout activeLink="/shop">
       <div className="flex flex-row items-center ">
@@ -36,14 +46,18 @@ const ExplorePostDetails = () => {
       </div>
       <div className="grid md:grid-cols-2 sm:grid-cols-1  md:gap-0  sm:gap-7">
         <div className={`${styles.exploreleft} md:my-7 xs:mt-7 `}>
-          <Image
-            src={PostCover}
-            alt={'logo'}
-            className=" xs:w-full xs:h-full md:w-11/12 md:h-full object-contain"
-          />
+          <div className="max-h-min">
+            {/* <ImageSlider data={image_data} /> */}
+            <Image
+              src={Post1}
+              alt={'logo'}
+              className=" xs:w-full xs:h-full md:w-11/12 md:h-full object-contain"
+            />
+          </div>
+
           {/* <ImageSlider
-            data={data}
-            className="w-4/5 rounded-lg h-4/5 object-cover lg:visible "
+            data={image_data}
+            className=" rounded-lg h-4/5 object-cover lg:visible "
           /> */}
         </div>
         <div className={`md:my-7 xs:mt-7 ${styles.exploreleft} `}>

@@ -4,29 +4,28 @@
 import MainLayout from '../../layouts/MainLayout';
 import Image from 'next/image';
 import styles from '../../styles/RedeemHistory.module.scss';
-import Product1 from '../../public/images/product1.png';
-import Product2 from '../../public/images/product2.png';
-import Product3 from '../../public/images/product3.png';
-import Product4 from '../../public/images/product4.png';
-import Product5 from '../../public/images/product5.png';
-import Product6 from '../../public/images/product6.png';
+
+import Thunderstorms from '../../public/images/thunderstorms.svg';
+import Shop from '../../public/images/shop-black.svg';
+
+import Like from '../../public/images/thumbs-up.svg';
 import LeftArrow from '../../public/images/LeftArrow.svg';
 import Button from '../Button';
 const RedeemHistory = () => {
   const productData = [
     {
       id: 1,
-      name: 'Classic Bathrobe',
+      name: 'Your post has been posted',
       hashtag: '##ZR1234567890',
-      url: Product1,
+      url: Thunderstorms,
       balance: 1200,
-      text: 'Refunded',
+      text: 'Earned',
       date: '30 - 11 - 2002',
     },
     {
       id: 2,
-      url: Product2,
-      name: 'Classic Bathrobe',
+      url: Like,
+      name: 'You got a new like',
       hashtag: '##ZR1234567890',
       balance: 1200,
       text: 'Reedemed',
@@ -34,38 +33,38 @@ const RedeemHistory = () => {
     },
     {
       id: 3,
-      url: Product3,
-      name: 'Classic Bathrobe',
+      url: Shop,
+      name: 'You redeemed a product',
       hashtag: '##ZR1234567890',
       balance: 2100,
-      text: 'Refunded',
+      text: 'Earned',
       date: '30 - 11 - 2002',
     },
     {
       id: 4,
-      url: Product4,
-      name: 'Classic Bathrobe',
+      url: Like,
+      name: 'You got a new like',
       hashtag: '##ZR1234567890',
       balance: 1600,
-      text: 'Reedeemed',
+      text: 'Reedemed',
       date: '30 - 11 - 2002',
     },
     {
       id: 5,
-      url: Product5,
-      name: 'Classic Bathrobe',
+      url: Shop,
+      name: 'You redeemed a product',
       hashtag: '##ZR1234567890',
       balance: 500,
-      text: 'Reedeemed',
+      text: 'Reedemed',
       date: '30 - 11 - 2002',
     },
     {
       id: 6,
-      url: Product6,
-      name: 'Classic Bathrobe',
+      url: Thunderstorms,
+      name: 'Your post has been posted',
       hashtag: '##ZR1234567890',
       balance: 200,
-      text: 'Refunded',
+      text: 'Earned',
       date: ' 20 - 11 - 2002',
     },
   ];
@@ -91,9 +90,10 @@ const RedeemHistory = () => {
                 <Image
                   src={item.url}
                   alt="product"
-                  className="h-full w-16 object-cover"
+                  style={{ fill: 'black' }}
+                  className="h-8 w-8 object-cover"
                 />
-                <div className="grid md:grid-cols-4 xs:grid-cols-2 w-full xs:ml-5 md:items-center md:place-content-start xs:place-content-center xs:gap-2 md:gap-0">
+                <div className="grid md:grid-cols-4 xs:grid-cols-2 w-full xs:ml-5 md:items-center md:place-content-start  xs:place-content-center xs:gap-2 md:gap-0">
                   <div className="flex flex-row items-center gap-3">
                     <div className="flex flex-col justify-between">
                       <strong>{item.name}</strong>
@@ -110,12 +110,12 @@ const RedeemHistory = () => {
                     />
                     {item.balance}
                   </div>
-                  {item.text === 'Refunded' ? (
-                    <div className="text-md font-bold text-slate-900">
+                  {item.text === 'Reedemed' ? (
+                    <div className="text-md font-bold text-red-500">
                       {item.text}
                     </div>
                   ) : (
-                    <div className="text-md font-bold text-indigo-400">
+                    <div className="text-md font-bold text-slate-900">
                       {item.text}
                     </div>
                   )}

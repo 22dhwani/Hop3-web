@@ -36,7 +36,7 @@ const Input = ({
         className={labelclassName}
       />
       {textarea ? (
-        <textarea id={id} {...rest} />
+        <textarea id={id} {...rest} placeholder={placeholder} />
       ) : (
         <input
           id={id}

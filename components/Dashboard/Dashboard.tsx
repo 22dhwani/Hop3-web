@@ -76,20 +76,22 @@ export default function Creator() {
       <div className={styles.profilesetting}>
         <div className={styles.profileDescription}>
           <div className={styles.profile}>
-            {userData?.image && (
-              <Image
-                src={userData?.image}
-                alt={'profile'}
-                height={60}
-                width={60}
-                className="rounded-full"
-              />
-            )}
-            <div className={styles.text}>
-              <span className={`${styles.title} text-2xl`}>
-                {userData?.username || ''}
-              </span>
-              <p className={`${styles.subtitle} text-sm`}>hop3 Creator</p>
+            <div className="flex flex-row">
+              {userData?.image && (
+                <Image
+                  src={userData?.image}
+                  alt={'profile'}
+                  height={60}
+                  width={60}
+                  className="rounded-full"
+                />
+              )}
+              <div className={styles.text}>
+                <span className={`${styles.title} text-2xl`}>
+                  {userData?.username || ''}
+                </span>
+                <p className={`${styles.subtitle} text-sm`}>hop3 Creator</p>
+              </div>
             </div>
             <div className="ml-5">
               <Button
@@ -116,7 +118,9 @@ export default function Creator() {
               <Image src={MoneyIcon} alt={'money sign'} />
               {userData?.balance || 0}
             </span>
-            <Button variant="dark" className="!text-sm !max-w-max mt-3">
+            <Button
+              variant="dark"
+              className="!text-sm !max-w-max mt-3 !min-w-min">
               Rewards History
             </Button>
           </div>
@@ -127,7 +131,9 @@ export default function Creator() {
               {userData?.balance || 0} */}
               We value your unique experiences
             </span>
-            <Button variant="primary" className="!text-sm !max-w-max mt-3">
+            <Button
+              variant="primary"
+              className="!text-sm !max-w-max mt-3 !min-w-min">
               Rewards History
             </Button>
           </div>
@@ -137,7 +143,9 @@ export default function Creator() {
               {userData?.balance || 100}
             </span>
             <p className={styles.smalltext}>{'Share the joy'}</p>
-            <Button variant="primary" className="!text-sm !max-w-max mt-3">
+            <Button
+              variant="primary"
+              className="!text-sm !max-w-max mt-3 !min-w-min">
               Rewards History
             </Button>
           </div>
@@ -148,7 +156,9 @@ export default function Creator() {
               {userData?.balance || 0} */}
               We value your unique experiences
             </span>
-            <Button variant="primary" className="!text-sm !max-w-max mt-3">
+            <Button
+              variant="primary"
+              className="!text-sm !max-w-max mt-3 !min-w-min">
               Browse Feeds
             </Button>
           </div>
