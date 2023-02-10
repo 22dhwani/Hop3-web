@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import SettingsLayout from '../../layouts/SettingsLayout';
 import Input from '../Input';
 import classes from '../../styles/AddressSettings.module.scss';

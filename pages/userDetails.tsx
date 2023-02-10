@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useCallback, useState } from 'react';
 import styles from '../styles/UserDetails.module.scss';
 import Image from 'next/image';

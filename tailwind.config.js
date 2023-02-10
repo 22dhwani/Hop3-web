@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+ 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -6,7 +6,12 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: '300px',
+        // ...defaultTheme.screens,
+      },
+    },
   },
   plugins: [],
 };

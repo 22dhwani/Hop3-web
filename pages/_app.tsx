@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/globals.scss';
 import type { AppProps } from 'next/app';

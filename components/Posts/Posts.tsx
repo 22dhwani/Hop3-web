@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import styles from '../../styles/Posts.module.scss';
-
+import ProductCover from '../../public/images/productcover.png';
 import UpArrow from '../../public/images/UpArrow.svg';
 import Like from '../../public/images/Like.svg';
 import NotLike from '../../public/images/like_not.svg';
@@ -216,7 +216,7 @@ export default function Posts() {
   );
 }
 
-const UserProfile = (props: UserProfileProps) => {
+export function UserProfile(props: UserProfileProps) {
   const { imgUrl, title, subtitle } = props;
 
   return (
@@ -228,7 +228,7 @@ const UserProfile = (props: UserProfileProps) => {
       </div>
     </div>
   );
-};
+}
 
 const PostItem: FC<PostDataProps> = props => {
   const { data, isAdmin, onRefresh } = props;
@@ -260,7 +260,7 @@ const PostItem: FC<PostDataProps> = props => {
     },
     [approvePostMutation, data?.id, rejectPostMutation],
   );
-
+  console.log(data);
   return (
     <div className={styles.postscontainer}>
       <div className={styles.postwrapper} key={data?.id}>
@@ -269,52 +269,80 @@ const PostItem: FC<PostDataProps> = props => {
         </div>
         <div className={styles.descriptionwrapper}>
           <div className={styles.description}>
-            <UserProfile
-              imgUrl={data?.user?.image || ''}
-              title={data?.user?.username}
-              subtitle={'Hop3 Creator'}
-            />
-            {data?.post_type === 'deal' && <Deal />}
-            <div>
-              <span className={styles.boldtext}>{data?.title}</span>
-              <p className={styles.text}>{data?.description}</p>
-            </div>
-            {data?.categories.length > 0 && (
-              <Chip chipData={data?.categories} />
-            )}
-            <div className={styles.explore}>
-              <Link href={`/explore/post/${data.id}`}>
-                <p className={styles.exploretext}>Expolre now</p>
-              </Link>
-              <Image className={styles.arowicon} src={UpArrow} alt={''} />
-            </div>
-            <div className={styles.selectwrapper}>
-              <span className={styles.like}>
-                <Image
-                  src={isLikeByMe ? Like : NotLike}
-                  alt={''}
-                  style={{ fill: 'red' }}
-                  onClick={onPressLike}
+            <div className="h-full flex flex-col justify-between">
+              <div className="">
+                <UserProfile
+                  imgUrl={data?.user?.image || ''}
+                  title={data?.user?.username}
+                  subtitle={'Hop3 Creator'}
                 />
-                <p className={styles.imgtitle}> {totalLikes} </p>
-              </span>
-              {isAdmin && (
-                <select
-                  id="demo-multiple-name"
-                  value={selectedStatus}
-                  className={styles.customselect}
-                  style={{
-                    backgroundColor: statusColor[selectedStatus],
-                    color: selectedStatus === 'Denied' ? '#FFF' : '#000',
-                  }}
-                  onChange={handleChange}>
-                  {status.map(name => (
-                    <option key={name} value={name}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
-              )}
+                {data?.post_type === 'deal' && <Deal />}
+                <div>
+                  <span className={styles.boldtext}>{data?.title}</span>
+                  <p className={styles.text}>{data?.description}</p>
+                </div>
+                {data?.categories.length > 0 && (
+                  <Chip chipData={data?.categories} />
+                )}
+                <div className="flex flex-row bg-yellow-50 md:w-4/6 px-2 py-2 rounded-lg my-5 gap-4 xs:w-11/12">
+                  <Image
+                    src={ProductCover}
+                    alt={'logo'}
+                    className="w-12 h-12 rounded-lg"
+                  />
+                  <div className="flex flex-col justify-between">
+                    <strong className="text-sm">
+                      Chi Forest Sparkling Water
+                    </strong>
+                    <div className="flex items-center">
+                      <p className="">
+                        <Image
+                          src="/vectors/icons/h.svg"
+                          width={10}
+                          height={10}
+                          alt="h"
+                          className="mr-1"
+                        />
+                        1200
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.explore}>
+                  <Link href={`/explore/post/${data.id}`}>
+                    <p className={styles.exploretext}>Explore now</p>
+                  </Link>
+                  <Image className={styles.arowicon} src={UpArrow} alt={''} />
+                </div>
+              </div>
+              <div className={styles.selectwrapper}>
+                <span className={styles.like}>
+                  <Image
+                    src={isLikeByMe ? Like : NotLike}
+                    alt={''}
+                    style={{ fill: 'red' }}
+                    onClick={onPressLike}
+                  />
+                  <p className={styles.imgtitle}> {totalLikes} </p>
+                </span>
+                {isAdmin && (
+                  <select
+                    id="demo-multiple-name"
+                    value={selectedStatus}
+                    className={styles.customselect}
+                    style={{
+                      backgroundColor: statusColor[selectedStatus],
+                      color: selectedStatus === 'Denied' ? '#FFF' : '#000',
+                    }}
+                    onChange={handleChange}>
+                    {status.map(name => (
+                      <option key={name} value={name}>
+                        {name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
             </div>
           </div>
         </div>

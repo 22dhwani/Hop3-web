@@ -70,6 +70,7 @@
       &:not(.listType) {
         display: flex;
         justify-content: center;
+
         flex-wrap: wrap;
         gap: 15px;
         padding: 30px;
@@ -79,6 +80,7 @@
           border-radius: 50px;
           background-color: #f0f0f0;
           display: flex;
+
           justify-content: center;
           align-items: center;
           padding-left: 14px;

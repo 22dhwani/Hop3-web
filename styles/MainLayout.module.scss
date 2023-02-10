@@ -69,7 +69,9 @@
   .mainLayout {
     .mainContent {
       padding: 0vh 0 0;
-      margin-left: 10vw;
+      margin-left: 3vw;
+      margin-right: 3vw;
+      margin-bottom: 20vh;
       .navMin {
         .logo {
           .logoimage {
@@ -83,7 +85,7 @@
 @media screen and (max-width: 508px) {
   .mainLayout {
     .mainContent {
-      margin-left: 10vw;
+      margin-left: 3vw;
       margin-right: 3vw;
     }
   }
@@ -91,8 +93,8 @@
 @media screen and (max-width: 390px) {
   .mainLayout {
     .mainContent {
-      margin-left: 14vw;
-      margin-right: 3vw;
+      margin-left: 4vw;
+      margin-right: 4vw;
     }
   }
 }

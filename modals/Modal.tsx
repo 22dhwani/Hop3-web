@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import clsx from 'clsx';
 import Image from 'next/image';
 import React from 'react';
@@ -14,6 +13,8 @@ import Button from '../components/Button';
 interface Props {
   show: boolean;
   toggleShow: (toSet?: string) => void;
+  bodyheader?: string;
+  bodycontent?: string;
 }
 
 const Modal = ({ show, toggleShow }: Props) => {

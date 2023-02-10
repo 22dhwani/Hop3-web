@@ -1,205 +1,237 @@
 .creatorstudio {
-    display: flex;
-    padding-top: 20px;
+  display: flex;
+  padding-top: 20px;
+  flex-direction: column;
 
-    .profilesetting {
+  .profilesetting {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    padding: 0px 10px 10px 10px;
+
+    .profileDescription {
+      display: flex;
+      gap: 15px;
+      width: max-content;
+      justify-content: space-between;
+
+      .profile {
+        display: flex;
+        align-items: center;
+        // img {
+        //   width: 105px;
+        //   height: 105px;
+        //   //   border-radius: 10px;
+        // }
+        @media screen and (max-width: 768px) {
+          flex-direction: column;
+        }
+
+        .text {
+          padding-left: 10px;
+
+          .title {
+            font-weight: 700;
+
+            line-height: 32px;
+          }
+
+          .subtitle {
+            font-weight: 700;
+
+            line-height: 105.5%;
+            color: #9f7cff;
+          }
+        }
+      }
+
+      .settingbtn {
+        border: 1px solid #000000;
+        border-radius: 44px;
+        padding: 10px 30px;
+        cursor: pointer;
+        background-color: transparent;
+      }
+    }
+
+    .earningwrapper {
+      //   width: 100%;
+      height: 100%;
+      //   display: table;
+      .earning {
+        height: 25vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        // display: table-cell;
+        // vertical-align: middle;
+        background: #fff;
+        box-shadow: 2px 15px 17px 0px #0000000d;
+        border-radius: 3px;
+
+        align-items: center;
+        justify-content: center;
+        &:first-child {
+          background-image: linear-gradient(rgb(165 180 252), rgb(217 249 157));
+        }
+        .smalltext,
+        .bigtext {
+          font-weight: 500;
+          font-size: 14px;
+        }
+        .bigtext {
+          font-weight: 900;
+          font-size: 18px;
+        }
+        .boldtext {
+          font-weight: 700;
+          font-size: 30px;
+          line-height: 45px;
+
+          img {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .rewards {
         display: flex;
         flex-direction: column;
         gap: 15px;
-        width: 45%;
-        padding: 0px 20px 10px 10px;
+        padding-top: 10px;
 
-        .profileDescription {
-            display: flex;
-            gap: 15px;
-            justify-content: space-between;
+        .rewardsbuton {
+          border: none;
+          display: flex;
+          cursor: pointer;
+          align-items: flex-start;
+          margin-left: 20px;
+          background: transparent;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 105.5%;
 
-            .profile {
-                display: flex;
+          img {
+            margin-left: 15px;
+          }
 
-                img {
-                    width: 105px;
-                    height: 105px;
-                    border-radius: 10px;
-
-                }
-
-                .text {
-                    padding-left: 10px;
-
-                    .title {
-                        font-weight: 700;
-                        font-size: 30px;
-                        line-height: 32px
-                    }
-
-                    .subtitle {
-                        font-weight: 700;
-                        font-size: 18px;
-                        line-height: 105.5%;
-                        color: #9F7CFF;
-                    }
-                }
-            }
-
-            .settingbtn {
-                border: 1px solid #000000;
-                border-radius: 44px;
-                padding: 10px 30px;
-                cursor: pointer;
-                background-color: transparent;
-
-            }
+          &:hover {
+            border-bottom: 1px solid #000;
+          }
         }
-
-        .earningwrapper {
-            display: flex;
-            padding-top: 30px;
-
-            .earning {
-                width: 224px;
-                height: 137px;
-                background: #F7F4FF;
-                border-radius: 9px;
-
-                .smalltext {
-                    font-weight: 500;
-                    font-size: 14px;
-                    padding: 20px 10px 20px 10px;
-                }
-
-                .boldtext {
-                    font-weight: 700;
-                    font-size: 40px;
-                    line-height: 45px;
-                    padding: 20px 10px 20px 10px;
-
-                    img {
-                        margin-right: 10px;
-
-                    }
-                }
-            }
-
-            .rewards {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                padding-top: 10px;
-
-                .rewardsbuton {
-                    border: none;
-                    display: flex;
-                    cursor: pointer;
-                    align-items: flex-start;
-                    margin-left: 20px;
-                    background: transparent;
-                    font-weight: 400;
-                    font-size: 18px;
-                    line-height: 105.5%;
-
-                    img {
-                        margin-left: 15px;
-                    }
-
-                    &:hover {
-                        border-bottom: 1px solid #000;
-                    }
-                }
-            }
-        }
-
-        .boxwrapper {
-            display: flex;
-            gap: 10px;
-
-            .box {
-                width: 150px;
-                border: 0.5px solid #000000;
-                border-radius: 6px;
-                height: 100px;
-
-                .boxvalue {
-                    font-weight: 700;
-                    font-size: 28px;
-                    padding: 20px 10px 20px 10px;
-
-                }
-
-                .boxtitle {
-                    font-weight: 500;
-                    font-size: 14px;
-                    padding: 20px 10px 20px 10px;
-
-                }
-            }
-        }
-
-        .experiencewrapper {
-            padding-top: 30px;
-
-            .backgroundcard {
-                position: absolute;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 250px;
-                margin-top: -17px;
-                margin-left: 6%;
-            }
-
-            .card {
-                position: relative;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                height: 190px;
-                width: 100%;
-                background: rgba(255, 255, 255, 0.5);
-                border: 1px dashed #000000;
-                backdrop-filter: blur(28.5px);
-                border-radius: 12px;
-
-                .cardtitle {
-                    display: flex;
-                    font-weight: 500;
-                    font-size: 14px;
-                    gap: 20px;
-                    padding-bottom: 25px;
-                }
-
-                .sharebtn {
-                    width: 245px;
-                    height: 39px;
-                    cursor: pointer;
-                    left: 119px;
-                    top: 116px;
-                    color: #FFF;
-                    background: #000000;
-                    border: 1px solid #000000;
-                    border-radius: 44px;
-                }
-            }
-
-            .bottomtext {
-                font-weight: 700;
-                text-align: center;
-                padding-top: 35px;
-                font-size: 18px;
-                line-height: 105.5%;
-                letter-spacing: 0.01em;
-                color: #9F7CFF;
-                cursor: pointer;
-                img {
-                    width: 15px;
-                    height: 15px;
-                }
-            }
-        }
+      }
     }
 
-    .postswrapper {
-        width: 40%;
+    .boxwrapper {
+      display: flex;
+      gap: 10px;
+
+      .box {
+        width: 150px;
+        border: 0.5px solid #000000;
+        border-radius: 6px;
+        height: 100px;
+
+        .boxvalue {
+          font-weight: 700;
+          font-size: 28px;
+          padding: 20px 10px 20px 10px;
+        }
+
+        .boxtitle {
+          font-weight: 500;
+          font-size: 14px;
+          padding: 20px 10px 20px 10px;
+        }
+      }
     }
+
+    .experiencewrapper {
+      padding-top: 30px;
+      height: 100%;
+
+      .backgroundcard {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 250px;
+        margin-top: -17px;
+        margin-left: 30%;
+        @media screen and (max-width: 767px) {
+          margin-left: 00%;
+          margin-right: 30%;
+        }
+      }
+      .cardwrapper {
+        position: relative;
+
+        width: 100%;
+        background: #fff;
+        box-shadow: 0px 10px 10px 5px #0000000d;
+        margin: 3vh 0 7vh;
+        backdrop-filter: blur(28.5px);
+        border-radius: 5px;
+        padding: 4vh 3vw;
+      }
+      .shopcard,
+      .card {
+        margin: 5vh 0;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        max-height: 30vh;
+
+        .cardtitle {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-weight: 500;
+          font-size: 14px;
+          gap: 20px;
+          padding-bottom: 25px;
+        }
+
+        .sharebtn {
+          width: 245px;
+          height: 39px;
+          cursor: pointer;
+          left: 119px;
+          top: 116px;
+          color: #fff;
+          background: #000000;
+          border: 1px solid #000000;
+          border-radius: 44px;
+        }
+      }
+      .productcard {
+        margin: 5vh 0;
+        max-height: max-content;
+        img {
+          object-fit: cover;
+        }
+      }
+      .bottomtext {
+        font-weight: 700;
+        text-align: center;
+        padding-top: 35px;
+        font-size: 18px;
+        line-height: 105.5%;
+        letter-spacing: 0.01em;
+        color: #9f7cff;
+        cursor: pointer;
+        img {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+  }
+
+  .postswrapper {
+    width: 100%;
+  }
 }
