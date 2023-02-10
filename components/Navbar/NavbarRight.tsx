@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useCallback } from 'react';
 import Image from 'next/image';
 

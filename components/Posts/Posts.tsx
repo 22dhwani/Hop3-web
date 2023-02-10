@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Cookies from 'js-cookie';

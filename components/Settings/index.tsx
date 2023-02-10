@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import Input from '../Input';

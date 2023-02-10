@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import clsx from 'clsx';
 import Image from 'next/image';
 import styles from '../../styles/ShareExperience.module.scss';

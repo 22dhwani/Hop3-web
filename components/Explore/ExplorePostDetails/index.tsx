@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import MainLayout from '../../../layouts/MainLayout';
 import Image from 'next/image';
 import LeftArrow from '../../../public/images/LeftArrow.svg';

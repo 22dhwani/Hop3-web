@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import Image from 'next/image';
 import { useRouter } from 'next/router';

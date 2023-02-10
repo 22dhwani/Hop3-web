@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import MainLayout from '../../layouts/MainLayout';
 import Posts from '../Posts/Posts';

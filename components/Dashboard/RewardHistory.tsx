@@ -1,6 +1,3 @@
-/* eslint-disable prettier/prettier */
-
-/* eslint-disable prettier/prettier */
 import MainLayout from '../../layouts/MainLayout';
 import Image from 'next/image';
 import styles from '../../styles/RedeemHistory.module.scss';

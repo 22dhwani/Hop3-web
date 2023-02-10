@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import Login from '../components/Login/Login';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import MainLayout from '../../../layouts/MainLayout';
 import LeftArrow from '../../../public/images/LeftArrow.svg';
 import UpArrow from '../../../public/images/UpArrow.svg';
@@ -9,7 +8,7 @@ import Input from '../../Input';
 import Button from '../../Button';
 import useModal from '../../../hooks/useModal';
 import Modal from '../../../modals/Modal';
-/* eslint-disable prettier/prettier */
+
 const Checkout = () => {
   const { show, toggleShow } = useModal(false);
   return (

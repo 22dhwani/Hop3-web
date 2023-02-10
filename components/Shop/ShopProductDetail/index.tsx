@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import LeftArrow from '../../../public/images/LeftArrow.svg';
 import UpArrow from '../../../public/images/UpArrow.svg';
 import Image from 'next/image';

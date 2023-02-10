@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import clsx from 'clsx';
 
 import styles from '../../styles/Input.module.scss';
