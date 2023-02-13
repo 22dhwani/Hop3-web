@@ -3,10 +3,10 @@ import Image from 'next/image';
 import Cookies from 'js-cookie';
 import styles from '../../styles/Posts.module.scss';
 import ProductCover from '../../public/images/productcover.png';
-import UpArrow from '../../public/images/UpArrow.svg';
-import Like from '../../public/images/Like.svg';
+import UpArrow from '../../public/images/up_arrow.svg';
+import Like from '../../public/images/like.svg';
 import NotLike from '../../public/images/like_not.svg';
-import Logout from '../../public/images/Logout.png';
+import Logout from '../../public/images/logout.png';
 import { FIREBASE_AUTH } from '../firebase';
 import ImageSlider from '../ImageSlider';
 import Chip from '../Chip/Chip';
@@ -260,7 +260,7 @@ const PostItem: FC<PostDataProps> = props => {
     },
     [approvePostMutation, data?.id, rejectPostMutation],
   );
-  console.log(data);
+  console.log(data.postImages);
   return (
     <div className={styles.postscontainer}>
       <div className={styles.postwrapper} key={data?.id}>
@@ -284,6 +284,7 @@ const PostItem: FC<PostDataProps> = props => {
                 {data?.categories.length > 0 && (
                   <Chip chipData={data?.categories} />
                 )}
+
                 <div className="flex flex-row bg-yellow-50 md:w-4/6 px-2 py-2 rounded-lg my-5 gap-4 xs:w-11/12">
                   <Image
                     src={ProductCover}

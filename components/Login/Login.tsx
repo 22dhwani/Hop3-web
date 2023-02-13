@@ -2,11 +2,11 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Google from '../../public/images/Google.svg';
-import LoginCover from '../../public/images/LoginCover.png';
-import LogoWhite from '../../public/images/Logo.png';
+import Google from '../../public/images/google.svg';
+import LoginCover from '../../public/images/login_cover.png';
+import LogoWhite from '../../public/images/logo.png';
 import LoginInMobileCover from '../../public/images/bgimage.png';
-import Logo from '../../public/images/Logo.svg';
+import Logo from '../../public/images/logo.svg';
 import styles from '../../styles/Login.module.scss';
 import { FIREBASE_AUTH } from '../firebase';
 

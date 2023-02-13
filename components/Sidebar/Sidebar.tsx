@@ -22,8 +22,13 @@ import Button from '../Button';
 export default function Sidebar(props: any) {
   const { toggleSidebar, isSideBarActive } = props;
   const menu_data = [
-    { label: 'Explore', id: 'explore', icon: <SidebarExploreIcon /> },
-    { label: 'hop3 Shop', id: 'shop', icon: <ShopIcon /> },
+    {
+      label: 'Explore',
+      id: 'explore',
+      icon: <SidebarExploreIcon />,
+      url: '/explore',
+    },
+    { label: 'hop3 Shop', id: 'shop', icon: <ShopIcon />, url: '/shop' },
   ];
   const mobile_data = [{ label: 'Globe', id: 'globe', icon: <GlobeIcon /> }];
 

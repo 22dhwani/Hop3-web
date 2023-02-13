@@ -39,7 +39,7 @@ function ExploreDetails(props: any) {
   console.log(userPostData);
   return (
     <>
-      <ExplorePostDetails />
+      <ExplorePostDetails data={userPostData} />
     </>
   );
 }

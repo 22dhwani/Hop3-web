@@ -7,7 +7,7 @@ import Product3 from '../../public/images/product3.png';
 import Product4 from '../../public/images/product4.png';
 import Product5 from '../../public/images/product5.png';
 import Product6 from '../../public/images/product6.png';
-import LeftArrow from '../../public/images/LeftArrow.svg';
+import LeftArrow from '../../public/images/left_arrow.svg';
 import Button from '../Button';
 const RedeemHistory = () => {
   const productData = [

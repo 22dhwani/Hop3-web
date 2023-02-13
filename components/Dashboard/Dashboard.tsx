@@ -3,10 +3,10 @@ import styles from '../../styles/Dashboard.module.scss';
 import Image from 'next/image';
 import Posts from '../Posts/Posts';
 import MoneyIcon from '../../public/images/Money.svg';
-import MoneyPurple from '../../public/images/MoneyPurple.svg';
-import UpArrow from '../../public/images/UpArrow.svg';
-import GradientBack from '../../public/images/Gradient.png';
-import ShiningStart from '../../public/images/ShiningStart.png';
+import MoneyPurple from '../../public/images/money_purple.svg';
+
+import GradientBack from '../../public/images/gradient.png';
+import ShiningStart from '../../public/images/shinningstar.png';
 import Product1 from '../../public/images/product1.png';
 import Product2 from '../../public/images/product2.png';
 import Product3 from '../../public/images/product3.png';
@@ -14,8 +14,8 @@ import Product4 from '../../public/images/product4.png';
 import Product5 from '../../public/images/product5.png';
 import Product6 from '../../public/images/product6.png';
 import { useUserStore } from '../../store/userStore';
-import Post1 from '../../public/images/Post.png';
-import Post2 from '../../public/images/Post2.png';
+import Post1 from '../../public/images/post.png';
+import Post2 from '../../public/images/post2.png';
 import Settings from '../../public/images/settings.svg';
 import Button from '../Button';
 export default function Creator() {

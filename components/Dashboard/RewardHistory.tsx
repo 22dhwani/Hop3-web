@@ -6,7 +6,7 @@ import Thunderstorms from '../../public/images/thunderstorms.svg';
 import Shop from '../../public/images/shop-black.svg';
 
 import Like from '../../public/images/thumbs-up.svg';
-import LeftArrow from '../../public/images/LeftArrow.svg';
+import LeftArrow from '../../public/images/left_arrow.svg';
 import Button from '../Button';
 const RedeemHistory = () => {
   const productData = [

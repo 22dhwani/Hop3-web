@@ -1,5 +1,5 @@
 import MainLayout from '../../../layouts/MainLayout';
-import LeftArrow from '../../../public/images/LeftArrow.svg';
+import LeftArrow from '../../../public/images/left_arrow.svg';
 import UpArrow from '../../../public/images/UpArrow.svg';
 import styles from '../../../styles/ShopProductDetail.module.scss';
 import ProductCover from '../../../public/images/productcover.png';

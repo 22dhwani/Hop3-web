@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 import hop3Api from '../config/axiosconfig';
 import axios from 'axios';
+import { PostDetail } from '../components/Explore/ExplorePostDetails';
 
 interface IPostData {
   post_type: string;
@@ -140,6 +142,8 @@ export const getPostForUser = async ({ queryKey }: any) => {
   if (status !== 'All' && status) {
     url = url + `&status=${status}`;
   }
+  const postdata = (await hop3Api.get(url)).data;
+  console.log(postdata);
   return (await hop3Api.get(url)).data;
 };
 
@@ -152,9 +156,8 @@ export const addPostMediaDetails = async (data: IAddPostMediaApi) => {
 
 export const getPostById = async ({ queryKey }: any) => {
   const postId = queryKey[1];
-  console.log(queryKey,'QUERY')
+  console.log(queryKey, 'QUERY');
   // post/getPostById/63d0b3590dc5a1fe7a532d84
-  let url = `/post/getPostById/${postId}`;
-  return (await hop3Api.get(url)).data;
-
-}
+  const url = `/post/getPostById/${postId}`;
+  return (await hop3Api.get(url)).data as PostDetail;
+};

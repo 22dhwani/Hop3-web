@@ -1,19 +1,18 @@
-import LeftArrow from '../../../public/images/LeftArrow.svg';
-import UpArrow from '../../../public/images/UpArrow.svg';
+import LeftArrow from '../../../public/images/left_arrow.svg';
+import UpArrow from '../../../public/images/up_arrow.svg';
+/* eslint-disable prettier/prettier */
 import Image from 'next/image';
+import { useState } from 'react';
+import useModal from '../../../hooks/useModal';
+import MainLayout from '../../../layouts/MainLayout';
+import Modal from '../../../modals/Modal';
 import ProductCover from '../../../public/images/productcover.png';
 import ProductLogo from '../../../public/images/productlogo.png';
 import Product1 from '../../../public/images/shopcover1.png';
 import Product2 from '../../../public/images/shopcover2.png';
 import Product3 from '../../../public/images/shopcover3.png';
-import Slider from 'react-slick';
-import ImageSlider from '../../ImageSlider';
 import styles from '../../../styles/ShopProductDetail.module.scss';
 import Button from '../../Button';
-import MainLayout from '../../../layouts/MainLayout';
-import { useState } from 'react';
-import useModal from '../../../hooks/useModal';
-import Modal from '../../../modals/Modal';
 
 const ShopProductDetail = () => {
   const [id, setid] = useState(0);
@@ -99,13 +98,15 @@ const ShopProductDetail = () => {
                 </div>
               </div>
               <Button
-                className={`mt-7 w-2/4 ${styles.redeem}`}
+                className={`mt-7 md:w-2/4 ${styles.redeem} xs:w-full `}
                 variant="primary"
                 onClick={() => toggleShow()}>
                 Redeem
               </Button>
               <div className="flex flex-row mt-5 items-center">
-                <p className="hover:underline">Learn more about the brand</p>
+                <p className="hover:underline underline py-2">
+                  Learn more about the brand
+                </p>
                 <Image src={UpArrow} alt={'arrow'} className="ml-2" />
               </div>
             </div>

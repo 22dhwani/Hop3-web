@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import Airtable from 'airtable';
 
 const personalAccessToken =

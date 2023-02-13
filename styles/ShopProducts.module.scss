@@ -28,10 +28,10 @@
 
     @media screen and (max-width: 1206px) {
       margin-bottom: 20px;
-      width: calc(33% - 30px);
+      width: calc(33% - 100px);
     }
 
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 900px) {
       width: calc(50% - 30px);
     }
     @media screen and (max-width: 500px) {
