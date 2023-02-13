@@ -169,11 +169,13 @@ const ExplorePostDetails = (props: { data?: any }) => {
             </p>
 
             <p className="text-sm mt-5 text-justify md:w-8/12 xs:w-full text-purple-400 ">
-              {userPostData?.hashtag.map(item => {
-                return <span className="pr-2 ">{item}</span>;
-              }) ??
-                ` #Lorem #Loremipsum #amet #accumsan #viverratortor #Lorem
-              #Loremipsum #amet #accumsan #viverratortor`}
+              {userPostData?.hashtag.map((item, index) => {
+                return (
+                  <span key={index} className="pr-2 ">
+                    {item}
+                  </span>
+                );
+              })}
             </p>
             <div className="mt-5">
               {props.data?.categories.length > 0 && (
