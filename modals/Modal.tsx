@@ -4,15 +4,17 @@ import React from 'react';
 
 import styles from '../styles/Modal.module.scss';
 import {
-  ModalIcon2,
   CloseIcon,
   Hop3TokenIcon,
+  ModalIcon2,
 } from '../components/Icons/Icons';
 import Button from '../components/Button';
 
 interface Props {
   show: boolean;
   toggleShow: (toSet?: string) => void;
+  bodyheader?: string;
+  bodycontent?: string;
 }
 
 const Modal = ({ show, toggleShow }: Props) => {

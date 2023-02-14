@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useState } from 'react';
-
+import ShopCover from '../../public/images/shopcover.png';
 import MainLayout from '../../layouts/MainLayout';
 import ShopProducts from './ShopProducts';
 import styles from '../../styles/Shop.module.scss';
@@ -46,7 +46,9 @@ const Shop = () => {
               </strong>
             </div>
           </div>
-
+          <div>
+            <Image src={ShopCover} alt={''} className={styles.logocover} />
+          </div>
           <div className={styles.filterBy}>
             <div className={styles.label}>Filter by:</div>
 

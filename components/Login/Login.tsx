@@ -1,39 +1,35 @@
-import React, { useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import Cookies from 'js-cookie';
 import Image from 'next/image';
-import styles from '../../styles/Login.module.scss';
-import LoginCover from '../../public/images/LoginCover.png';
-import Logo from '../../public/images/Logo.svg';
-import Google from '../../public/images/Google.svg';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import Google from '../../public/images/Google.svg';
+import LoginCover from '../../public/images/LoginCover.png';
+import LogoWhite from '../../public/images/Logo.png';
+import LoginInMobileCover from '../../public/images/bgimage.png';
+import Logo from '../../public/images/Logo.svg';
+import styles from '../../styles/Login.module.scss';
 import { FIREBASE_AUTH } from '../firebase';
-import { refreshToken } from '../../utils/utils';
 
-import { useQuery } from 'react-query';
 import { useUserStore } from '../../store/userStore';
+import { useLoginProcess } from '../../store/loginProcess';
+import Cookies from 'js-cookie';
 
 const provider = new GoogleAuthProvider();
 
 export default function Login() {
-  const router = useRouter();
-  const { fetchUserData } = useUserStore();
+  const { setLoginProcess } = useLoginProcess();
   //ts-ignore
 
-  const [fieldValues, setFieldValues] = useState({
-    email: '',
-    password: '',
-  });
-
-  const redirectToUserDetailsPage = () => {
-    router.push(
-      `/userDetails?user=${JSON.stringify(fieldValues)}`,
-      '/userDetails',
-    );
-  };
-
   const login = async () => {
+    await FIREBASE_AUTH.signOut().catch(err => {
+      console.error('error in signouit', err);
+    });
+    localStorage.removeItem('authToken');
+    Cookies.remove('loggedin');
+    setLoginProcess(true);
     signInWithPopup(FIREBASE_AUTH, provider).catch(error => {
+      setLoginProcess(false);
+
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -55,10 +51,10 @@ export default function Login() {
   return (
     <div className={styles.logincontainer}>
       <div className={styles.rightsection}>
-        <Image src={Logo} alt={''} />
+        <Image src={Logo} alt={''} className={styles.logoblack} />
         <p className={styles.title}>
           You are
-          <br />
+          <br className="horizontal-bar" />
           hopping to the
         </p>
         <span className={styles.transformdivwrraper}>
@@ -78,13 +74,14 @@ export default function Login() {
           <p className={styles.agreetext}>
             By logining, I agree to the{' '}
             <a className={styles.link}>Terms of Service</a> and
-            <br />
             <a className={styles.link}>Privacy Policy</a>
           </p>
         </div>
       </div>
       <div className={styles.leftsection}>
+        <Image src={LogoWhite} alt={''} className={styles.logoimage} />
         <Image className={styles.imgcover} src={LoginCover} alt={''} />
+        <Image className={styles.imgmobile} src={LoginInMobileCover} alt={''} />
       </div>
     </div>
   );

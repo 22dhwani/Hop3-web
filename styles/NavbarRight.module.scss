@@ -2,6 +2,10 @@
   display: flex;
   align-items: center;
   gap: 30px;
+  .rightmain {
+    display: flex;
+    gap: 10px;
+  }
 
   .profileimg {
     width: 40px;

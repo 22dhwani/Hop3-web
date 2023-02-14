@@ -4,3 +4,9 @@
   display: block;
   margin-bottom: 8px;
 }
+
+@media screen and (max-width: 768px) {
+  .label {
+    font-weight: 600;
+  }
+}

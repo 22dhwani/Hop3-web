@@ -25,6 +25,7 @@ import { findHashtags } from '../../helper/common';
 import { GOOGLE_PLACES_API_KEY } from '../../constant/constant';
 import { GoogleLocation } from '../GoogleLocation/GoogleLocation';
 import { DescriptionBox } from '../DescriptionBox/DescriptionBox';
+import Dropdown from '../Dropdown';
 
 const rewardItems = [
   {
@@ -43,7 +44,9 @@ const rewardItems = [
     extra: true,
   },
 ];
-
+interface Option {
+  label: string;
+}
 const ShareExperience = () => {
   const { userDetails: userData, fetchUserData } = useUserStore();
   const createPostMutation = useMutation(createPost);
@@ -73,6 +76,12 @@ const ShareExperience = () => {
   const [stepIndex, setStepIndex] = useState(1);
   const [categories, setCategories] = useState<string[]>([]);
   const { categories: allCategories } = useCategoriesStore();
+  const options: Option[] = [
+    { label: 'Dead Bear Tshirt 1' },
+    { label: 'Dead Bear tshirt 2' },
+    { label: 'Dead Bear tshirt 3' },
+    { label: 'Dead Bear tshirt4' },
+  ];
 
   useEffect(() => {
     fetchUserData().then();
@@ -399,6 +408,8 @@ const ShareExperience = () => {
                   required
                   onChange={onChangePostInfo}
                   value={postInfo.title}
+                  className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full"
+                  labelclassName="font-sans md:text-xl xs:text-sm"
                   placeholder="Give your post an attractive title"
                 />
               </div>
@@ -406,11 +417,13 @@ const ShareExperience = () => {
                 <Input
                   id="description"
                   label="Description"
+                  className="lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full"
+                  labelclassName="font-sans md:text-xl xs:text-sm"
+                  placeholder="Share your description"
                   required
                   textarea
                   onChange={onChangePostInfo}
                   value={postInfo.description}
-                  placeholder="Tell more about..."
                 />
               </div>
               {/*<div className={styles.input}>*/}
@@ -431,7 +444,19 @@ const ShareExperience = () => {
                   placeholder="URL"
                   onChange={onChangePostInfo}
                   value={postInfo.event}
-                  className={styles.urlImage}
+                  className={`${styles.urlImage} lg:h-10 xs:h-8 border !border-slate-600 outline-none placeholder:text-sm placeholder:text-slate-600 !text-sm !w-full`}
+                  labelclassName="font-sans md:text-xl xs:text-sm"
+                />
+              </div>
+              <div className={styles.input}>
+                <Dropdown
+                  id="Product"
+                  label="Redeemed Product"
+                  placeholder="Select a Redeemed Product"
+                  onSelect={(item: string) => {
+                    console.log(item);
+                  }}
+                  options={options}
                 />
               </div>
               <InputLabel

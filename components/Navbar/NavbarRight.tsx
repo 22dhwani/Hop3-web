@@ -24,9 +24,15 @@ const NavbarRight = ({ withoutShareExpBtn }: Props) => {
   return (
     <div className={styles.right}>
       {!withoutShareExpBtn && (
-        <Button variant="dark-outlined" href="/share-experience">
-          Share Experience
-        </Button>
+        <div className={styles.rightmain}>
+          <Button variant="dark-outlined" href="/share-experience">
+            Share Experience
+          </Button>
+          <Button variant="primary" href="">
+            <Image src="/vectors/icons/h.svg" width={14} height={14} alt="h" />
+            1200
+          </Button>
+        </div>
       )}
       <Image
         src={userDetails?.image || '/images/user.png'}

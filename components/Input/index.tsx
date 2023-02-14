@@ -5,6 +5,8 @@ import InputLabel from '../InputLabel';
 
 interface Props {
   className?: string;
+  placeholder?: string;
+  labelclassName?: string;
   id: string;
   label: string;
   required?: boolean;
@@ -16,6 +18,8 @@ interface Props {
 const Input = ({
   required,
   className,
+  labelclassName,
+  placeholder,
   label,
   id,
   textarea,
@@ -24,11 +28,21 @@ const Input = ({
 }: Props) => {
   return (
     <div className={clsx(styles.inputControl, styles.className)}>
-      <InputLabel id={id} required={required} label={label} />
+      <InputLabel
+        id={id}
+        required={required}
+        label={label}
+        className={labelclassName}
+      />
       {textarea ? (
-        <textarea id={id} {...rest} />
+        <textarea id={id} {...rest} placeholder={placeholder} />
       ) : (
-        <input id={id} className={className} {...rest} />
+        <input
+          id={id}
+          className={className}
+          {...rest}
+          placeholder={placeholder}
+        />
       )}
       {errorText && <p className={styles.errorText}>{errorText}</p>}
     </div>

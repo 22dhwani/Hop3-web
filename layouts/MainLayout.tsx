@@ -48,6 +48,7 @@ const MainLayout = ({ activeLink, children }: Props) => {
                 width={128}
                 height={50}
                 alt="logo"
+                className={styles.logoimage}
               />
             </Link>
           </div>

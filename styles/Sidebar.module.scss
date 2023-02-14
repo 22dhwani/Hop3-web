@@ -1,93 +1,151 @@
 @use 'common' as *;
 
 .container {
-    background: $sidebar-bg;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    transition: all 0.3s ease;
-    z-index: 999;
-    padding: 3.2rem 0.58rem 0 2.81rem;
+  background: $sidebar-bg;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transition: all 0.3s ease;
+  z-index: 999;
+  padding: 3.2rem 1rem 0 1rem;
+  overflow-y: scroll;
+  .add,
+  .balance {
+    display: none;
+  }
+  .mobilebar {
+    display: none;
+  }
+  .logo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &.active {
+    padding: 3.2rem 4rem 0 4rem;
 
     .logo {
+      justify-content: space-between;
+    }
+
+    img {
+      display: block;
+    }
+
+    .textwrapper {
+      display: block;
+      transition: all 0.3s ease;
+    }
+  }
+
+  .nav {
+    margin-top: 66px;
+
+    .navLink {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 28px;
+
+      img {
+        filter: invert(90%) sepia(1%) saturate(20%) hue-rotate(354deg)
+          brightness(86%) contrast(81%);
+        transition: 0.4s ease;
+      }
+
+      .text {
+        font-size: 18px;
+        transition: 0.4s ease;
+      }
+
+      &.active {
+        border-bottom: 1px solid #000;
+
+        img {
+          filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(64deg)
+            brightness(95%) contrast(107%);
+        }
+
+        .text {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .textwrapper {
+    margin: 20px 0;
+    display: none;
+
+    .invite,
+    .help {
+      cursor: pointer;
+    }
+
+    .invite {
+      color: $color-secondary;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .help {
+      display: flex;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0rem 0vw;
+    transition: all 0.3s ease;
+    height: fit-content;
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    overflow-x: clip;
+    .logo {
+      display: none;
+    }
+    .menulist {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2vw;
+      .add {
+        display: inline;
+        height: max-content;
+        min-width: min-content !important;
+      }
+      .balance {
         display: flex;
-        justify-content: space-around;
+        padding: 1vh 5vw;
+        flex-direction: row;
         align-items: center;
-
+        height: max-content;
+        min-width: min-content !important;
+        img {
+          margin-right: 4px;
         }
-
-    &.active{
-        padding: 3.2rem 4rem 0 4rem;
-        
-        .logo{
-            justify-content: space-between;
-        }
-
-        img{
-            display: block;
-        }
-
-        .textwrapper{
-            display: block;
-            transition: all 0.3s ease;
-        }
-
+      }
+      .categories {
+        display: none;
+      }
+      .mobilebar {
+        display: inline;
+      }
     }
-    
-        .nav {
-          margin-top: 66px;
-    
-          .navLink {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 28px;
-    
-            img {
-              filter: invert(90%) sepia(1%) saturate(20%) hue-rotate(354deg)
-                brightness(86%) contrast(81%);
-              transition: 0.4s ease;
-            }
-    
-            .text {
-              font-size: 18px;
-              transition: 0.4s ease;
-            }
-    
-            &.active {
-              border-bottom: 1px solid #000;
-    
-              img {
-                filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(64deg)
-                  brightness(95%) contrast(107%);
-              }
-    
-              .text {
-                font-weight: bold;
-              }
-            }
-          }
-        }
-    
-  
-    
-        .textwrapper{
-          margin: 20px 0;
-          display: none;
-    
-          .invite, .help {
-            cursor: pointer;
-  
-          }
-
-          .invite{
-            color:$color-secondary;
-            font-weight: bold;
-            margin-bottom: 1rem;
-          }
-
-          .help{
-            display: flex;
-          }
-        }
+    &.active {
+      display: block;
+      height: 100%;
+      position: fixed;
+      width: 70%;
+      padding: 2.5rem 0.58rem 0 1rem;
+      .menulist {
+        display: block;
+      }
     }
+  }
+}

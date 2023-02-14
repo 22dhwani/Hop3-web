@@ -8,37 +8,56 @@ import styles from '../../styles/ShopProducts.module.scss';
 
 const data = [
   {
-    img: '/images/prod-1.png',
+    img: '/images/product1.png',
     name: 'LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10',
     price: '2,000',
+    text: 'Redeem',
   },
   {
-    img: '/images/prod-2.png',
+    img: '/images/product2.png',
     name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
     price: '8,500',
     limitedTimeOffer: true,
+    text: 'Redeem',
   },
   {
-    img: '/images/prod-3.png',
+    img: '/images/product3.png',
     name: 'LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10',
     price: '2,000',
+    text: 'Redeem',
   },
   {
-    img: '/images/prod-4.png',
+    img: '/images/product1.png',
     name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
     price: '8,500',
     disabled: true,
+    text: 'Sold Out',
   },
   {
-    img: '/images/prod-5.png',
+    img: '/images/product2.png',
     name: 'LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10',
     price: '2,000',
     disabled: true,
+    text: 'Sold Out',
   },
   {
-    img: '/images/prod-6.png',
+    img: '/images/product3.png',
     name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
     price: '8,500',
+    text: 'Redeem',
+  },
+  {
+    img: '/images/product1.png',
+    name: 'LEPUTA Microfiber Dust Cleaning Slipper size 7.5-10',
+    price: '2,000',
+    disabled: true,
+    text: 'Sold Out',
+  },
+  {
+    img: '/images/product2.png',
+    name: 'Advanced Night Repair Eye Concentrate Matrix 0.5oz',
+    price: '8,500',
+    text: 'Redeem',
   },
 ];
 
@@ -56,7 +75,11 @@ const ShopProducts = () => {
                 <div className={styles.limitedTimeOffer}>Limited-Time</div>
               )}
 
-              <Image src={el.img} alt={el.img} />
+              <Image
+                src={el.img}
+                alt={el.img}
+                className={styles.productimage}
+              />
 
               <div className={styles.name}>{el.name}</div>
 
@@ -71,7 +94,7 @@ const ShopProducts = () => {
                   {el.price}
                 </strong>
                 <Button
-                  variant="dark"
+                  variant="primary"
                   disabled={el.disabled}
                   onClick={() => toggleShow()}>
                   Redeem

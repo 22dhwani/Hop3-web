@@ -14,18 +14,25 @@ import { pageview, refreshToken } from '../utils/utils';
 import { useUserStore } from '../store/userStore';
 import { useCategoriesStore } from '../store/categoriesStore';
 import { User } from '@firebase/auth';
+import { useLoginProcess } from '../store/loginProcess';
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
   const { fetchUserData } = useUserStore();
   const { fetchCategoriesData } = useCategoriesStore();
+  const { isLoginProcess, setLoginProcess } = useLoginProcess();
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const routeName = useRef(router.pathname);
+  const isLoginProcessRef = useRef(isLoginProcess);
 
   useEffect(() => {
     routeName.current = router.pathname;
   }, [router.pathname]);
+
+  useEffect(() => {
+    isLoginProcessRef.current = isLoginProcess;
+  }, [isLoginProcess]);
 
   useEffect(() => {
     // const fetchRoutes = async () => {
@@ -60,7 +67,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         } else if (user) {
           let token = localStorage.getItem('authToken');
-          if (!token) {
+          if (!token || isLoginProcessRef.current) {
             token = await refreshToken();
           }
           token && setAuthToken(token);
@@ -79,10 +86,13 @@ export default function App({ Component, pageProps }: AppProps) {
           if (
             userResponse &&
             (routeName.current === '/' ||
-              routeName.current === '/login' ||
+              isLoginProcessRef.current ||
               routeName.current === '/userDetails')
           ) {
             await router.replace('/explore');
+            if (isLoginProcessRef.current) {
+              setLoginProcess(false);
+            }
           } else if (userNotfound) {
             await router.replace('/userDetails');
           }

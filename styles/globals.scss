@@ -1,6 +1,9 @@
-@use "common" as *;
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+@use 'common' as *;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 
+body {
+  overflow-x: hidden;
+}
 
 a {
   color: inherit;
@@ -11,11 +14,11 @@ a {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
-h4{
-  font-size: 1.8rem
+h4 {
+  font-size: 1.8rem;
 }
 
 ul {
@@ -55,20 +58,21 @@ ul {
 }
 
 .link {
-
-  &__default{
+  &__default {
     text-decoration: none;
     font-weight: bold;
     color: $color-secondary;
-    
 
-    &:hover{
+    &:hover {
       text-decoration: underline;
       cursor: pointer;
     }
   }
 }
 
-svg{
+svg {
   vertical-align: middle;
 }
+
+@tailwind components;
+@tailwind utilities;

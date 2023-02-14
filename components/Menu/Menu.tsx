@@ -14,6 +14,7 @@ interface Meun {
   title?: string;
   action?: (...args: Array<any>) => void;
   isActive?: boolean;
+  className?: string;
 }
 
 interface MenuItem {
@@ -25,12 +26,24 @@ interface MenuItem {
   action?: (...args: Array<any>) => void;
   icon?: JSX.Element | null;
   data?: Option[];
+  className?: string;
 }
 
-const Menu = ({ data, title, selectedItem, action, isActive }: Meun) => {
+const Menu = ({
+  data,
+  title,
+  selectedItem,
+  action,
+  isActive,
+  className,
+}: Meun) => {
   return (
-    <div className={clsx(styles.container, isActive && styles.active)}>
-      <div className={styles.title}>{title}</div>
+    <div
+      className={`${clsx(
+        styles.container,
+        isActive && styles.active,
+      )} ${className}`}>
+      <div className={styles.title}>{title}</div>{' '}
       {data.map((item, idx) => {
         return (
           <MenuItem
@@ -57,10 +70,14 @@ const MenuItem = ({
   icon,
   action,
   selectedItem,
+  className,
 }: MenuItem) => {
   return (
     <div
-      className={clsx(styles.item, selectedItem === id && styles.selected)}
+      className={`${clsx(
+        styles.item,
+        selectedItem === id && styles.selected,
+      )} ${className}`}
       id={id}
       onClick={e => {
         if (action) {
