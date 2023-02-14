@@ -2,25 +2,24 @@ import React, { useEffect } from 'react';
 import Login from '../components/Login/Login';
 
 import { baseShopCMS } from '../services/airtable';
-
-const LoginPage = () => {
+import { Client } from '@notionhq/client';
+const LoginPage = ({ data }: any) => {
   useEffect(() => {
-    baseShopCMS('Table 1')
-      .select({
-        // Select the first 3 records in Grid view:
-        maxRecords: 3,
-        view: 'Grid view',
-      })
-      .eachPage(function page(records, fetchNextPage) {
-        // This function (`page`) will get called for each page of records.
-
-        records.forEach(function (record) {
-          console.log('Retrieved', record.get('Product Name'));
-        });
-      });
+    console.log(data);
   }, []);
 
   return <Login />;
+};
+
+export const getStaticProps = async () => {
+  const token = 'secret_cxJ7MEhil10WBl1w1mEIVIK7FmwwK1jYgs2HOfYEIzh';
+  const notion = new Client({ auth: token });
+  const data = await notion.databases.query({
+    database_id: 'f6980531c1ac4e539a444771e819452d',
+  });
+  return {
+    props: { data },
+  };
 };
 
 export default LoginPage;
