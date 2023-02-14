@@ -260,7 +260,7 @@ const PostItem: FC<PostDataProps> = props => {
     },
     [approvePostMutation, data?.id, rejectPostMutation],
   );
-  console.log(data.postImages);
+  console.log(data);
   return (
     <div className={styles.postscontainer}>
       <div className={styles.postwrapper} key={data?.id}>

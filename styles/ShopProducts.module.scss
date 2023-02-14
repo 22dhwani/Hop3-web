@@ -25,7 +25,10 @@
     .productcard {
       height: max-content;
     }
-
+    @media screen and (max-width: 1406px) {
+      margin-bottom: 20px;
+      width: calc(33% - 150px);
+    }
     @media screen and (max-width: 1206px) {
       margin-bottom: 20px;
       width: calc(33% - 100px);
@@ -95,6 +98,8 @@
       height: 55%;
     }
     .productcard {
+      background-color: transparent;
+
       height: 100%;
     }
   }

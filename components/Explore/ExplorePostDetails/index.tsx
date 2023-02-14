@@ -1,5 +1,5 @@
 import router from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import MainLayout from '../../../layouts/MainLayout';
 import { getPostById } from '../../../services/post';
@@ -16,6 +16,10 @@ import UpArrow from '../../../public/images/up_arrow.svg';
 import ProductCover from '../../../public/images/productcover.png';
 import ImageSlider from '../../ImageSlider';
 import Link from 'next/link';
+import {
+  getCategoryById,
+  useCategoriesStore,
+} from '../../../store/categoriesStore';
 
 export interface PostDetail {
   id: string;
@@ -67,6 +71,7 @@ export interface Reactions {
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ExplorePostDetails = (props: { data?: any }) => {
+  const [categories, setCategories] = useState([]);
   const {
     data: userPostData,
     isLoading: isPostLoading,
@@ -75,7 +80,25 @@ const ExplorePostDetails = (props: { data?: any }) => {
   } = useQuery(['getUserPost', router.query.exploreId], getPostById, {
     enabled: false,
   });
+  const { categoryDetails } = useCategoriesStore();
 
+  const allCtaegories = useMemo(() => {
+    const allItems = userPostData?.categories;
+
+    if (Array.isArray(allItems)) {
+      const finalArray: any = [];
+      allItems.forEach((item: any) => {
+        let tempItem = { text: '', id: item };
+
+        tempItem = { text: categoryDetails[item] || '', id: item };
+        finalArray.push(tempItem);
+      });
+      setCategories(finalArray);
+      console.log(finalArray);
+      return finalArray;
+    }
+  }, [userPostData]);
+  console.log(categories);
   const renderPostMedia = () => {
     const tempItem = { ...userPostData };
     tempItem.post_media = Array.isArray(tempItem.media_url)
@@ -85,7 +108,7 @@ const ExplorePostDetails = (props: { data?: any }) => {
       : [];
     return tempItem.post_media;
   };
-  console.log(userPostData);
+
   useEffect(() => {
     renderPostMedia();
   }, []);
@@ -108,7 +131,6 @@ const ExplorePostDetails = (props: { data?: any }) => {
       <div className="grid md:grid-cols-2 sm:grid-cols-1  md:gap-0  sm:gap-7">
         <div className={`${styles.exploreleft} md:my-7 xs:mt-7 `}>
           <div className="max-h-min">
-            {/* <ImageSlider data={userPostData?.post_media ?? []} /> */}
             <Image
               width={100}
               height={100}
@@ -176,8 +198,12 @@ const ExplorePostDetails = (props: { data?: any }) => {
               #Loremipsum #amet #accumsan #viverratortor`}
             </p>
             <div className="mt-5">
+              {/* {allCtaegories.length ??
+                allCtaegories.map((item: any) => {
+                  <Chip chipData={item} />;
+                })} */}
               {props.data?.categories.length > 0 && (
-                <Chip chipData={props.data?.categories} />
+                <Chip chipData={categories} />
               )}
             </div>
 
