@@ -3,7 +3,7 @@ import Login from '../components/Login/Login';
 
 import { baseShopCMS } from '../services/airtable';
 import { Client } from '@notionhq/client';
-const LoginPage = ({ data }) => {
+const LoginPage = ({ data }: any) => {
   useEffect(() => {
     console.log(data);
   }, []);
