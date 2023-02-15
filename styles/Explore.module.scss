@@ -1,11 +1,20 @@
 .explore {
   .header {
+    .topbar {
+      display: none;
+      @media screen and (max-width: 768px) {
+        display: flex;
+      }
+    }
     .logocover {
       margin: 0vh 0 5vh;
       width: 100%;
 
       object-fit: fill;
       border-radius: 10px;
+      @media screen and (max-width: 450px) {
+        display: none;
+      }
     }
   }
 }

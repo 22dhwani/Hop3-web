@@ -425,3 +425,109 @@ export const ThunderIcon = () => {
     </svg>
   );
 };
+
+export const LeftArrow = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      className="bi bi-arrow-left"
+      viewBox="0 0 16 16">
+      {' '}
+      <path
+        fill-rule="evenodd"
+        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+      />{' '}
+    </svg>
+  );
+};
+
+export const Google = () => {
+  return (
+    <svg
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M24.5 12.7839C24.5 11.8975 24.4205 11.0452 24.2727 10.2271H12.5V15.0623H19.2273C18.9375 16.6248 18.0568 17.9486 16.733 18.835V21.9714H20.7727C23.1364 19.7952 24.5 16.5907 24.5 12.7839Z"
+        fill="black"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M12.5 25C15.875 25 18.7045 23.8807 20.7727 21.9716L16.7329 18.8352C15.6136 19.5852 14.1818 20.0284 12.5 20.0284C9.2443 20.0284 6.48862 17.8295 5.50566 14.875H1.32953V18.1136C3.38635 22.1989 7.61362 25 12.5 25Z"
+        fill="black"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M5.50568 14.8749C5.25568 14.1249 5.11364 13.3237 5.11364 12.4999C5.11364 11.676 5.25568 10.8749 5.50568 10.1249V6.88623H1.32955C0.482954 8.57373 0 10.4828 0 12.4999C0 14.5169 0.482954 16.426 1.32955 18.1135L5.50568 14.8749Z"
+        fill="black"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M12.5 4.97159C14.3352 4.97159 15.9829 5.60227 17.2784 6.84091L20.8636 3.25568C18.6988 1.23864 15.8693 0 12.5 0C7.61362 0 3.38635 2.80114 1.32953 6.88636L5.50566 10.125C6.48862 7.17045 9.2443 4.97159 12.5 4.97159Z"
+        fill="black"
+      />
+    </svg>
+  );
+};
+
+export const MoneyPurple = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 22 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <rect
+        x="7.03125"
+        y="0.65625"
+        width="4.21875"
+        height="19.6875"
+        fill="#9F7CFF"
+      />
+      <rect
+        x="16.875"
+        y="0.65625"
+        width="4.21875"
+        height="19.6875"
+        fill="#9F7CFF"
+      />
+      <rect
+        x="18.8217"
+        y="6.28125"
+        width="4.3034"
+        height="19.6875"
+        transform="rotate(72.9476 18.8217 6.28125)"
+        fill="#9F7CFF"
+      />
+    </svg>
+  );
+};
+
+export const UpArrow = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 17 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M12 2.25H1.5V0.25H16V14.75H14V4.25V3.64645L13.5732 4.07322L1.75 15.8964L0.353554 14.5L12.1768 2.67678L12.6036 2.25H12Z"
+        fill="black"
+        stroke="white"
+        stroke-width="0.5"
+      />
+    </svg>
+  );
+};

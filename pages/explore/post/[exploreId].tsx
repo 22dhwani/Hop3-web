@@ -26,20 +26,9 @@ function ExploreDetails(props: any) {
     getUserPostById().then();
   }, [router.query.exploreId]);
 
-  //Destructure Post Media
-  const renderPostMedia = () => {
-    const tempItem = { ...userPostData };
-    tempItem.postImages = Array.isArray(tempItem.media_url)
-      ? tempItem.media_url.map((item: any) => item.signUrl)
-      : Array.isArray(tempItem.publicUrls)
-      ? tempItem.publicUrls.map((item: any) => item.media_url)
-      : [];
-    return tempItem.postImages;
-  };
-  console.log(userPostData);
   return (
     <>
-      <ExplorePostDetails />
+      <ExplorePostDetails data={userPostData} />
     </>
   );
 }

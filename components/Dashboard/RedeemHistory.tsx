@@ -7,7 +7,8 @@ import Product3 from '../../public/images/product3.png';
 import Product4 from '../../public/images/product4.png';
 import Product5 from '../../public/images/product5.png';
 import Product6 from '../../public/images/product6.png';
-import LeftArrow from '../../public/images/LeftArrow.svg';
+import { LeftArrow } from '../Icons/Icons';
+// import LeftArrow from '../../public/images/left_arrow.svg';
 import Button from '../Button';
 const RedeemHistory = () => {
   const productData = [
@@ -68,8 +69,9 @@ const RedeemHistory = () => {
   ];
   return (
     <MainLayout activeLink="/shop">
-      <div className="flex flex-row items-center ">
-        <Image src={LeftArrow} alt={'arrow'} className="mr-2" />
+      <div className="flex flex-row items-center gap-3">
+        <LeftArrow />
+        {/* <Image src={LeftArrow} alt={'arrow'} className="mr-2" /> */}
         <div className={styles.title}>Back </div>
       </div>
       <div className={styles.history}>

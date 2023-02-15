@@ -19,7 +19,14 @@
       height: 66%;
       background-color: black;
       max-width: 510px;
-
+      @media screen and (max-width: 450px) {
+        max-width: 100vw;
+        max-height: 100vh;
+        img {
+          width: max-content;
+          height: max-content;
+        }
+      }
       img {
         object-fit: cover;
       }
@@ -41,7 +48,7 @@
         .explore {
           display: flex;
           align-items: baseline;
-
+          gap: 10px;
           padding-bottom: 7px;
           border-bottom: 1px solid #000;
           width: 110px;
@@ -132,7 +139,7 @@
 @media screen and (max-width: 767px) {
   .postscontainer {
     .postwrapper {
-      flex-direction: column-reverse;
+      flex-direction: column;
       .poster {
         width: 100%;
       }
@@ -146,6 +153,27 @@
             margin-top: 5vh;
           }
         }
+      }
+    }
+  }
+}
+@media screen and (max-width: 450px) {
+  .postscontainer {
+    padding: 0px;
+    // height: 100vh;
+    .postwrapper {
+      .poster {
+        max-width: 100vw;
+        max-height: 100vh;
+
+        img {
+          width: max-content;
+          height: max-content;
+        }
+      }
+      .descriptionwrapper {
+        bottom: 0;
+        top: 100%;
       }
     }
   }

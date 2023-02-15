@@ -3,10 +3,11 @@ import styles from '../../styles/Dashboard.module.scss';
 import Image from 'next/image';
 import Posts from '../Posts/Posts';
 import MoneyIcon from '../../public/images/Money.svg';
-import MoneyPurple from '../../public/images/MoneyPurple.svg';
-import UpArrow from '../../public/images/UpArrow.svg';
-import GradientBack from '../../public/images/Gradient.png';
-import ShiningStart from '../../public/images/ShiningStart.png';
+import { MoneyPurple } from '../Icons/Icons';
+// import MoneyPurple from '../../public/images/money_purple.svg';
+
+import GradientBack from '../../public/images/gradient.png';
+import ShiningStart from '../../public/images/shinningstar.png';
 import Product1 from '../../public/images/product1.png';
 import Product2 from '../../public/images/product2.png';
 import Product3 from '../../public/images/product3.png';
@@ -14,8 +15,8 @@ import Product4 from '../../public/images/product4.png';
 import Product5 from '../../public/images/product5.png';
 import Product6 from '../../public/images/product6.png';
 import { useUserStore } from '../../store/userStore';
-import Post1 from '../../public/images/Post.png';
-import Post2 from '../../public/images/Post2.png';
+import Post1 from '../../public/images/post.png';
+import Post2 from '../../public/images/post2.png';
 import Settings from '../../public/images/settings.svg';
 import Button from '../Button';
 export default function Creator() {
@@ -231,8 +232,12 @@ export default function Creator() {
             </div>
           </div>
           <p className={styles.bottomtext}>
-            Invite a friend and earn{' '}
-            <Image src={MoneyPurple} alt={'money sign'} /> 100
+            Invite a friend and earn
+            <div className="flex flex-row gap-2">
+              <MoneyPurple />
+              100
+            </div>
+            {/* <Image src={MoneyPurple} alt={'money sign'} /> 100 */}
           </p>
           <div className={styles.cardwrapper}>
             <div className="flex flex-row w-full justify-between">
