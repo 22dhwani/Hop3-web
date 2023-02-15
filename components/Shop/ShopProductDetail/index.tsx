@@ -1,7 +1,7 @@
 import { LeftArrow } from '../../Icons/Icons';
 import { UpArrow } from '../../Icons/Icons';
 // import UpArrow from '../../../public/images/up_arrow.svg';
-/* eslint-disable prettier/prettier */
+
 import Image from 'next/image';
 import { useState } from 'react';
 import useModal from '../../../hooks/useModal';

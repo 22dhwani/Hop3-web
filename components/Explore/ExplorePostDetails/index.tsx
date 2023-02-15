@@ -8,8 +8,8 @@ import Image from 'next/image';
 import styles from '../../../styles/ExplorePostDetails.module.scss';
 import { LeftArrow } from '../../Icons/Icons';
 // import LeftArrow from '../../../public/images/left_arrow.svg';
-import Post1 from '../../../public/images/post.png';
-import UserProfileImage from '../../../public/images/profilelg.png';
+// import Post1 from '../../../public/images/post.png';
+
 import Button from '../../Button';
 import Thunderstorms from '../../../public/images/thunderstorms.svg';
 import Like from '../../../public/images/like.svg';
@@ -137,7 +137,7 @@ const ExplorePostDetails = (props: { data?: any }) => {
             <Image
               width={100}
               height={100}
-              src={userPostData?.publicUrls[0]?.media_url ?? Post1}
+              src={userPostData?.publicUrls[0]?.media_url || ''}
               alt={'logo'}
               className=" xs:w-full xs:h-full md:w-11/12 md:h-full object-cover"
             />
@@ -146,7 +146,7 @@ const ExplorePostDetails = (props: { data?: any }) => {
         <div className={`md:my-7 xs:mt-7 ${styles.exploreleft} `}>
           <div className={styles.profileDescription}>
             <Image
-              src={userPostData?.user.image ?? UserProfileImage}
+              src={userPostData?.user.image ?? ''}
               alt={'profile'}
               height={38}
               width={38}

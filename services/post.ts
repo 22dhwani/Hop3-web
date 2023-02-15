@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import hop3Api from '../config/axiosconfig';
 import axios from 'axios';
 import { PostDetail } from '../components/Explore/ExplorePostDetails';
