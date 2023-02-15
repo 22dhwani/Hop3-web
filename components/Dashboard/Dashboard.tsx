@@ -3,7 +3,8 @@ import styles from '../../styles/Dashboard.module.scss';
 import Image from 'next/image';
 import Posts from '../Posts/Posts';
 import MoneyIcon from '../../public/images/Money.svg';
-import MoneyPurple from '../../public/images/money_purple.svg';
+import { MoneyPurple } from '../Icons/Icons';
+// import MoneyPurple from '../../public/images/money_purple.svg';
 
 import GradientBack from '../../public/images/gradient.png';
 import ShiningStart from '../../public/images/shinningstar.png';
@@ -231,8 +232,12 @@ export default function Creator() {
             </div>
           </div>
           <p className={styles.bottomtext}>
-            Invite a friend and earn{' '}
-            <Image src={MoneyPurple} alt={'money sign'} /> 100
+            Invite a friend and earn
+            <div className="flex flex-row gap-2">
+              <MoneyPurple />
+              100
+            </div>
+            {/* <Image src={MoneyPurple} alt={'money sign'} /> 100 */}
           </p>
           <div className={styles.cardwrapper}>
             <div className="flex flex-row w-full justify-between">

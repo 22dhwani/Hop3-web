@@ -1,6 +1,8 @@
 import MainLayout from '../../../layouts/MainLayout';
-import LeftArrow from '../../../public/images/left_arrow.svg';
-import UpArrow from '../../../public/images/UpArrow.svg';
+//
+import { LeftArrow } from '../../Icons/Icons';
+import { UpArrow } from '../../Icons/Icons';
+// import UpArrow from '../../../public/images/UpArrow.svg';
 import styles from '../../../styles/ShopProductDetail.module.scss';
 import ProductCover from '../../../public/images/productcover.png';
 import Image from 'next/image';
@@ -17,8 +19,9 @@ const Checkout = () => {
 
       <MainLayout activeLink="/shop">
         <div className="md:px-6 xs:px-1">
-          <div className="flex flex-row items-center ">
-            <Image src={LeftArrow} alt={'arrow'} className="mr-2" />
+          <div className="flex flex-row items-center gap-3">
+            <LeftArrow />
+            {/* <Image src={LeftArrow} alt={'arrow'} className="mr-2" /> */}
             <div className={styles.title}>back </div>
           </div>
           <div className="grid md:grid-cols-2 sm:grid-cols-1  md:gap-0  sm:gap-7 md:pt-12 xs:pt-7">

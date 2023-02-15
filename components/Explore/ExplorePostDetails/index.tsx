@@ -6,13 +6,15 @@ import { getPostById } from '../../../services/post';
 import Chip from '../../Chip/Chip';
 import Image from 'next/image';
 import styles from '../../../styles/ExplorePostDetails.module.scss';
-import LeftArrow from '../../../public/images/left_arrow.svg';
+import { LeftArrow } from '../../Icons/Icons';
+// import LeftArrow from '../../../public/images/left_arrow.svg';
 import Post1 from '../../../public/images/post.png';
 import UserProfileImage from '../../../public/images/profilelg.png';
 import Button from '../../Button';
 import Thunderstorms from '../../../public/images/thunderstorms.svg';
 import Like from '../../../public/images/like.svg';
-import UpArrow from '../../../public/images/up_arrow.svg';
+import { UpArrow } from '../../Icons/Icons';
+// import UpArrow from '../../../public/images/up_arrow.svg';
 import ProductCover from '../../../public/images/productcover.png';
 import ImageSlider from '../../ImageSlider';
 import Link from 'next/link';
@@ -122,8 +124,9 @@ const ExplorePostDetails = (props: { data?: any }) => {
     <MainLayout activeLink="/shop">
       <Link href="/explore">
         {' '}
-        <div className="flex flex-row items-center ">
-          <Image src={LeftArrow} alt={'arrow'} className="mr-2" />
+        <div className="flex flex-row items-center gap-3">
+          <LeftArrow />
+          {/* <Image src={LeftArrow} alt={'arrow'} className="mr-2" /> */}
           <div className={styles.title}>Back </div>
         </div>
       </Link>
@@ -199,11 +202,12 @@ const ExplorePostDetails = (props: { data?: any }) => {
               )}
             </div>
 
-            <div className="flex flex-row mt-5 items-center">
+            <div className="flex flex-row mt-5 items-center gap-2">
               <p className="hover:underline underline font-semibold">
                 Learn more
               </p>
-              <Image src={UpArrow} alt={'arrow'} className="ml-2" />
+              <UpArrow />
+              {/* <Image src={UpArrow} alt={'arrow'} className="ml-2" /> */}
             </div>
             <div className="flex flex-row bg-yellow-50 md:w-4/6 px-2 py-2 rounded-lg my-7 gap-4 xs:w-11/12">
               <Image

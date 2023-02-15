@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Cookies from 'js-cookie';
 import styles from '../../styles/Posts.module.scss';
 import ProductCover from '../../public/images/productcover.png';
-import UpArrow from '../../public/images/up_arrow.svg';
+import { UpArrow } from '../Icons/Icons';
+// import UpArrow from '../../public/images/up_arrow.svg';
 import Like from '../../public/images/like.svg';
 import NotLike from '../../public/images/like_not.svg';
 import Logout from '../../public/images/logout.png';
@@ -313,7 +314,7 @@ const PostItem: FC<PostDataProps> = props => {
                   <Link href={`/explore/post/${data.id}`}>
                     <p className={styles.exploretext}>Explore now</p>
                   </Link>
-                  <Image className={styles.arowicon} src={UpArrow} alt={''} />
+                  <UpArrow />
                 </div>
               </div>
               <div className={styles.selectwrapper}>

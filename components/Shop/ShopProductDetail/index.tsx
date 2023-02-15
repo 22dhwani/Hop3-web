@@ -1,5 +1,6 @@
-import LeftArrow from '../../../public/images/left_arrow.svg';
-import UpArrow from '../../../public/images/up_arrow.svg';
+import { LeftArrow } from '../../Icons/Icons';
+import { UpArrow } from '../../Icons/Icons';
+// import UpArrow from '../../../public/images/up_arrow.svg';
 /* eslint-disable prettier/prettier */
 import Image from 'next/image';
 import { useState } from 'react';
@@ -44,8 +45,9 @@ const ShopProductDetail = () => {
       <MainLayout activeLink="/shop">
         <Link href="/shop">
           {' '}
-          <div className="flex flex-row items-center ">
-            <Image src={LeftArrow} alt={'arrow'} className="mr-2" />
+          <div className="flex flex-row items-center gap-3">
+            <LeftArrow />
+            {/* <Image src={LeftArrow} alt={'arrow'} className="mr-2" /> */}
             <div className={styles.title}>hop3 Shop </div>
           </div>
         </Link>
@@ -107,11 +109,11 @@ const ShopProductDetail = () => {
                 onClick={() => toggleShow()}>
                 Redeem
               </Button>
-              <div className="flex flex-row mt-5 items-center">
+              <div className="flex flex-row mt-5 items-center gap-2">
                 <p className="hover:underline underline py-2">
                   Learn more about the brand
                 </p>
-                <Image src={UpArrow} alt={'arrow'} className="ml-2" />
+                <UpArrow />
               </div>
             </div>
           </div>
