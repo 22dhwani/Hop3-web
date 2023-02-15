@@ -174,17 +174,7 @@ const ExplorePostDetails = (props: { data?: any }) => {
                 ` Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc`}
             </p>
             <br></br>
-            <p className="text-sm mt-1 text-justify md:w-11/12 xs:w-full">
-              Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc
-              viverra tortor malesuada id non. Lorem ipsum dolor sit amet
-              consectetur. Vitae accumsan nunc viverra tortor malesuada id non.
-              Lorem ipsum dolor sit amet consectetur. Vitae accumsan nunc
-              viverra tortor malesuada id non. Lorem ipsum dolor sit amet
-              consectetur. Vitae accumsan nunc viverra tortor malesuada id non
-              accumsan. Lorem ipsum dolor sit amet consectetur. Vitae accumsan
-              nunc viverra tortor malesuada id non. Lorem ipsum dolor sit amet
-              consectetur.
-            </p>
+
             <p className="text-sm mt-5 text-justify md:w-11/12 xs:w-full">
               <strong>Location : </strong>
               {userPostData?.location ?? `Lorem Ipsum dolor`}

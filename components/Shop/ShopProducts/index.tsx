@@ -5,6 +5,7 @@ import useModal from '../../../hooks/useModal';
 import Button from '../../Button';
 import Modal from '../../../modals/Modal';
 import styles from '../../../styles/ShopProducts.module.scss';
+import Link from 'next/link';
 
 const data = [
   {
@@ -91,11 +92,16 @@ const ShopProducts = () => {
               {el.limitedTimeOffer && (
                 <div className={styles.limitedTimeOffer}>Limited-Time</div>
               )}
+              <Link href="/shop/2">
+                <img
+                  src={el.img}
+                  alt={el.img}
+                  className={styles.productimage}
+                />
+              </Link>
 
-              <img src={el.img} alt={el.img} className={styles.productimage} />
               <div className={`px-2 ${styles.productcard}`}>
                 <div className={styles.name}>{el.name}</div>
-
                 <div className={styles.buy}>
                   <div className="flex flex-row w-full">
                     <div className="items-start">
@@ -117,6 +123,7 @@ const ShopProducts = () => {
                       </strong>
                     </div>
                   </div>
+
                   <Button
                     className={styles.redeem}
                     variant="primary"

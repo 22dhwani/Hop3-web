@@ -13,6 +13,7 @@ import Product2 from '../../../public/images/shopcover2.png';
 import Product3 from '../../../public/images/shopcover3.png';
 import styles from '../../../styles/ShopProductDetail.module.scss';
 import Button from '../../Button';
+import Link from 'next/link';
 
 const ShopProductDetail = () => {
   const [id, setid] = useState(0);
@@ -41,10 +42,13 @@ const ShopProductDetail = () => {
     <>
       <Modal show={show} toggleShow={toggleShow} />
       <MainLayout activeLink="/shop">
-        <div className="flex flex-row items-center ">
-          <Image src={LeftArrow} alt={'arrow'} className="mr-2" />
-          <div className={styles.title}>hop3 Shop </div>
-        </div>
+        <Link href="/shop">
+          {' '}
+          <div className="flex flex-row items-center ">
+            <Image src={LeftArrow} alt={'arrow'} className="mr-2" />
+            <div className={styles.title}>hop3 Shop </div>
+          </div>
+        </Link>
         <div className="grid md:grid-cols-2 sm:grid-cols-1  md:gap-0  sm:gap-7">
           <div className={`${styles.shopproductleft} md:my-7 xs:mt-7`}>
             <Image
